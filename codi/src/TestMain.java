@@ -86,6 +86,29 @@ public class TestMain {
         String output3 = realiser.realiseSentence(p); // Realiser created earlier.
         System.out.println(output3);
 
+        SPhraseSpec ss1 = nlgFactory.createClause("my cat", "like", "fish");
+        SPhraseSpec ss2 = nlgFactory.createClause("my dog", "like", "big bones");
+        SPhraseSpec ss3 = nlgFactory.createClause("my horse", "like", "grass");
+
+        CoordinatedPhraseElement c = nlgFactory.createCoordinatedPhrase();
+        c.setConjunction("but");
+        c.addCoordinate(ss1);
+        c.addCoordinate(ss2);
+        c.addCoordinate(ss3);
+
+        String output4 = realiser.realiseSentence(c);
+        System.out.println(output4);
+
+        SPhraseSpec p1 = nlgFactory.createClause("I", "be", "happy");
+        SPhraseSpec q1 = nlgFactory.createClause("I", "eat", "fish");
+
+        q1.setFeature(Feature.COMPLEMENTISER, "because");
+        q1.setFeature(Feature.TENSE, Tense.PAST);
+        p1.addComplement(q1);
+
+        String output5 = realiser.realiseSentence(p1);
+        System.out.println(output5);
+
 
 
     }
