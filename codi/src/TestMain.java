@@ -1,8 +1,12 @@
+import simplenlg.format.english.HTMLFormatter;
 import simplenlg.framework.*;
 import simplenlg.lexicon.*;
 import simplenlg.realiser.english.*;
 import simplenlg.phrasespec.*;
 import simplenlg.features.*;
+
+import java.util.Arrays;
+
 
 
 public class TestMain {
@@ -108,6 +112,24 @@ public class TestMain {
 
         String output5 = realiser.realiseSentence(p1);
         System.out.println(output5);
+
+        SPhraseSpec pp1 = nlgFactory.createClause("Mary", "chase", "the monkey");
+        SPhraseSpec pp2 = nlgFactory.createClause("The monkey", "fight back");
+        SPhraseSpec pp3 = nlgFactory.createClause("Mary", "be", "nervous");
+
+        DocumentElement sss1 = nlgFactory.createSentence(pp1);
+        DocumentElement sss2 = nlgFactory.createSentence(pp2);
+        DocumentElement sss3 = nlgFactory.createSentence(pp3);
+
+        DocumentElement par1 = nlgFactory.createParagraph(Arrays.asList(sss1, sss2, sss3));
+
+        DocumentElement section = nlgFactory.createSection("The Trials and Tribulations of Mary and the Monkey");
+        section.addComponent(par1);
+
+        realiser.setFormatter(new HTMLFormatter());
+        String output6 = realiser.realise(section).getRealisation();
+        System.out.println(output6);
+
 
 
 
