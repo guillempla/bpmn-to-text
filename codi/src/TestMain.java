@@ -22,9 +22,9 @@ public class TestMain {
 
         // Define a noun phrase for 'Mary' and 'the monkey' and a verb phrase for 'chase'
         NPPhraseSpec subject1 = nlgFactory.createNounPhrase("Mary");
-        NPPhraseSpec subject2 = nlgFactory.createNounPhrase("your", "giraffe");
+        //NPPhraseSpec subject2 = nlgFactory.createNounPhrase("your", "giraffe");
         NPPhraseSpec object1 = nlgFactory.createNounPhrase("the monkey");
-        NPPhraseSpec object2 = nlgFactory.createNounPhrase("George");
+        //NPPhraseSpec object2 = nlgFactory.createNounPhrase("George");
         VPPhraseSpec verb = nlgFactory.createVerbPhrase("chase");
 
         // Apply the adjective 'fast' to Mary
@@ -35,15 +35,17 @@ public class TestMain {
         // Define the components of the sentence we wish to construct
         SPhraseSpec p = nlgFactory.createClause();
 
-        CoordinatedPhraseElement subj = nlgFactory.createCoordinatedPhrase(subject1, subject2);
-        // may revert to nlgFactory.createCoordinatedPhrase( subject1, subject2 ) ;
-        p.setSubject(subj);
+        //CoordinatedPhraseElement subj = nlgFactory.createCoordinatedPhrase(subject1, subject2);
+        // // may revert to nlgFactory.createCoordinatedPhrase( subject1, subject2 ) ;
+        //p.setSubject(subj);
+        p.setSubject(subject1);
 
-        CoordinatedPhraseElement obj = nlgFactory.createCoordinatedPhrase(object1, object2);
-        // may revert to nlgFactory.createCoordinatedPhrase( subject1, subject2 ) ;
-        obj.addCoordinate("Martha");
-        obj.setFeature(Feature.CONJUNCTION, "or");
-        p.setObject(obj);
+        //CoordinatedPhraseElement obj = nlgFactory.createCoordinatedPhrase(object1, object2);
+        // // may revert to nlgFactory.createCoordinatedPhrase( subject1, subject2 ) ;
+        //obj.addCoordinate("Martha");
+        //obj.setFeature(Feature.CONJUNCTION, "or");
+        //p.setObject(obj);
+        p.setObject(object1);
 
 
         //p.setSubject("Mary");
@@ -71,6 +73,15 @@ public class TestMain {
         // Combine the different components of the sentence
         //String output2 = realiser.realiseSentence(p); // Realiser created earlier.
         //System.out.println(output2);
+
+        NPPhraseSpec place = nlgFactory.createNounPhrase("park");
+        place.setDeterminer("the");
+        place.addPreModifier("leafy");
+        PPPhraseSpec pp = nlgFactory.createPrepositionPhrase();
+        pp.addComplement(place);
+        pp.setPreposition("in");
+
+        p.addComplement(pp);
 
         String output3 = realiser.realiseSentence(p); // Realiser created earlier.
         System.out.println(output3);
