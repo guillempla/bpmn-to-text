@@ -21,26 +21,40 @@ public class TestMain {
         System.out.println(output);
 
         // Define a noun phrase for 'Mary' and 'the monkey' and a verb phrase for 'chase'
-        NPPhraseSpec subject = nlgFactory.createNounPhrase("Mary");
-        NPPhraseSpec object = nlgFactory.createNounPhrase("the monkey");
+        NPPhraseSpec subject1 = nlgFactory.createNounPhrase("Mary");
+        NPPhraseSpec subject2 = nlgFactory.createNounPhrase("your", "giraffe");
+        NPPhraseSpec object1 = nlgFactory.createNounPhrase("the monkey");
+        NPPhraseSpec object2 = nlgFactory.createNounPhrase("George");
         VPPhraseSpec verb = nlgFactory.createVerbPhrase("chase");
 
         // Apply the adjective 'fast' to Mary
-        subject.addModifier("fast");
+        //subject.addModifier("fast");
         // Add the adverb 'quickly' to the verb
-        verb.addModifier("quickly");
-
-
+        //verb.addModifier("quickly");
 
         // Define the components of the sentence we wish to construct
         SPhraseSpec p = nlgFactory.createClause();
 
+        CoordinatedPhraseElement subj = nlgFactory.createCoordinatedPhrase(subject1, subject2);
+        // may revert to nlgFactory.createCoordinatedPhrase( subject1, subject2 ) ;
+        p.setSubject(subj);
+
+        CoordinatedPhraseElement obj = nlgFactory.createCoordinatedPhrase(object1, object2);
+        // may revert to nlgFactory.createCoordinatedPhrase( subject1, subject2 ) ;
+        obj.addCoordinate("Martha");
+        obj.setFeature(Feature.CONJUNCTION, "or");
+        p.setObject(obj);
+
+
         //p.setSubject("Mary");
-        //p.setVerb("chase");
+        p.setVerb("chase");
         //p.setObject("the monkey");
 
-        p.setSubject(subject);
-        p.setObject(object);
+
+
+
+        //p.setSubject(subject);
+        //p.setObject(object);
         p.setVerb(verb);
 
         //p.setFeature(Feature.TENSE, Tense.PAST); // Set the phrase in the past
