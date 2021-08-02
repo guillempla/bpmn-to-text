@@ -1,0 +1,9 @@
+## configuration file for a language identifier aware of a few European languages.
+## Dealing with less languages speeds up both loading and identification.
+<Languages>
+./de.dat
+./en.dat
+./es.dat
+./fr.dat
+./pt.dat
+</Languages>
