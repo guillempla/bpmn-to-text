@@ -4,7 +4,7 @@ Per instal·lar el docker de FreeLing, cal fer
 
 2) des d'aquest directori (on hi ha el fitxer 'Dockerfile') executar
 
-   $ docker build . -t freeling
+   $ sudo docker build . -t freeling
 
    Aixo trigara una estona, compilara el freeling, i creara la maquina virtual
    (que en docker se'n diu una "image")
@@ -49,7 +49,7 @@ A partir d'aqui, el que cal fer cada cop que vulguis posar en marxa la MV
 Per enviar peticions al servidor del container (mentre esta engegat, es clar):
 
 3) Esbrina quina IP te la MV, amb el seu "CONTAINER ID"
-   
+
    $ docker container inspect d75edfbe2c5d | grep IPAddress
           "SecondaryIPAddresses": null,
             "IPAddress": "172.17.0.2",
@@ -62,7 +62,7 @@ Per enviar peticions al servidor del container (mentre esta engegat, es clar):
    hi ha un fitxer "sample-client.py" que llegeix frases i les envia al servidor.
 
    Exemple d'execucio:
-   
+
 $ ./sample-client.py 172.17.0.2
 enviar documento al cliente.
 [{"sentence" : "enviar documento al cliente.", "actions" : [{"predW" : "enviar", "predF" : "enviar", "predL" : "enviar", "predPoS" : "VMN0000", "predMSD" : "pos=verb|type=main|mood=infinitive", "objW" : "documento", "objF" : "documento", "objL" : "documento", "objPoS" : "NCMS000", "objMSD" : "pos=noun|type=common|gen=masculine|num=singular", "compW" : "a el cliente", "compF" : "cliente", "compL" : "cliente", "compPoS" : "NCCS000", "compMSD" : "pos=noun|type=common|gen=common|num=singular"}]}]
@@ -89,5 +89,3 @@ Dins de cada accio, t'interessa "predL" (lema del predicat) i "objL" (lema de l'
 Potser en alguns casos et pot interessar "objW" que te el sintagma sencer (p.e. "nuevos empleados" enlloc de "empleado").
 
 Si el simpleNLG necessita informació mes desglossada (p.e. "nuevo" i "empleado" separat i lematitzat), podem intentar retocar la gramatica perque ho faci.
-
-  
