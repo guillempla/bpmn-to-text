@@ -11,14 +11,14 @@ Per instal·lar el docker de FreeLing, cal fer
 
 3) comprovar que s'ha creat la imatge
 
-   $ docker image ls
+   $ sudo docker image ls
    REPOSITORY                        TAG               IMAGE ID       CREATED              SIZE
    freeling                          latest            2a66aed1affc   About a minute ago   2.7GB
    <none>                            <none>            dc939bf033f7   About a minute ago   5.09GB
 
 4) Si ha quedat alguna imatge temporal ("<none>") esborrarla pel seu "IMAGE ID"
 
-   $ docker image rm dc939bf033f7
+   $ sudo docker image rm dc939bf033f7
 
 
 Fins aqui, nomes s'ha de fer un cop. Nomes cal repetir-ho si es vol generar de nou la imatge (p.e. perque
@@ -31,11 +31,11 @@ A partir d'aqui, el que cal fer cada cop que vulguis posar en marxa la MV
 
 1) Per executar la MV i el servidor, cal fer
 
-   $ docker run freeling
+   $ sudo docker run freeling
 
 2) Comprova que esta engegat:
 
-   $ docker container ls
+   $ sudo docker container ls
     CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS              PORTS                 NAMES
     d75edfbe2c5d   freeling  "/bin/sh -c /usr/loc…"   About a minute ago   Up About a minute   50005/tcp, 60006/tcp  interesting_shirley
 
@@ -43,14 +43,14 @@ A partir d'aqui, el que cal fer cada cop que vulguis posar en marxa la MV
 
 3) per aturar el container, amb el seu "CONTAINER ID"
 
-   $ docker container stop d75edfbe2c5d
+   $ sudo docker container stop d75edfbe2c5d
 
 --------------------------------------------------------
 Per enviar peticions al servidor del container (mentre esta engegat, es clar):
 
 3) Esbrina quina IP te la MV, amb el seu "CONTAINER ID"
 
-   $ docker container inspect d75edfbe2c5d | grep IPAddress
+   $ sudo docker container inspect d75edfbe2c5d | grep IPAddress
           "SecondaryIPAddresses": null,
             "IPAddress": "172.17.0.2",
                     "IPAddress": "172.17.0.2",
