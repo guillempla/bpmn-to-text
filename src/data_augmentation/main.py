@@ -16,9 +16,15 @@ def read_bpmn_files():
 
     tree_array = []
 
+    count = 0
+
     for file in Path(DATA_PATH).glob('**/*.bpmn'):
         tree = ET.parse(os.fspath(file))
         tree_array.append(tree)
+
+        count += 1
+        if (count == 1):
+            break
 
     return tree_array
 
@@ -28,7 +34,7 @@ def main():
 
     for tree in parsed_files:
         for child in tree.getroot():
-            print(child.tag)
+            print(child.tag, child.attrib)
 
 
 if __name__ == "__main__":
