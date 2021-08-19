@@ -1,7 +1,5 @@
-from asyncio import queues
 import xml.etree.ElementTree as ET
-from bpmn_types import *
-from pprint import pprint
+from .bpmn_types import *
 from copy import deepcopy
 from collections import defaultdict, deque
 from functools import partial
