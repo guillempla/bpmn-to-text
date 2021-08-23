@@ -1,0 +1,57 @@
+{
+  "sequenceFlow": [
+    {
+      "description": "Aquesta és la descripció de sequenceFlow"
+    }
+  ],
+  "task": [
+    {
+      "description": "Aquesta és la descripció de task"
+    }
+  ],
+  "manualTask": [
+    {
+      "description": "Aquesta és la descripció de manualTask"
+    }
+  ],
+  "userTask": [
+    {
+      "description": "Aquesta és la descripció de userTask"
+    }
+  ],
+  "serviceTask": [
+    {
+      "description": "Aquesta és la descripció de serviceTask"
+    }
+  ],
+  "event": [
+    {
+      "description": "Aquesta és la descripció de event"
+    }
+  ],
+  "startEvent": [
+    {
+      "description": "Aquesta és la descripció de startEvent"
+    }
+  ],
+  "endEvent": [
+    {
+      "description": "Aquesta és la descripció de endEvent"
+    }
+  ],
+  "gateway": [
+    {
+      "description": "Aquesta és la descripció de gateway"
+    }
+  ],
+  "parallelGateway": [
+    {
+      "description": "Aquesta és la descripció de parallelGateway"
+    }
+  ],
+  "exclusiveGateway": [
+    {
+      "description": "Aquesta és la descripció de exclusiveGateway"
+    }
+  ]
+}
