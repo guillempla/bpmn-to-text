@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
-from src.bpmn_parser import BpmnModel, UserFormMessage
+from src.bpmn_parser import BpmnModel
 
-DATA_PATH = "../bpmn"
+BPMN_PATH = "../bpmn"
 
 
 def read_bpmn_files():
@@ -15,7 +15,7 @@ def read_bpmn_files():
 
     bpmn_array = []
 
-    for file in Path(DATA_PATH).glob('**/*.bpmn'):
+    for file in Path(BPMN_PATH).glob('**/*.bpmn'):
         model = BpmnModel(os.fspath(file))
         bpmn_array.append(model)
 
@@ -26,7 +26,6 @@ def main():
     print(Path.cwd())
 
     parsed_files = read_bpmn_files()
-
     print(parsed_files[0])
 
 
