@@ -17,10 +17,10 @@ def bpmn_tag(tag):
 
 class BpmnObject(object):
     def __repr__(self):
-        return f"{type(self).__name__}({self.name or self._id})"
+        return f"{type(self).__name__}({self.name or self.id})"
 
     def parse(self, element):
-        self._id = element.attrib["id"]
+        self.id = element.attrib["id"]
         self.name = element.attrib["name"] if "name" in element.attrib else None
 
     def run(self):
@@ -43,7 +43,7 @@ class SequenceFlow(BpmnObject):
 
     def __repr__(self):
         conditions = f" w. {len(self.conditions)} con. " if self.conditions else ""
-        return f"{type(self).__name__}({self._id}): {self.source} -> {self.target}{conditions}"
+        return f"{type(self).__name__}({self.id}): {self.source} -> {self.target}{conditions}"
 
     pass
 
