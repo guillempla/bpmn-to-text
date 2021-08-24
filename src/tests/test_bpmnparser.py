@@ -15,10 +15,14 @@ async def get_workload():
 async def simulate_user(q):
     WAIT = 0.01
 
+    def auto(text):
+        return ""
+
     def ask(text):
-        sys.stdout.write(f"\t[?] {text}")
-        sys.stdout.flush()
-        text = sys.stdin.readline().strip()
+        text = auto(text)
+        # sys.stdout.write(f"\t[?] {text}")
+        # sys.stdout.flush()
+        # text = sys.stdin.readline().strip()
         return (
             {
                 key: value
@@ -60,6 +64,16 @@ async def simulate_user(q):
     await asyncio.sleep(WAIT)
 
 
+def run_serial():
+    async def serial():
+        instances = await get_workload()
+        for i, p in enumerate(instances):
+            print(f"Running process {i+1}\n-----------------")
+            await asyncio.gather(simulate_user(p.in_queue), p.run())
+
+    asyncio.run(serial())
+
+
 def run_parallel():
     async def parallel():
         instances = await get_workload()
@@ -71,4 +85,6 @@ def run_parallel():
     asyncio.run(parallel())
 
 
-run_parallel()
+# run_parallel()
+run_serial()
+print("END")
