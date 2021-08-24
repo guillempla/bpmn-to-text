@@ -1,0 +1,74 @@
+import asyncio
+from bpmn_parser import BpmnModel, UserFormMessage
+import random
+import sys
+
+
+m = BpmnModel("../../bpmn/model_01/model_01.bpmn")
+NUM_INSTANCES = 2
+
+
+async def get_workload():
+    return [await m.create_instance(str(i + 1), {}) for i in range(NUM_INSTANCES)]
+
+
+async def simulate_user(q):
+    WAIT = 0.01
+
+    def ask(text):
+        sys.stdout.write(f"\t[?] {text}")
+        sys.stdout.flush()
+        text = sys.stdin.readline().strip()
+        return (
+            {
+                key: value
+                for statement in (text.split(",") if "," in text else [text])
+                for key, value in statement.split("=")
+            }
+            if text
+            else {}
+        )
+
+    q.put_nowait(UserFormMessage("t_wrong", "null"))  # Wrong message
+    await asyncio.sleep(WAIT)
+
+    a = random.randint(1, 2)
+    default = f"option={a}"
+    data = ask(f"Form input: [{default}]")
+    q.put_nowait(UserFormMessage("t0", data if data != "" else default))
+    await asyncio.sleep(WAIT)
+
+    q.put_nowait(UserFormMessage("tup", ask("Form input [tup]: ")))
+    await asyncio.sleep(WAIT)
+
+    q.put_nowait(UserFormMessage("t_wrong", "null"))  # Wrong message
+    await asyncio.sleep(WAIT)
+
+    q.put_nowait(UserFormMessage("tdown", ask("Form input [tdown]: ")))
+    await asyncio.sleep(WAIT)
+
+    q.put_nowait(UserFormMessage("t_wrong", "null"))  # Wrong message
+    await asyncio.sleep(WAIT)
+
+    q.put_nowait(UserFormMessage("tup2", ask("Form input [tup2]: ")))
+    await asyncio.sleep(WAIT)
+
+    q.put_nowait(UserFormMessage("t_wrong", "null"))  # Wrong message
+    await asyncio.sleep(WAIT)
+
+    q.put_nowait(UserFormMessage("tdown2", ask("Form input [tdown2]: ")))
+    await asyncio.sleep(WAIT)
+
+
+def run_parallel():
+    async def parallel():
+        instances = await get_workload()
+        users = [simulate_user(i.in_queue) for i in instances]
+        processes = [p.run() for p in instances]
+        await asyncio.gather(*users, *processes)
+
+    print(f"Running processes\n-----------------")
+    asyncio.run(parallel())
+
+
+run_parallel()
