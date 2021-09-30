@@ -1,0 +1,61 @@
+## This is the configuration file for 'basic' NE recognizer.
+## Configuration files for B-I-O NE recognizer can be 
+## found (if available) in nerc/nerc/ner-ab-*.dat
+<Type>
+basic
+</Type>
+
+## list of words that may be included in a Named Entity
+## e.g.  "Banco de España"  "Pedro Villacasas de la Morena"
+<FunctionWords>
+el
+la
+els
+les
+l'
+un
+una
+uns
+unes
+de
+del
+d'
+&
+per
+</FunctionWords>
+## Punctuation mark tags after which a capitalized word
+## may be indicating just a sentence (or clause) beginning
+<SpecialPunct>
+Fpa
+Fca
+Fla
+Fp
+Fs
+Fd
+Fg
+Fe
+Fia
+Fit
+Faa
+Fat
+Fra
+Frc
+</SpecialPunct>
+## Tag to be assigned to detected NEs
+<NE_Tag>
+NP00000
+</NE_Tag>
+<TitleLimit>
+0
+</TitleLimit>
+<Affixes>
+sr.  PRE
+sra. PRE
+sres. PRE
+srs.  PRE
+srta. PRE
+jr. SUF
+</Affixes>
+<SplitMultiwords>
+no
+</SplitMultiwords>
