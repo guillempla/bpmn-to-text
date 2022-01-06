@@ -1,8 +1,15 @@
 import os
+import pickle
 from pathlib import Path
 from src.bpmn_parser import BpmnModel
 
 BPMN_PATH = "../bpmn"
+PICKLE_PATH = "../parsed_bpmn/"
+
+def save_model_as_picke(file_name, model):
+    name_file = PICKLE_PATH + file_name + '.txt'
+    with open(name_file, 'wb') as fh:
+            pickle.dump(model, fh)
 
 
 def read_bpmn_files():
@@ -17,6 +24,7 @@ def read_bpmn_files():
 
     for file in Path(BPMN_PATH).glob('**/*.bpmn'):
         model = BpmnModel(os.fspath(file))
+        save_model_as_picke(file.name, model)
         bpmn_array.append(model)
 
     return bpmn_array
@@ -26,7 +34,6 @@ def main():
     print(Path.cwd())
 
     parsed_files = read_bpmn_files()
-    print(parsed_files[0])
 
 
 if __name__ == "__main__":
