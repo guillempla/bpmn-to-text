@@ -5,7 +5,7 @@ from collections import defaultdict
 import asyncio
 import json
 
-DESCRIPTIONS_PATH = "../../resources/descriptions.json"
+DESCRIPTIONS_PATH = "../resources/descriptions.json"
 
 
 class BpmnModel:
