@@ -1,4 +1,4 @@
-class Event():
+class Event:
 
     def __init__(self, id, name):
         self.id = id

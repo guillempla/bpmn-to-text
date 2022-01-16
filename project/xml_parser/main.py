@@ -2,6 +2,7 @@
 import xml.etree.ElementTree as ET
 from event import Event
 from flow import Flow
+from gateway import Gateway
 
 
 def parseXML(xmlfile):
@@ -12,48 +13,48 @@ def parseXML(xmlfile):
 	root = tree.getroot()
 	print(root.tag)
 	print()
-	# create empty list for storing BPMN elements
-	bpmn_events = []
-	bpmn_flows = []
+
+	# empty events and flows dictionary
+	events = []
+	flows = []
+	gateways = []
 
 	# iterate BPMN items
 	for item in root:
 		if item.tag.__contains__('process'):
 			print("    ", item.tag)
 
-			# empty events and flows dictionary
-			events = []
-			flows = []
-
 			# iterate child elements of item
 			for child in item:
-				if (child.tag.__contains__('sequenceFlow')):
+				if child.tag.__contains__('sequenceFlow'):
 					f = Flow(child.attrib['id'], child.attrib['sourceRef'], child.attrib['targetRef'])
 					print("         Sequence Flow: ", f.getId())
 					print("         Incoming:      ", f.getIncoming())
 					print("         Outcoming:     ", f.getOutgoing())
 					flows.append(f)
+				elif child.tag.__contains__('exclusiveGateway'):
+					g = Gateway(child.attrib['id'], child.attrib['name'], child.attrib['gatewayDirection'])
+					print("         Gateway:       ", g.getId())
+					print("         Name:          ", g.getName())
+					print("         Direction:     ", g.getGatewayDirection())
+					gateways.append(g)
 				else:
 					e = Event(child.attrib['id'], child.attrib['name'])
-					print("         Name:           ", e.getId())
-					print("         Id:             ", e.getName())
+					print("         Event:         ", e.getId())
+					print("         Name:          ", e.getName())
 					events.append(e)
 
 				print()
 
-			# append news dictionary to news items list
-			bpmn_events.append(events)
-			bpmn_flows.append(flows)
-
 			print()
 
 	# return BPMN elements list
-	return bpmn_events + bpmn_flows
+	return events + flows + gateways
 
 
 def main():
 	# model_path of BPMN model
-	model_path = '../bpmn_models/A10/A.1.0.bpmn'
+	model_path = '../bpmn_models/A20/A.2.0.bpmn'
 
 	# parse xml file
 	model_parsed = parseXML(model_path)

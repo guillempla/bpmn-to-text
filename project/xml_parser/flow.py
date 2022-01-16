@@ -1,4 +1,4 @@
-class Flow():
+class Flow:
 
     def __init__(self, id, incoming, outgoing):
         self.id = id
