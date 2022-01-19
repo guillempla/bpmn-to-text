@@ -1,8 +1,6 @@
 # Python code to parse a BPMN file
 import xml.etree.ElementTree as ET
-from event import Event
-from flow import Flow
-from gateway import Gateway
+from Elements import Event, Flow, Gateway, Process
 
 
 def parseXML(xmlfile):
@@ -14,15 +12,19 @@ def parseXML(xmlfile):
 	print(root.tag)
 	print()
 
-	# empty events and flows dictionary
-	events = []
-	flows = []
-	gateways = []
+	processes = []
 
 	# iterate BPMN items
 	for item in root:
 		if item.tag.__contains__('process'):
-			print("    ", item.tag)
+
+			p = Process(item.attrib['id'])
+			print("     Process:    ", p.getId())
+
+			# empty events, flows dictionary
+			events = []
+			gateways = []
+			flows = []
 
 			# iterate child elements of item
 			for child in item:
@@ -46,10 +48,15 @@ def parseXML(xmlfile):
 
 				print()
 
+			p.setEvents(events)
+			p.setGateways(gateways)
+			p.setFlows(flows)
 			print()
 
+		processes.append(p)
+
 	# return BPMN elements list
-	return events + flows + gateways
+	return processes
 
 
 def main():
