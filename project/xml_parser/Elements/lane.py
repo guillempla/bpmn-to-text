@@ -20,5 +20,5 @@ class Lane:
     def setName(self, name):
         self.name = name
 
-    def setFlowNodes(self, flowNodes):
-        self.flowNodes = flowNodes
+    def setFlowNodes(self, flow_nodes):
+        self.flowNodes = flow_nodes
