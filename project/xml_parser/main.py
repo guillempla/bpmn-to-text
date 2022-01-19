@@ -51,9 +51,8 @@ def parseXML(xmlfile):
 			p.setEvents(events)
 			p.setGateways(gateways)
 			p.setFlows(flows)
+			processes.append(p)
 			print()
-
-		processes.append(p)
 
 	# return BPMN elements list
 	return processes
