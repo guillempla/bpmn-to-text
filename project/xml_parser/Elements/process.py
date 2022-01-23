@@ -1,34 +1,41 @@
 class Process:
 
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, process_id):
+        self.id = process_id
         self.events = []
         self.flows = []
         self.gateways = []
+        self.lanes_set = []
 
-    def getId(self):
+    def get_id(self):
         return self.id
 
-    def getEvents(self):
+    def get_events(self):
         return self.events
 
-    def getFlows(self):
+    def get_flows(self):
         return self.flows
 
-    def getGateways(self):
+    def get_gateways(self):
         return self.gateways
 
-    def getElements(self):
+    def get_elements(self):
         return self.events + self.flows + self.gateways
 
-    def setId(self, id):
-        self.id = id
+    def get_lanes_set(self):
+        return self.lanes_set
 
-    def setEvents(self, events):
+    def set_id(self, process_id):
+        self.id = process_id
+
+    def set_events(self, events):
         self.events = events
 
-    def setFlows(self, flows):
+    def set_flows(self, flows):
         self.flows = flows
 
-    def setGateways(self, gateways):
+    def set_gateways(self, gateways):
         self.gateways = gateways
+
+    def set_lanes_set(self, lanes_set):
+        self.lanes_set = lanes_set
