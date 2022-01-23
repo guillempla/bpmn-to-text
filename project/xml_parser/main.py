@@ -9,7 +9,7 @@ PICKLE_PATH = "../parsed_models/"
 
 
 def save_model_as_pickle(file_name, model):
-    name_file = PICKLE_PATH + file_name + '.txt'
+    name_file = PICKLE_PATH + file_name.replace('.bpmn', '') + '.pickle'
     with open(name_file, 'wb') as fh:
         pickle.dump(model, fh)
 
