@@ -7,7 +7,7 @@ import json
 import requests
 
 # Variables to connect with Freeling's Docker
-HOST = "127.0.0.2"
+HOST = "172.17.0.2"
 LANGID = "50005"
 FREELING = "60006"
 
