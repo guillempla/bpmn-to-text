@@ -21,6 +21,7 @@ FREELING_PATH = "../freeling_responses/"
 
 def send_parsed_texts(file_path):
     lines = read_file_lines(file_path)
+    final_response = ""
 
     for line in lines:
         # Clean text from newlines and trailing spaces.
@@ -29,14 +30,16 @@ def send_parsed_texts(file_path):
         # Find out text language
         resp = call_server(langid, {'text': line})
         lang = json.loads(resp)["language"]
+        if lang != "en" or lang != "es" or lang != "ca":
+            lang = "en"
 
         # Get predicate task label analysis from freeling
         resp = call_server(freeling, {'text': line,
                                       'language': lang,
                                       'OutputLevel': 'shallow'})
-
-        # Save to disk
-        save_to_disk(FREELING_PATH + file_path.name, resp)
+        final_response = final_response + resp
+    # Save to disk
+    save_to_disk(FREELING_PATH + file_path.name.replace(".txt", ""), final_response)
 
 
 def read_file_lines(file_path):
@@ -63,8 +66,8 @@ def call_server(url, request):
 
 
 def save_to_disk(name, response):
-    out_file = open(name + ".json", "w")
-    json.dump(response, out_file)
+    with open(name + ".json", 'w') as out_file:
+        out_file.write(response)
     out_file.close()
 
 
