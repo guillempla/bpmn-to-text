@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class Application {
 
@@ -18,7 +17,7 @@ public class Application {
 
     ArrayList<String> bpmn_paths = getBpmnPaths(models_path);
     for (String path: bpmn_paths) {
-      readModelFromFile(path);
+      ModelReader model = new ModelReader(path);
     }
 
     createJSON("test");
