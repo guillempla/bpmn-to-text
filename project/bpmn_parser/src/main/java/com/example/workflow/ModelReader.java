@@ -2,30 +2,37 @@ package com.example.workflow;
 
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
-import org.camunda.bpm.model.bpmn.instance.FlowNode;
-import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
-import org.camunda.bpm.model.bpmn.instance.StartEvent;
-import org.camunda.bpm.model.bpmn.instance.Task;
+import org.camunda.bpm.model.bpmn.instance.*;
 import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 import org.camunda.bpm.model.xml.type.ModelElementType;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 public class ModelReader {
     String path;
     File file;
     BpmnModelInstance modelInstance;
     Collection<ModelElementInstance> read_elements;
+    Map<String, int[]> pools;
 
     public ModelReader(String path) {
         this.path = path;
         this.file = new File(path);
         this.modelInstance = Bpmn.readModelFromFile(file);
+        this.pools = new HashMap<>();
+        this.getLanesFromModel();
     }
 
-    public void readModelFromFile() {
+    public void getLanesFromModel() {
+        Collection<ModelElementInstance> lanesSets = getElementsOfType(LaneSet.class);
+        for (ModelElementInstance laneSetInstance : lanesSets) {
+            LaneSet laneSet = (LaneSet) laneSetInstance;
+            System.out.println(laneSet.getName());
+        }
+    }
+
+    public void getElementsFromModel() {
         // Find all elements of the type Task
         Collection<ModelElementInstance> taskInstances = getElementsOfType(Task.class);
         for (ModelElementInstance taskInstance : taskInstances) {
