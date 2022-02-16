@@ -54,7 +54,7 @@ public class Application {
     JSONObject jsonObject = new JSONObject();
 
     // Insert key-value pairs into the json object
-    jsonObject.put("ID", "1")
+    jsonObject.put("ID", "1");
     jsonObject.put("First_Name", "Shikhar");
     jsonObject.put("Last_Name", "Dhawan");
     jsonObject.put("Date_Of_Birth", "1981-12-05");
