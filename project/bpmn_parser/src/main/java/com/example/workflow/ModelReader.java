@@ -13,22 +13,31 @@ public class ModelReader {
     String path;
     File file;
     BpmnModelInstance modelInstance;
-    Collection<ModelElementInstance> read_elements;
-    Map<String, int[]> pools;
+    ArrayList<ModelElementInstance> read_elements;
+    Map<String, ArrayList<String>> lanes;
 
     public ModelReader(String path) {
         this.path = path;
         this.file = new File(path);
         this.modelInstance = Bpmn.readModelFromFile(file);
-        this.pools = new HashMap<>();
-        this.getLanesFromModel();
+        this.read_elements = new ArrayList<>();
+        this.lanes = new HashMap<>();
+        this.saveLanesFromModel();
+        System.out.println(lanes.size());
     }
 
-    public void getLanesFromModel() {
+    public void saveLanesFromModel() {
         Collection<ModelElementInstance> lanesSets = getElementsOfType(LaneSet.class);
         for (ModelElementInstance laneSetInstance : lanesSets) {
             LaneSet laneSet = (LaneSet) laneSetInstance;
-            System.out.println(laneSet.getName());
+            for (Lane lane : laneSet.getLanes()) {
+                String lane_name = lane.getName();
+                ArrayList<String> element_ids = new ArrayList<>();
+                for (FlowNode flowNodeRef : lane.getFlowNodeRefs()) {
+                    element_ids.add(flowNodeRef.getId());
+                }
+                lanes.put(lane_name, element_ids);
+            }
         }
     }
 
