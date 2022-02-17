@@ -17,7 +17,10 @@ public class Application {
 
     ArrayList<String> bpmn_paths = getBpmnPaths(models_path);
     for (String path: bpmn_paths) {
+      String bpmn_name = getBpmnNameFromPath(path);
+      System.out.println(bpmn_name);
       ModelReader model = new ModelReader(path);
+      System.out.println();
     }
 
     createJSON("test");
@@ -45,6 +48,11 @@ public class Application {
       }
     }
     return paths;
+  }
+
+  public static String getBpmnNameFromPath(String path) {
+    String[] paths_elements = path.split("/");
+    return paths_elements[paths_elements.length-1].replace(".bpmn", "");
   }
 
   public static void createJSON(String file_name) {
