@@ -26,7 +26,15 @@ public class ModelReader {
         this.saveElementsFromModel();
     }
 
-    public void saveLanesFromModel() {
+    public Map<String, ModelElementInstance> getElements() {
+        return this.elements;
+    }
+
+    public Map<String, ArrayList<String>> getLanes() {
+        return this.lanes;
+    }
+
+    private void saveLanesFromModel() {
         Collection<ModelElementInstance> lanesSets = getElementsOfType(LaneSet.class);
         for (ModelElementInstance laneSetInstance : lanesSets) {
             LaneSet laneSet = (LaneSet) laneSetInstance;
@@ -41,7 +49,7 @@ public class ModelReader {
         }
     }
 
-    public void saveElementsFromModel() {
+    private void saveElementsFromModel() {
         // Find all elements of type Start Event
         Collection<ModelElementInstance> startInstances = getElementsOfType(StartEvent.class);
         for (ModelElementInstance startInstance : startInstances) {
@@ -53,7 +61,7 @@ public class ModelReader {
         System.out.println();
     }
 
-    public void saveFollowingElements(FlowNode node) {
+    private void saveFollowingElements(FlowNode node) {
         for (SequenceFlow sequenceFlow : node.getOutgoing()) {
             FlowNode next = sequenceFlow.getTarget();
             if (addElement(next)) {
@@ -62,7 +70,7 @@ public class ModelReader {
         }
     }
 
-    public boolean addElement(ModelElementInstance instance) {
+    private boolean addElement(ModelElementInstance instance) {
         String instance_id = instance.getAttributeValue("id");
         if (!elements.containsKey(instance_id)) {
             elements.put(instance_id, instance);
@@ -72,7 +80,7 @@ public class ModelReader {
         return false;
     }
 
-    public Collection<ModelElementInstance> getElementsOfType(Class<? extends ModelElementInstance> c) {
+    private Collection<ModelElementInstance> getElementsOfType(Class<? extends ModelElementInstance> c) {
         ModelElementType taskType = modelInstance.getModel().getType(c);
         return modelInstance.getModelElementsByType(taskType);
     }
