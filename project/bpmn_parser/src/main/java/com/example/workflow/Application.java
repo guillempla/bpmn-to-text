@@ -1,10 +1,6 @@
 package com.example.workflow;
 
-import org.json.simple.JSONObject;
-
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Application {
@@ -20,10 +16,11 @@ public class Application {
       String bpmn_name = getBpmnNameFromPath(path);
       System.out.println(bpmn_name);
       ModelReader model = new ModelReader(path);
+      ModelJSON modelJSON = new ModelJSON(bpmn_name, model.getElements(), model.getLanes());
+      modelJSON.createElementsJSON();
       System.out.println();
     }
 
-//    createJSON("test");
   }
 
   public static ArrayList<String> getBpmnPaths(String path) {
@@ -53,31 +50,6 @@ public class Application {
   public static String getBpmnNameFromPath(String path) {
     String[] paths_elements = path.split("/");
     return paths_elements[paths_elements.length-1].replace(".bpmn", "");
-  }
-
-  public static void createJSON(String file_name) {
-    String path = "../parsed_bpmn/" + file_name + ".json";
-
-    // Creating a JSONObject object
-    JSONObject jsonObject = new JSONObject();
-
-    // Insert key-value pairs into the json object
-//    jsonObject.put("ID", "1");
-//    jsonObject.put("First_Name", "Shikhar");
-//    jsonObject.put("Last_Name", "Dhawan");
-//    jsonObject.put("Date_Of_Birth", "1981-12-05");
-//    jsonObject.put("Place_Of_Birth", "Delhi");
-//    jsonObject.put("Country", "India");
-
-    // Save JSON
-    try {
-      FileWriter file = new FileWriter(path);
-      file.write(jsonObject.toJSONString());
-      file.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    System.out.println("JSON file created: " + jsonObject);
   }
 
 }

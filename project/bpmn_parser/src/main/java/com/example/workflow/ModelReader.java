@@ -14,7 +14,7 @@ public class ModelReader {
     File file;
     BpmnModelInstance modelInstance;
     Map<String, ModelElementInstance> elements;
-    Map<String, ArrayList<String>> lanes;
+    Map<String, ArrayList<ModelElementInstance>> lanes;
 
     public ModelReader(String path) {
         this.path = path;
@@ -30,7 +30,7 @@ public class ModelReader {
         return this.elements;
     }
 
-    public Map<String, ArrayList<String>> getLanes() {
+    public Map<String, ArrayList<ModelElementInstance>> getLanes() {
         return this.lanes;
     }
 
@@ -40,11 +40,14 @@ public class ModelReader {
             LaneSet laneSet = (LaneSet) laneSetInstance;
             for (Lane lane : laneSet.getLanes()) {
                 String lane_name = lane.getName();
-                ArrayList<String> element_ids = new ArrayList<>();
+                ArrayList<ModelElementInstance> elements = new ArrayList<>();
                 for (FlowNode flowNodeRef : lane.getFlowNodeRefs()) {
-                    element_ids.add(flowNodeRef.getId());
+                    String element_id = flowNodeRef.getId();
+                    ModelElementInstance element = modelInstance.getModelElementById(element_id);
+                    element.setAttributeValue("lane", lane_name);
+                    elements.add(element);
                 }
-                lanes.put(lane_name, element_ids);
+                lanes.put(lane_name, elements);
             }
         }
     }
@@ -58,7 +61,7 @@ public class ModelReader {
                 saveFollowingElements(start);
             }
         }
-        System.out.println();
+//        System.out.println();
     }
 
     private void saveFollowingElements(FlowNode node) {
@@ -74,7 +77,7 @@ public class ModelReader {
         String instance_id = instance.getAttributeValue("id");
         if (!elements.containsKey(instance_id)) {
             elements.put(instance_id, instance);
-            System.out.println(instance_id + " " + instance.getAttributeValue("name"));
+//            System.out.println(instance_id + " " + instance.getAttributeValue("name"));
             return true;
         }
         return false;
