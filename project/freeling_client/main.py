@@ -38,9 +38,9 @@ def get_arguments():
 def main():
     args = get_arguments()
 
-    for file_path in Path(args.parsedpath).glob('**/*.txt'):
+    for file_path in Path(args.parsedpath).glob('**/*.json'):
         client = FreelingClient(file_path, args.host, args.langport, args.freelingport, args.lang, args.resppath)
-        client.send_parsed_texts()
+        client.send_to_freeling()
 
 
 if __name__ == '__main__':
