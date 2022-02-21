@@ -1,13 +1,7 @@
 import json
+from json import JSONDecodeError
 
 import requests
-
-
-def read_file_lines(file_path):
-    file = open(file_path, 'r')
-    lines = file.readlines()
-    file.close()
-    return lines
 
 
 def call_server(url, request):
@@ -26,12 +20,6 @@ def call_server(url, request):
     return resp.text
 
 
-def save_to_disk(name, response):
-    with open(name + ".json", 'w') as out_file:
-        out_file.write(response)
-    out_file.close()
-
-
 class FreelingClient:
     def __init__(self, file_path, host="172.17.0.2", lang_port="50005", freeling_port="60006", lang="en",
                  resp_path="../freeling_responses/"):
@@ -40,22 +28,38 @@ class FreelingClient:
         self.lang_port = lang_port
         self.freeling_port = freeling_port
         self.lang = lang
+        self.responses_path = resp_path
         self.lang_url = "http://" + host + ":" + lang_port
         self.freeling_url = "http://" + host + ":" + freeling_port
-        self.responses_path = resp_path
-        self.lines = read_file_lines(self.file_path)
+        self.file_name = self.file_path.name.replace(".json", "")
+        self.json_object = self.read_json_file()
 
-    def send_parsed_texts(self):
-        final_response = ""
+    def send_to_freeling(self):
+        wrapper = self.json_object[self.file_name]
 
-        for line in self.lines:
-            # Clean text from newlines and trailing spaces.
-            line = line.strip()
-
+        for attribute, value in wrapper.items():
+            sentence = value["name"]
             # Get predicate task label analysis from freeling
-            resp = call_server(self.freeling_url, {'text': line,
+            resp = call_server(self.freeling_url, {'text': sentence,
                                                    'language': self.lang,
                                                    'OutputLevel': 'shallow'})
-            final_response = final_response + resp
+            try:
+                json_resp = json.loads(resp.replace("[", "").replace("]", ""))
+                json_resp.pop("sentence")
+            except JSONDecodeError:
+                json_resp = {}
+            wrapper[attribute].update(json_resp)
+
         # Save to disk
-        save_to_disk(self.responses_path + self.file_path.name.replace(".txt", ""), final_response)
+        self.save_to_disk(wrapper)
+
+    def read_json_file(self):
+        file = open(self.file_path)
+        json_object = json.load(file)
+        file.close()
+        return json_object
+
+    def save_to_disk(self, response):
+        with open(self.responses_path + self.file_name + ".json", 'w') as out_file:
+            json.dump(response, out_file)
+        out_file.close()
