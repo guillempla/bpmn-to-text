@@ -61,7 +61,6 @@ public class ModelReader {
                 saveFollowingElements(start);
             }
         }
-//        System.out.println();
     }
 
     private void saveFollowingElements(FlowNode node) {
