@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 
-public class Sentence {
+public class JSONReader {
+    String path;
     String originalSentence;
     String finalSentence;
     ArrayList<String> actions;
 
-    public Sentence(String originalSentence, String finalSentence, ArrayList<String> actions) {
-        this.originalSentence = originalSentence;
-        this.finalSentence = finalSentence;
-        this.actions = actions;
+    public JSONReader(String path) {
+        this.path = path;
     }
 
     public String getOriginalSentence() {
@@ -35,7 +34,7 @@ public class Sentence {
         this.actions = actions;
     }
 
-    private void buildFinalSentence() {
+    public void buildFinalSentence() {
         SentenceGenerator generator = new SentenceGenerator(originalSentence);
         this.finalSentence = generator.getFinalSentence();
     }

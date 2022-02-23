@@ -13,6 +13,7 @@ public class Application {
         for (String path: json_paths) {
             String bpmn_name = getJSONNameFromPath(path);
             System.out.println(bpmn_name);
+            JSONReader reader = new JSONReader(path);
             System.out.println();
         }
     }
