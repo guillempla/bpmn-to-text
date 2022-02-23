@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class SentenceGenerator {
     String originalSentence;
     String finalSentence;
+    String lane;
     ArrayList<String> actions;
 
     public SentenceGenerator(String originalSentence, ArrayList<String> actions) {
@@ -17,6 +18,6 @@ public class SentenceGenerator {
     }
 
     public String getFinalSentence() {
-        return "";
+        return this.finalSentence;
     }
 }
