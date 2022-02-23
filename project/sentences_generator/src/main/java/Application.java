@@ -27,9 +27,6 @@ public class Application {
         File[] filesList = directoryPath.listFiles();
         if (filesList != null) {
             for (File file : filesList) {
-
-                File filePath = new File(file.getAbsolutePath());
-                //List of all files and directories
                 paths.add(file.getAbsolutePath());
             }
         }
