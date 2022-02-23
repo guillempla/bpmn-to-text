@@ -34,4 +34,8 @@ public class Sentence {
     public void setActions(ArrayList<String> actions) {
         this.actions = actions;
     }
+
+    private void buildFinalSentence() {
+    }
 }
+
