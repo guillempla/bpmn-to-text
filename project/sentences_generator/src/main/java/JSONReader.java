@@ -8,6 +8,8 @@ public class JSONReader {
 
     public JSONReader(String path) {
         this.path = path;
+        readOriginalSentence();
+        readActions();
     }
 
     public String getOriginalSentence() {
@@ -35,8 +37,16 @@ public class JSONReader {
     }
 
     public void buildFinalSentence() {
-        SentenceGenerator generator = new SentenceGenerator(originalSentence);
+        SentenceGenerator generator = new SentenceGenerator(originalSentence, actions);
         this.finalSentence = generator.getFinalSentence();
+    }
+
+    private void readOriginalSentence() {
+
+    }
+
+    private void readActions() {
+
     }
 }
 
