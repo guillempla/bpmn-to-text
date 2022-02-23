@@ -1,5 +1,0 @@
-start the task
-find documents in the desk
-parse the documents
-send them to the manager
-finish the task

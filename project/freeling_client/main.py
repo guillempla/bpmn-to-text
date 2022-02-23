@@ -1,83 +1,46 @@
 # Freeling client. Read sentences from a file, sends them to Freeling, and saves to disk the
 # syntactic analysis.
-
+import argparse
 from pathlib import Path
 import sys
-import json
-import requests
 
-# Variables to connect with Freeling's Docker
-HOST = "172.17.0.2"
-LANGID = "50005"
-FREELING = "60006"
-
-# Language identification and text analysis service URL
-langid = "http://" + HOST + ":" + LANGID
-freeling = "http://" + HOST + ":" + FREELING
-
-PARSED_PATH = "../parsed_bpmn/"
-FREELING_PATH = "../freeling_responses/"
+from freelingClient import FreelingClient
 
 
-def send_parsed_texts(file_path):
-    lines = read_file_lines(file_path)
-    final_response = ""
+def get_arguments():
+    # Initialize parser
+    parser = argparse.ArgumentParser()
 
-    for line in lines:
-        # Clean text from newlines and trailing spaces.
-        line = line.strip()
+    # Adding optional argument
+    parser.add_argument("-l", "--lang",
+                        help="Freeling's language. Default: 'en'",
+                        default='en')
+    parser.add_argument("-p", "--parsedpath",
+                        help="Path where parsed bpmn are stored. Default: '../parsed_bpmn/'",
+                        default='../parsed_bpmn/')
+    parser.add_argument("-dh", "--host",
+                        help="Freeling's Docker host. Default: '172.17.0.2'",
+                        default='172.17.0.2')
+    parser.add_argument("-lp", "--langport",
+                        help="Language's Docker port. Default: '50005'",
+                        default='50005')
+    parser.add_argument("-fp", "--freelingport",
+                        help="Freeling's Docker port. Default: '60006'",
+                        default='60006')
+    parser.add_argument("-r", "--resppath",
+                        help="Path where Freeling's responses are stored. Default: '../freeling_responses/'",
+                        default='../freeling_responses/')
 
-        # Find out text language
-        resp = call_server(langid, {'text': line})
-        lang = json.loads(resp)["language"]
-        if lang != "en" or lang != "es" or lang != "ca":
-            lang = "en"
-
-        # Get predicate task label analysis from freeling
-        resp = call_server(freeling, {'text': line,
-                                      'language': lang,
-                                      'OutputLevel': 'shallow'})
-        final_response = final_response + resp
-    # Save to disk
-    save_to_disk(FREELING_PATH + file_path.name.replace(".txt", ""), final_response)
-
-
-def read_file_lines(file_path):
-    file = open(file_path, 'r')
-    lines = file.readlines()
-    file.close()
-    return lines
-
-
-def call_server(url, request):
-    # Set query elements
-    request_headers = {'Content-Type': 'application/json; charset=utf-8'}
-    request_data = json.dumps(request, ensure_ascii=False).encode('utf-8')
-
-    # Send request and get response
-    resp = requests.post(url, data=request_data, headers=request_headers)
-    # HTTP error, raise exception
-    if resp.status_code != requests.codes.ok:
-        print("ERROR", resp.status_code, "- Reason:", resp.headers["Reason"])
-        resp.raise_for_status()
-
-    # Extract language from answer
-    return resp.text
-
-
-def save_to_disk(name, response):
-    with open(name + ".json", 'w') as out_file:
-        out_file.write(response)
-    out_file.close()
+    # Read arguments from command line
+    return parser.parse_args()
 
 
 def main():
-    global HOST
-    if len(sys.argv) > 1:
-        HOST = sys.argv[1]
+    args = get_arguments()
 
-    for file_path in Path(PARSED_PATH).glob('**/*.txt'):
-        send_parsed_texts(file_path)
+    for file_path in Path(args.parsedpath).glob('**/*.json'):
+        client = FreelingClient(file_path, args.host, args.langport, args.freelingport, args.lang, args.resppath)
+        client.send_to_freeling()
 
 
 if __name__ == '__main__':
