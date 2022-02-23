@@ -36,6 +36,8 @@ public class Sentence {
     }
 
     private void buildFinalSentence() {
+        SentenceGenerator generator = new SentenceGenerator(originalSentence);
+        this.finalSentence = generator.getFinalSentence();
     }
 }
 
