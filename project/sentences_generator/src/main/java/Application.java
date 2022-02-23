@@ -10,7 +10,11 @@ public class Application {
         }
 
         ArrayList<String> json_paths = getJSONPaths(responsesPath);
-        System.out.println(json_paths);
+        for (String path: json_paths) {
+            String bpmn_name = getJSONNameFromPath(path);
+            System.out.println(bpmn_name);
+            System.out.println();
+        }
     }
 
     private static ArrayList<String> getJSONPaths(String path) {
@@ -28,5 +32,10 @@ public class Application {
             }
         }
         return paths;
+    }
+
+    private static String getJSONNameFromPath(String path) {
+        String[] paths_elements = path.split("/");
+        return paths_elements[paths_elements.length-1].replace(".json", "");
     }
 }
