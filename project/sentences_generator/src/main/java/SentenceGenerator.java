@@ -8,12 +8,13 @@ import java.util.ArrayList;
 
 public class SentenceGenerator {
     String originalSentence;
-    String finalSentence;
     String lane;
     ArrayList<String> actions;
+    String finalSentence;
 
-    public SentenceGenerator(String originalSentence, ArrayList<String> actions) {
+    public SentenceGenerator(String originalSentence, String lane, ArrayList<String> actions) {
         this.originalSentence = originalSentence;
+        this.lane = lane;
         this.actions = actions;
     }
 
