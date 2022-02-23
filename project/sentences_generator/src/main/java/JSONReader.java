@@ -1,52 +1,42 @@
 import java.util.ArrayList;
+import org.json.simple.JSONObject;
 
 public class JSONReader {
     String path;
-    String originalSentence;
     String finalSentence;
-    ArrayList<String> actions;
+    ArrayList<JSONObject> jsonObjects;
 
     public JSONReader(String path) {
         this.path = path;
-        readOriginalSentence();
-        readActions();
-    }
-
-    public String getOriginalSentence() {
-        return originalSentence;
-    }
-
-    public String getFinalSentence() {
-        return finalSentence;
-    }
-
-    public ArrayList<String> getActions() {
-        return actions;
-    }
-
-    public void setOriginalSentence(String originalSentence) {
-        this.originalSentence = originalSentence;
-    }
-
-    public void setFinalSentence(String finalSentence) {
-        this.finalSentence = finalSentence;
-    }
-
-    public void setActions(ArrayList<String> actions) {
-        this.actions = actions;
+        this.readJSONObjects();
+        for (JSONObject jsonObject : jsonObjects) {
+            generateSentence(jsonObject);
+        }
     }
 
     public void buildFinalSentence() {
+        // print and save finalSentence to file
+    }
+
+    private void readJSONObjects() {
+        // get every single json element
+    }
+
+    private String readOriginalSentence(JSONObject jsonObject) {
+        String originalSentence = "";
+        return originalSentence;
+    }
+
+    private ArrayList<String> readActions(JSONObject jsonObject) {
+        ArrayList<String> actions = new ArrayList<>();
+        return actions;
+    }
+
+    private void generateSentence(JSONObject jsonObject) {
+        String originalSentence = readOriginalSentence(jsonObject);
+        ArrayList<String> actions = readActions(jsonObject);
         SentenceGenerator generator = new SentenceGenerator(originalSentence, actions);
         this.finalSentence = generator.getFinalSentence();
-    }
-
-    private void readOriginalSentence() {
-
-    }
-
-    private void readActions() {
-
     }
 }
 
