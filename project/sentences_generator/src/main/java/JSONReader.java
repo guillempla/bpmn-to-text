@@ -27,6 +27,11 @@ public class JSONReader {
         return originalSentence;
     }
 
+    private String readLane(JSONObject jsonObject) {
+        String lane = "";
+        return lane;
+    }
+
     private ArrayList<String> readActions(JSONObject jsonObject) {
         ArrayList<String> actions = new ArrayList<>();
         return actions;
@@ -34,8 +39,9 @@ public class JSONReader {
 
     private void generateSentence(JSONObject jsonObject) {
         String originalSentence = readOriginalSentence(jsonObject);
+        String lane = readLane(jsonObject);
         ArrayList<String> actions = readActions(jsonObject);
-        SentenceGenerator generator = new SentenceGenerator(originalSentence, actions);
+        SentenceGenerator generator = new SentenceGenerator(originalSentence, lane, actions);
         this.finalSentence = generator.getFinalSentence();
     }
 }
