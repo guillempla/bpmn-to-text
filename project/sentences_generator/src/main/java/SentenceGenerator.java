@@ -31,6 +31,28 @@ public class SentenceGenerator {
     }
 
     private void generateFinalSentence() {
-        this.finalSentence = "";
+        SPhraseSpec phrase = nlgFactory.createClause();
+
+        if (lane != null) {
+            phrase.setSubject(lane);
+        }
+
+        String verb = searchVerb();
+        phrase.setVerb(verb);
+
+        String object = searchObject();
+        if (object != null) {
+            phrase.setObject(object);
+        }
+
+        this.finalSentence = realiser.realiseSentence(phrase);
+    }
+
+    private String searchVerb() {
+        return "";
+    }
+
+    private String searchObject() {
+        return "";
     }
 }
