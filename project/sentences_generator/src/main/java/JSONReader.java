@@ -24,7 +24,7 @@ public class JSONReader {
     }
 
     public void buildFinalSentence() {
-        // print and save finalSentence to file
+        System.out.println(this.finalSentence);
     }
 
     private JSONObject parseJSON(String path) {
