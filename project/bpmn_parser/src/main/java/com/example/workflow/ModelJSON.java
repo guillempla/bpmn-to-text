@@ -42,7 +42,7 @@ public class ModelJSON {
             for (String attribute : attributes) {
                 String value = entry.getValue().getAttributeValue(attribute);
                 if (value != null) {
-                    value = value.replaceAll("([\\r\\n])", "");
+                    value = value.replaceAll("([\\r\\n])", " ");
                 }
                 attributes_json.put(attribute, value);
             }
