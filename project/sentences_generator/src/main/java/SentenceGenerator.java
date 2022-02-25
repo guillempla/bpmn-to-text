@@ -36,6 +36,9 @@ public class SentenceGenerator {
         if (lane != null) {
             phrase.setSubject(lane);
         }
+        else {
+            phrase.setFeature(Feature.PASSIVE, true);
+        }
 
         String verb = searchVerb();
         phrase.setVerb(verb);
