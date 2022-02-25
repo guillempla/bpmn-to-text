@@ -1,16 +1,25 @@
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import gov.nih.nlm.nls.lvg.Util.Str;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class JSONReader {
     String path;
     String finalSentence;
-    ArrayList<JSONObject> jsonObjects;
+    JSONObject jsonElements;
 
     public JSONReader(String path) {
         this.path = path;
-        this.readJSONObjects();
-        for (JSONObject jsonObject : jsonObjects) {
-            generateSentence(jsonObject);
+        this.jsonElements = parseJSON(this.path);
+        for (Object key : jsonElements.keySet()) {
+            JSONObject jsonElement = (JSONObject) jsonElements.get(key);
+            generateSentence(jsonElement);
         }
     }
 
@@ -18,29 +27,33 @@ public class JSONReader {
         // print and save finalSentence to file
     }
 
-    private void readJSONObjects() {
-        // get every single json element
+    private JSONObject parseJSON(String path) {
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = (JSONObject) parser.parse(new FileReader(path));
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
     private String readOriginalSentence(JSONObject jsonObject) {
-        String originalSentence = "";
-        return originalSentence;
+        return (String) jsonObject.get("name");
     }
 
     private String readLane(JSONObject jsonObject) {
-        String lane = "";
-        return lane;
+        return (String) jsonObject.get("lane");
     }
 
-    private ArrayList<String> readActions(JSONObject jsonObject) {
-        ArrayList<String> actions = new ArrayList<>();
-        return actions;
+    private Map<String, String> readActions(JSONObject jsonObject) {
+        return (Map<String, String>) jsonObject.get("actions");
     }
 
     private void generateSentence(JSONObject jsonObject) {
         String originalSentence = readOriginalSentence(jsonObject);
         String lane = readLane(jsonObject);
-        ArrayList<String> actions = readActions(jsonObject);
+        Map<String, String> actions = readActions(jsonObject);
         SentenceGenerator generator = new SentenceGenerator(originalSentence, lane, actions);
         this.finalSentence = generator.getFinalSentence();
     }
