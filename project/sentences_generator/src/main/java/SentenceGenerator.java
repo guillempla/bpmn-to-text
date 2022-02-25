@@ -24,6 +24,8 @@ public class SentenceGenerator {
         this.originalSentence = originalSentence;
         this.lane = lane;
         this.actions = actions;
+
+        this.generateFinalSentence();
     }
 
     public String getFinalSentence() {
