@@ -21,4 +21,8 @@ public class SentenceGenerator {
     public String getFinalSentence() {
         return this.finalSentence;
     }
+
+    private void generateFinalSentence() {
+        this.finalSentence = "";
+    }
 }
