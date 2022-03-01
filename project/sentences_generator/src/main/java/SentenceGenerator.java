@@ -42,16 +42,6 @@ public class SentenceGenerator {
         else {
             return generateWithActions();
         }
-
-        String verb = searchVerb();
-        phrase.setVerb(verb);
-
-        String object = searchObject();
-        if (object != null) {
-            phrase.setObject(object);
-        }
-
-        this.finalSentence = realiser.realiseSentence(phrase);
     }
 
     private String generateWithoutActions() {
