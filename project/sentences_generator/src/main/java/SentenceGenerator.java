@@ -4,7 +4,9 @@ import simplenlg.realiser.english.*;
 import simplenlg.phrasespec.*;
 import simplenlg.features.*;
 
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 public class SentenceGenerator {
     Lexicon lexicon;
@@ -69,7 +71,7 @@ public class SentenceGenerator {
             phrase.setVerb(verb);
         }
 
-        String object = searchObject();
+        NPPhraseSpec object = searchObject();
         if (object != null) {
             phrase.setObject(object);
         }
@@ -86,8 +88,25 @@ public class SentenceGenerator {
         return this.actions != null ? this.actions.get("predL") : null;
     }
 
-    private String searchObject() {
-        return this.actions != null ? this.actions.get("objL") : null;
+    private NPPhraseSpec searchObject() {
+        if (this.actions == null) {
+            return null;
+        }
+
+        String object = this.actions.get("objW");
+        NPPhraseSpec objectPhrase = nlgFactory.createNounPhrase(object);
+        String objMSD = this.actions.get("objMSD");
+        if (objMSD != null) {
+            String[] objMSDSplit = objMSD.split("\\|");
+            if (objMSDSplit.length > 2) {
+                String morfologicalInfo = objMSDSplit[2];
+                String num = morfologicalInfo.split("=")[1];
+                if (Objects.equals(num, "plural")) {
+                    objectPhrase.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+                }
+            }
+        }
+        return objectPhrase;
     }
 
     private String searchComplement() {
