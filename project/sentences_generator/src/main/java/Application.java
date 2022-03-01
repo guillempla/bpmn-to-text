@@ -14,7 +14,6 @@ public class Application {
             String bpmn_name = getJSONNameFromPath(path);
             System.out.println(bpmn_name);
             JSONReader reader = new JSONReader(path);
-            reader.buildFinalSentence();
             System.out.println();
         }
     }
