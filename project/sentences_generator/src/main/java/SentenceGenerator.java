@@ -54,11 +54,11 @@ public class SentenceGenerator {
     }
 
     private String searchVerb() {
-        return "";
+        return this.actions != null ? this.actions.get("predL") : null;
     }
 
     private String searchObject() {
-        return "";
+        return this.actions != null ? this.actions.get("objL") : null;
     }
 
     private String searchComplement() {
