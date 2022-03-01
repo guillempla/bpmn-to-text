@@ -2,7 +2,6 @@
 # syntactic analysis.
 import argparse
 from pathlib import Path
-import sys
 
 from freelingClient import FreelingClient
 
@@ -39,6 +38,7 @@ def main():
     args = get_arguments()
 
     for file_path in Path(args.parsedpath).glob('**/*.json'):
+        print(file_path.name.replace(".json", ""))
         client = FreelingClient(file_path, args.host, args.langport, args.freelingport, args.lang, args.resppath)
         client.send_to_freeling()
 
