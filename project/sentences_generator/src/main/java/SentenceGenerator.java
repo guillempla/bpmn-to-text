@@ -59,12 +59,37 @@ public class SentenceGenerator {
     private String generateWithActions() {
         SPhraseSpec phrase = nlgFactory.createClause();
 
+        if (originalSentence.contains("?")) {
+            return generateQuestionWithActions(phrase);
+        }
+
         if (lane != null) {
             phrase.setSubject(lane);
         }
         else {
             phrase.setFeature(Feature.PASSIVE, true);
         }
+
+        String verb = searchVerb();
+        if (verb != null) {
+            phrase.setVerb(verb);
+        }
+
+        NPPhraseSpec object = searchObject();
+        if (object != null) {
+            phrase.setObject(object);
+        }
+
+        String complement = searchComplement();
+        if (complement != null) {
+            phrase.setComplement(complement);
+        }
+
+        return realiser.realiseSentence(phrase);
+    }
+
+    private String generateQuestionWithActions(SPhraseSpec phrase) {
+        phrase.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
 
         String verb = searchVerb();
         if (verb != null) {
