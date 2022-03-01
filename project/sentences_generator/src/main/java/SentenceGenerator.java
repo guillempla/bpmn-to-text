@@ -60,4 +60,8 @@ public class SentenceGenerator {
     private String searchObject() {
         return "";
     }
+
+    private String searchComplement() {
+        return this.actions != null ? this.actions.get("compW") : null;
+    }
 }
