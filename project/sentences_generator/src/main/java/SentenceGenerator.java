@@ -25,7 +25,10 @@ public class SentenceGenerator {
         this.lane = lane;
         this.actions = actions;
 
-        this.generateFinalSentence();
+        System.out.println(this.originalSentence);
+        System.out.println(this.actions);
+
+        this.finalSentence = this.originalSentence != null ? this.generateFinalSentence() : null;
     }
 
     public String getFinalSentence() {
