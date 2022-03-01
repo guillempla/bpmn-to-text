@@ -35,14 +35,12 @@ public class SentenceGenerator {
         return this.finalSentence;
     }
 
-    private void generateFinalSentence() {
-        SPhraseSpec phrase = nlgFactory.createClause();
-
-        if (lane != null) {
-            phrase.setSubject(lane);
+    private String generateFinalSentence() {
+        if (actions == null) {
+            return generateWithoutActions();
         }
         else {
-            phrase.setFeature(Feature.PASSIVE, true);
+            return generateWithActions();
         }
 
         String verb = searchVerb();
@@ -54,6 +52,44 @@ public class SentenceGenerator {
         }
 
         this.finalSentence = realiser.realiseSentence(phrase);
+    }
+
+    private String generateWithoutActions() {
+        NLGElement phrase = nlgFactory.createSentence(originalSentence);
+
+        if (originalSentence.contains("?")) {
+            phrase.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
+        }
+
+        return realiser.realiseSentence(phrase);
+    }
+
+    private String generateWithActions() {
+        SPhraseSpec phrase = nlgFactory.createClause();
+
+        if (lane != null) {
+            phrase.setSubject(lane);
+        }
+        else {
+            phrase.setFeature(Feature.PASSIVE, true);
+        }
+
+        String verb = searchVerb();
+        if (verb != null) {
+            phrase.setVerb(verb);
+        }
+
+        String object = searchObject();
+        if (object != null) {
+            phrase.setObject(object);
+        }
+
+        String complement = searchComplement();
+        if (complement != null) {
+            phrase.setComplement(complement);
+        }
+
+        return realiser.realiseSentence(phrase);
     }
 
     private String searchVerb() {
