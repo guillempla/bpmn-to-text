@@ -19,11 +19,13 @@ public class JSONReader {
         this.jsonElements = parseJSON(this.path);
         for (Object key : jsonElements.keySet()) {
             JSONObject jsonElement = (JSONObject) jsonElements.get(key);
-            generateSentence(jsonElement);
+            this.generateSentence(jsonElement);
+            this.buildFinalSentence();
+            System.out.println();
         }
     }
 
-    public void buildFinalSentence() {
+    private void buildFinalSentence() {
         System.out.println(this.finalSentence);
     }
 
