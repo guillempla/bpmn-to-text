@@ -20,6 +20,13 @@ def call_server(url, request):
     return resp.text
 
 
+def get_sentence(value):
+    sentence = value["name"]
+    if sentence is not None:
+        sentence = sentence.replace("?", "")
+    return sentence
+
+
 class FreelingClient:
     def __init__(self, file_path, host="172.17.0.2", lang_port="50005", freeling_port="60006", lang="en",
                  resp_path="../freeling_responses/"):
@@ -38,7 +45,7 @@ class FreelingClient:
         wrapper = self.json_object[self.file_name]
 
         for attribute, value in wrapper.items():
-            sentence = value["name"]
+            sentence = get_sentence(value)
             # Get predicate task label analysis from freeling
             resp = call_server(self.freeling_url, {'text': sentence,
                                                    'language': self.lang,
