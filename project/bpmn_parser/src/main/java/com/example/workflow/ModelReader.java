@@ -2,6 +2,7 @@ package com.example.workflow;
 
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
+import org.camunda.bpm.model.bpmn.Query;
 import org.camunda.bpm.model.bpmn.instance.*;
 import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 import org.camunda.bpm.model.xml.type.ModelElementType;
@@ -14,6 +15,7 @@ public class ModelReader {
     File file;
     BpmnModelInstance modelInstance;
     Map<String, ModelElementInstance> elements;
+    Map<String, ArrayList<String>> nextElements;
     Map<String, ArrayList<ModelElementInstance>> lanes;
 
     public ModelReader(String path) {
@@ -21,6 +23,7 @@ public class ModelReader {
         this.file = new File(path);
         this.modelInstance = Bpmn.readModelFromFile(file);
         this.elements = new HashMap<>();
+        this.nextElements = new HashMap<>();
         this.lanes = new HashMap<>();
         this.saveLanesFromModel();
         this.saveElementsFromModel();
@@ -29,6 +32,8 @@ public class ModelReader {
     public Map<String, ModelElementInstance> getElements() {
         return this.elements;
     }
+
+    public Map<String, ArrayList<String>> getNextElements() { return this.nextElements; }
 
     public Map<String, ArrayList<ModelElementInstance>> getLanes() {
         return this.lanes;
@@ -39,15 +44,15 @@ public class ModelReader {
         for (ModelElementInstance laneSetInstance : lanesSets) {
             LaneSet laneSet = (LaneSet) laneSetInstance;
             for (Lane lane : laneSet.getLanes()) {
-                String lane_name = lane.getName();
+                String laneName = lane.getName();
                 ArrayList<ModelElementInstance> elements = new ArrayList<>();
                 for (FlowNode flowNodeRef : lane.getFlowNodeRefs()) {
-                    String element_id = flowNodeRef.getId();
-                    ModelElementInstance element = modelInstance.getModelElementById(element_id);
-                    element.setAttributeValue("lane", lane_name);
+                    String elementId = flowNodeRef.getId();
+                    ModelElementInstance element = modelInstance.getModelElementById(elementId);
+                    element.setAttributeValue("lane", laneName);
                     elements.add(element);
                 }
-                lanes.put(lane_name, elements);
+                lanes.put(laneName, elements);
             }
         }
     }
@@ -55,6 +60,8 @@ public class ModelReader {
     private void saveElementsFromModel() {
         // Find all elements of type Start Event
         Collection<ModelElementInstance> startInstances = getElementsOfType(StartEvent.class);
+
+        // For each startEvent, save it and save its following elements
         for (ModelElementInstance startInstance : startInstances) {
             FlowNode start = (FlowNode) startInstance;
             if (addElement(startInstance)) {
@@ -64,19 +71,30 @@ public class ModelReader {
     }
 
     private void saveFollowingElements(FlowNode node) {
+        ArrayList<String> nextIDs = new ArrayList<>();
+
+        // For each following node, save it and save its following elements
         for (SequenceFlow sequenceFlow : node.getOutgoing()) {
             FlowNode next = sequenceFlow.getTarget();
+            nextIDs.add(next.getAttributeValue("id"));
+
+            // If element has been saved, then save its following elements
             if (addElement(next)) {
                 saveFollowingElements(next);
             }
         }
+
+        String nodeID = node.getAttributeValue("id");
+        nextElements.put(nodeID, nextIDs);
     }
 
     private boolean addElement(ModelElementInstance instance) {
-        String instance_id = instance.getAttributeValue("id");
-        if (!elements.containsKey(instance_id)) {
-            elements.put(instance_id, instance);
-//            System.out.println(instance_id + " " + instance.getAttributeValue("name"));
+        String instanceId = instance.getAttributeValue("id");
+
+        // Checks if instance have been previously saved, if not it saves the instance in elements
+        if (!elements.containsKey(instanceId)) {
+            elements.put(instanceId, instance);
+//            System.out.println(instanceId + " " + instance.getAttributeValue("name"));
             return true;
         }
         return false;
