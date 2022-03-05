@@ -11,24 +11,24 @@ import java.util.Map;
 
 
 public class ModelJSON {
-    public static final String PARSED_BPMN_PATH = "../parsed_bpmn/";
+    public static final String PARSED_BPMN_PATH = "../bpmn_parsed/";
 
-    String file_name;
-    String json_path;
+    String fileName;
+    String jsonPath;
     Map<String, ModelElementInstance> elements;
     Map<String, ArrayList<ModelElementInstance>> lanes;
     ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "name", "lane"));
 
-    public ModelJSON(String file_name, Map<String, ModelElementInstance> elements, Map<String, ArrayList<ModelElementInstance>> lanes) {
-        this.file_name = file_name;
-        this.json_path = PARSED_BPMN_PATH + file_name + ".json";
+    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<ModelElementInstance>> lanes) {
+        this.fileName = fileName;
+        this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
         this.elements = elements;
         this.lanes = lanes;
     }
 
-    public ModelJSON(String file_name, Map<String, ModelElementInstance> elements, Map<String, ArrayList<ModelElementInstance>> lanes, ArrayList<String> attributes) {
-        this.file_name = file_name;
-        this.json_path = PARSED_BPMN_PATH + file_name + ".json";
+    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<ModelElementInstance>> lanes, ArrayList<String> attributes) {
+        this.fileName = fileName;
+        this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
         this.elements = elements;
         this.lanes = lanes;
         this.attributes = attributes;
@@ -36,28 +36,28 @@ public class ModelJSON {
 
 
     public void createElementsJSON() {
-        JSONObject elements_json = new JSONObject();
+        JSONObject elementsJson = new JSONObject();
         for (Map.Entry<String, ModelElementInstance> entry : elements.entrySet()) {
-            JSONObject attributes_json = new JSONObject();
+            JSONObject attributesJson = new JSONObject();
             for (String attribute : attributes) {
                 String value = entry.getValue().getAttributeValue(attribute);
                 if (value != null) {
                     value = value.replaceAll("([\\r\\n])", " ");
                 }
-                attributes_json.put(attribute, value);
+                attributesJson.put(attribute, value);
             }
-            elements_json.put(entry.getKey().replace("\\", ""), attributes_json);
+            elementsJson.put(entry.getKey().replace("\\", ""), attributesJson);
         }
 
         JSONObject wrapper = new JSONObject();
-        wrapper.put(file_name, elements_json);
+        wrapper.put(fileName, elementsJson);
 
         saveJSON(wrapper);
     }
 
     private void saveJSON(JSONObject jsonObject) {
         try {
-            FileWriter file = new FileWriter(json_path);
+            FileWriter file = new FileWriter(jsonPath);
             file.write(jsonObject.toJSONString());
             file.close();
             System.out.println("JSON file created");
