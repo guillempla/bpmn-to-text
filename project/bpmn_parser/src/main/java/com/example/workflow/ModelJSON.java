@@ -17,7 +17,7 @@ public class ModelJSON {
     String jsonPath;
     Map<String, ModelElementInstance> elements;
     Map<String, ArrayList<ModelElementInstance>> lanes;
-    ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "name", "lane"));
+    ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "type", "name", "lane"));
 
     public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<ModelElementInstance>> lanes) {
         this.fileName = fileName;
@@ -38,14 +38,8 @@ public class ModelJSON {
     public void createElementsJSON() {
         JSONObject elementsJson = new JSONObject();
         for (Map.Entry<String, ModelElementInstance> entry : elements.entrySet()) {
-            JSONObject attributesJson = new JSONObject();
-            for (String attribute : attributes) {
-                String value = entry.getValue().getAttributeValue(attribute);
-                if (value != null) {
-                    value = value.replaceAll("([\\r\\n])", " ");
-                }
-                attributesJson.put(attribute, value);
-            }
+            ModelElementInstance value = entry.getValue();
+            JSONObject attributesJson = getValueAttributes(value);
             elementsJson.put(entry.getKey().replace("\\", ""), attributesJson);
         }
 
@@ -53,6 +47,29 @@ public class ModelJSON {
         wrapper.put(fileName, elementsJson);
 
         saveJSON(wrapper);
+    }
+
+    private JSONObject getValueAttributes(ModelElementInstance value) {
+        JSONObject attributesJson = new JSONObject();
+
+        // Get attributes from attributes list
+        for (String attributeName : this.attributes) {
+            String attributeValue;
+            if (attributeName.equals("type")) {
+                attributeValue = value.getElementType().getTypeName();
+            }
+            else {
+                attributeValue = value.getAttributeValue(attributeName);
+            }
+
+            // If attributeValue exists, remove line breaks
+            if (attributeValue != null) {
+                attributeValue = attributeValue.replaceAll("([\\r\\n])", " ");
+            }
+            attributesJson.put(attributeName, attributeValue);
+        }
+
+        return attributesJson;
     }
 
     private void saveJSON(JSONObject jsonObject) {
