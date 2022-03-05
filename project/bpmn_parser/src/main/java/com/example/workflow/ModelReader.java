@@ -14,6 +14,7 @@ public class ModelReader {
     File file;
     BpmnModelInstance modelInstance;
     Map<String, ModelElementInstance> elements;
+    Map<String, ArrayList<String>> nextElements;
     Map<String, ArrayList<ModelElementInstance>> lanes;
 
     public ModelReader(String path) {
@@ -21,6 +22,7 @@ public class ModelReader {
         this.file = new File(path);
         this.modelInstance = Bpmn.readModelFromFile(file);
         this.elements = new HashMap<>();
+        this.nextElements = new HashMap<>();
         this.lanes = new HashMap<>();
         this.saveLanesFromModel();
         this.saveElementsFromModel();
