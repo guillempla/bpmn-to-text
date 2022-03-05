@@ -16,27 +16,31 @@ public class ModelJSON {
     String fileName;
     String jsonPath;
     Map<String, ModelElementInstance> elements;
+    Map<String, ArrayList<String>> nextElements;
     Map<String, ArrayList<ModelElementInstance>> lanes;
-    ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "type", "name", "lane"));
+    ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "type", "name", "lane", "next"));
 
-    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<ModelElementInstance>> lanes) {
+    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<String>> nextElements, Map<String, ArrayList<ModelElementInstance>> lanes) {
         this.fileName = fileName;
         this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
         this.elements = elements;
+        this.nextElements = nextElements;
         this.lanes = lanes;
     }
 
-    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<ModelElementInstance>> lanes, ArrayList<String> attributes) {
+    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<String>> nextElements, Map<String, ArrayList<ModelElementInstance>> lanes, ArrayList<String> attributes) {
         this.fileName = fileName;
         this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
         this.elements = elements;
+        this.nextElements = nextElements;
         this.lanes = lanes;
         this.attributes = attributes;
     }
 
-
     public void createElementsJSON() {
         JSONObject elementsJson = new JSONObject();
+
+        // For every entry on elements Map, get its attributes and save them into a JSONObject
         for (Map.Entry<String, ModelElementInstance> entry : elements.entrySet()) {
             ModelElementInstance value = entry.getValue();
             JSONObject attributesJson = getValueAttributes(value);
@@ -53,18 +57,24 @@ public class ModelJSON {
         JSONObject attributesJson = new JSONObject();
 
         // Get attributes from attributes list
-        for (String attributeName : this.attributes) {
-            String attributeValue;
-            if (attributeName.equals("type")) {
+        for (String attributeName : attributes) {
+            Object attributeValue;
+
+            if (attributeName.equals("next")) {
+                String valueID = value.getAttributeValue("id");
+                attributeValue = nextElements.get(valueID);
+            }
+            else if (attributeName.equals("type")) {
                 attributeValue = value.getElementType().getTypeName();
             }
             else {
                 attributeValue = value.getAttributeValue(attributeName);
             }
 
-            // If attributeValue exists, remove line breaks
-            if (attributeValue != null) {
-                attributeValue = attributeValue.replaceAll("([\\r\\n])", " ");
+            // If attributeValue exists and is not an array, remove line breaks
+            if (attributeValue != null && !attributeName.equals("next")) {
+                String attributeString = (String) attributeValue;
+                attributeValue = attributeString.replaceAll("([\\r\\n])", " ");
             }
             attributesJson.put(attributeName, attributeValue);
         }

@@ -2,6 +2,7 @@ package com.example.workflow;
 
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
+import org.camunda.bpm.model.bpmn.Query;
 import org.camunda.bpm.model.bpmn.instance.*;
 import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 import org.camunda.bpm.model.xml.type.ModelElementType;
@@ -31,6 +32,8 @@ public class ModelReader {
     public Map<String, ModelElementInstance> getElements() {
         return this.elements;
     }
+
+    public Map<String, ArrayList<String>> getNextElements() { return this.nextElements; }
 
     public Map<String, ArrayList<ModelElementInstance>> getLanes() {
         return this.lanes;
@@ -68,16 +71,27 @@ public class ModelReader {
     }
 
     private void saveFollowingElements(FlowNode node) {
+        ArrayList<String> nextIDs = new ArrayList<>();
+
+        // For each following node, save it and save its following elements
         for (SequenceFlow sequenceFlow : node.getOutgoing()) {
             FlowNode next = sequenceFlow.getTarget();
+            nextIDs.add(next.getAttributeValue("id"));
+
+            // If element has been saved, then save its following elements
             if (addElement(next)) {
                 saveFollowingElements(next);
             }
         }
+
+        String nodeID = node.getAttributeValue("id");
+        nextElements.put(nodeID, nextIDs);
     }
 
     private boolean addElement(ModelElementInstance instance) {
         String instanceId = instance.getAttributeValue("id");
+
+        // Checks if instance have been previously saved, if not it saves the instance in elements
         if (!elements.containsKey(instanceId)) {
             elements.put(instanceId, instance);
 //            System.out.println(instanceId + " " + instance.getAttributeValue("name"));
