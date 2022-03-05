@@ -69,4 +69,5 @@ class FreelingClient:
     def save_to_disk(self, response):
         with open(self.responses_path + self.file_name + ".json", 'w') as out_file:
             json.dump(response, out_file)
+            print("JSON file with Freeling's responses created")
         out_file.close()

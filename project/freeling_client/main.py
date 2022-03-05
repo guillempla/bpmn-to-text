@@ -41,6 +41,7 @@ def main():
         print(file_path.name.replace(".json", ""))
         client = FreelingClient(file_path, args.host, args.langport, args.freelingport, args.lang, args.resppath)
         client.send_to_freeling()
+        print()
 
 
 if __name__ == '__main__':
