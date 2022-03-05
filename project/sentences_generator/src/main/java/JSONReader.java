@@ -1,32 +1,35 @@
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
-import gov.nih.nlm.nls.lvg.Util.Str;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class JSONReader {
+    public static final String GENERATED_PATH = "../sentences_generated/";
+
+    String fileName;
     String path;
     String finalSentence;
     JSONObject jsonElements;
 
-    public JSONReader(String path) {
+    public JSONReader(String fileName, String path) {
+        this.fileName = fileName;
         this.path = path;
         this.jsonElements = parseJSON(this.path);
         for (Object key : jsonElements.keySet()) {
             JSONObject jsonElement = (JSONObject) jsonElements.get(key);
             this.generateSentence(jsonElement);
-            this.buildFinalSentence();
-            System.out.println();
+            this.buildFinalSentence(jsonElement);
+//            System.out.println();
         }
     }
 
-    private void buildFinalSentence() {
-        System.out.println(this.finalSentence);
+    private void buildFinalSentence(JSONObject jsonElement) {
+        jsonElement.put("finalSentence", this.finalSentence);
+//        System.out.println(this.finalSentence);
     }
 
     private JSONObject parseJSON(String path) {
@@ -58,6 +61,17 @@ public class JSONReader {
         Map<String, String> actions = readActions(jsonObject);
         SentenceGenerator generator = new SentenceGenerator(originalSentence, lane, actions);
         this.finalSentence = generator.getFinalSentence();
+    }
+
+    public void saveJSON() {
+        try {
+            FileWriter file = new FileWriter(GENERATED_PATH + fileName + ".json");
+            file.write(jsonElements.toJSONString());
+            file.close();
+            System.out.println("JSON file with final sentence created");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

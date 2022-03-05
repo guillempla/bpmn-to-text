@@ -9,11 +9,12 @@ public class Application {
             responsesPath = args[0];
         }
 
-        ArrayList<String> json_paths = getJSONPaths(responsesPath);
-        for (String path: json_paths) {
-            String bpmn_name = getJSONNameFromPath(path);
-            System.out.println(bpmn_name);
-            JSONReader reader = new JSONReader(path);
+        ArrayList<String> jsonPaths = getJSONPaths(responsesPath);
+        for (String path: jsonPaths) {
+            String bpmnName = getJSONNameFromPath(path);
+            System.out.println(bpmnName);
+            JSONReader reader = new JSONReader(bpmnName, path);
+            reader.saveJSON();
             System.out.println();
         }
     }
@@ -33,7 +34,7 @@ public class Application {
     }
 
     private static String getJSONNameFromPath(String path) {
-        String[] paths_elements = path.split("/");
-        return paths_elements[paths_elements.length-1].replace(".json", "");
+        String[] pathsElements = path.split("/");
+        return pathsElements[pathsElements.length-1].replace(".json", "");
     }
 }
