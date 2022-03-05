@@ -54,7 +54,7 @@ class FreelingClient:
                 json_resp = json.loads(resp.replace("[", "").replace("]", ""))
                 json_resp.pop("sentence")
             except JSONDecodeError:
-                json_resp = {}
+                json_resp = {"actions": None}
             wrapper[attribute].update(json_resp)
 
         # Save to disk
