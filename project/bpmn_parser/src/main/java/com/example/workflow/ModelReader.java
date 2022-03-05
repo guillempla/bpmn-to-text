@@ -39,15 +39,15 @@ public class ModelReader {
         for (ModelElementInstance laneSetInstance : lanesSets) {
             LaneSet laneSet = (LaneSet) laneSetInstance;
             for (Lane lane : laneSet.getLanes()) {
-                String lane_name = lane.getName();
+                String laneName = lane.getName();
                 ArrayList<ModelElementInstance> elements = new ArrayList<>();
                 for (FlowNode flowNodeRef : lane.getFlowNodeRefs()) {
-                    String element_id = flowNodeRef.getId();
-                    ModelElementInstance element = modelInstance.getModelElementById(element_id);
-                    element.setAttributeValue("lane", lane_name);
+                    String elementId = flowNodeRef.getId();
+                    ModelElementInstance element = modelInstance.getModelElementById(elementId);
+                    element.setAttributeValue("lane", laneName);
                     elements.add(element);
                 }
-                lanes.put(lane_name, elements);
+                lanes.put(laneName, elements);
             }
         }
     }
@@ -55,6 +55,8 @@ public class ModelReader {
     private void saveElementsFromModel() {
         // Find all elements of type Start Event
         Collection<ModelElementInstance> startInstances = getElementsOfType(StartEvent.class);
+
+        // For each startEvent, save it and save its following elements
         for (ModelElementInstance startInstance : startInstances) {
             FlowNode start = (FlowNode) startInstance;
             if (addElement(startInstance)) {
@@ -73,10 +75,10 @@ public class ModelReader {
     }
 
     private boolean addElement(ModelElementInstance instance) {
-        String instance_id = instance.getAttributeValue("id");
-        if (!elements.containsKey(instance_id)) {
-            elements.put(instance_id, instance);
-//            System.out.println(instance_id + " " + instance.getAttributeValue("name"));
+        String instanceId = instance.getAttributeValue("id");
+        if (!elements.containsKey(instanceId)) {
+            elements.put(instanceId, instance);
+//            System.out.println(instanceId + " " + instance.getAttributeValue("name"));
             return true;
         }
         return false;
