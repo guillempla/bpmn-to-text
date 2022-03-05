@@ -15,7 +15,7 @@ def get_arguments():
                         help="Freeling's language. Default: 'en'",
                         default='en')
     parser.add_argument("-p", "--parsedpath",
-                        help="Path where parsed bpmn are stored. Default: '../parsed_bpmn/'",
+                        help="Path where parsed bpmn are stored. Default: '../bpmn_parsed/'",
                         default='../parsed_bpmn/')
     parser.add_argument("-dh", "--host",
                         help="Freeling's Docker host. Default: '172.17.0.2'",
