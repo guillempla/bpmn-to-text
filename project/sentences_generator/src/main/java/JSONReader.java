@@ -14,6 +14,7 @@ public class JSONReader {
     String path;
     String finalSentence;
     JSONObject jsonElements;
+    Map<String, String> finalPhraseAttributes;
 
     public JSONReader(String fileName, String path) {
         this.fileName = fileName;
@@ -30,6 +31,7 @@ public class JSONReader {
 
     private void buildFinalSentence(JSONObject jsonElement) {
         jsonElement.put("finalSentence", this.finalSentence);
+        jsonElement.put("finalPhrase", this.finalPhraseAttributes);
         System.out.println(this.finalSentence);
     }
 
@@ -62,6 +64,7 @@ public class JSONReader {
         Map<String, String> actions = readActions(jsonObject);
         SentenceGenerator generator = new SentenceGenerator(originalSentence, lane, actions);
         this.finalSentence = generator.getFinalSentence();
+        this.finalPhraseAttributes = generator.getFinalPhraseAttributes();
     }
 
     public void saveJSON() {

@@ -4,6 +4,7 @@ import simplenlg.realiser.english.*;
 import simplenlg.phrasespec.*;
 import simplenlg.features.*;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -16,7 +17,15 @@ public class SentenceGenerator {
     String lane;
     Map<String, String> actions;
     String finalSentence;
-    NLGElement finalPhrase;
+
+    String subject;
+    String verb;
+    String object;
+    String complement;
+    String interrogative;
+    String objectPlural;
+    String objectDeterminant;
+    String existActions;
 
     public SentenceGenerator(String originalSentence, String lane, Map<String, String> actions) {
         this.lexicon = Lexicon.getDefaultLexicon();
@@ -30,6 +39,8 @@ public class SentenceGenerator {
         System.out.println(this.originalSentence);
         System.out.println(this.actions);
 
+        this.initializeFinalPhraseAttributes();
+
         this.finalSentence = this.originalSentence != null ? this.generateFinalSentence() : null;
     }
 
@@ -37,13 +48,40 @@ public class SentenceGenerator {
         return this.finalSentence;
     }
 
-    public NLGElement getFinalPhrase() { return this.finalPhrase; }
+    public Map<String, String> getFinalPhraseAttributes() {
+        Map<String, String> finalPhraseAttributes = new HashMap<>();
+
+        finalPhraseAttributes.put("subject", subject);
+        finalPhraseAttributes.put("verb", verb);
+        finalPhraseAttributes.put("object", object);
+        finalPhraseAttributes.put("complement", complement);
+        finalPhraseAttributes.put("interrogative", interrogative);
+        finalPhraseAttributes.put("objectPlural", objectPlural);
+        finalPhraseAttributes.put("objectDeterminant", objectDeterminant);
+        finalPhraseAttributes.put("existActions", existActions);
+
+        return finalPhraseAttributes;
+    }
+
+    private void initializeFinalPhraseAttributes() {
+        this.subject = null;
+        this.verb = null;
+        this.object = null;
+        this.complement = null;
+        this.interrogative = "false";
+        this.objectPlural = "false";
+        this.objectDeterminant = "false";
+        this.existActions = "false";
+    }
 
     private String generateFinalSentence() {
+
         if (actions == null) {
+            this.existActions = "false";
             return generateWithoutActions();
         }
         else {
+            this.existActions = "true";
             return generateWithActions();
         }
     }
@@ -52,10 +90,10 @@ public class SentenceGenerator {
         NLGElement phrase = nlgFactory.createSentence(originalSentence);
 
         if (originalSentence.contains("?")) {
+            this.interrogative = "true";
             phrase.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
         }
 
-        this.finalPhrase = phrase;
         return realiser.realiseSentence(phrase);
     }
 
@@ -63,10 +101,12 @@ public class SentenceGenerator {
         SPhraseSpec phrase = nlgFactory.createClause();
 
         if (originalSentence.contains("?")) {
+            this.interrogative = "true";
             return generateQuestionWithActions(phrase);
         }
 
         if (lane != null) {
+            this.subject = lane;
             phrase.setSubject(lane);
         }
         else {
@@ -74,6 +114,7 @@ public class SentenceGenerator {
         }
 
         String verb = searchVerb();
+        this.verb = verb;
         if (verb != null) {
             phrase.setVerb(verb);
         }
@@ -84,11 +125,11 @@ public class SentenceGenerator {
         }
 
         String complement = searchComplement();
+        this.complement = complement;
         if (complement != null) {
             phrase.addModifier(complement); // Complement has to be added as modified to
         }
 
-        this.finalPhrase = phrase;
         return realiser.realiseSentence(phrase);
     }
 
@@ -96,6 +137,7 @@ public class SentenceGenerator {
         phrase.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
 
         String verb = searchVerb();
+        this.verb = verb;
         if (verb != null) {
             phrase.setVerb(verb);
         }
@@ -106,6 +148,7 @@ public class SentenceGenerator {
         }
 
         String complement = searchComplement();
+        this.complement = complement;
         if (complement != null) {
             phrase.setComplement(complement);
         }
@@ -123,6 +166,7 @@ public class SentenceGenerator {
         }
 
         String object = this.actions.get("objW");
+        this.object = object;
         NPPhraseSpec objectPhrase = nlgFactory.createNounPhrase(object);
         String objMSD = this.actions.get("objMSD");
         if (objMSD != null) {
@@ -131,6 +175,7 @@ public class SentenceGenerator {
                 String morfologicalInfo = objMSDSplit[2];
                 String num = morfologicalInfo.split("=")[1];
                 if (Objects.equals(num, "plural")) {
+                    this.objectPlural = "true";
                     objectPhrase.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
                 }
             }
@@ -140,6 +185,7 @@ public class SentenceGenerator {
         if (object != null) {
             String firstWord = object.split(" ")[0];
             if (needsDeterminer(firstWord)) {
+                this.objectDeterminant = "true";
                 objectPhrase.setDeterminer("the");
             }
         }
