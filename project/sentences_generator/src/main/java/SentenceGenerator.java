@@ -4,7 +4,6 @@ import simplenlg.realiser.english.*;
 import simplenlg.phrasespec.*;
 import simplenlg.features.*;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -82,7 +81,7 @@ public class SentenceGenerator {
 
         String complement = searchComplement();
         if (complement != null) {
-            phrase.setComplement(complement);
+            phrase.addModifier(complement); // Complement has to be added as modified to
         }
 
         return realiser.realiseSentence(phrase);
