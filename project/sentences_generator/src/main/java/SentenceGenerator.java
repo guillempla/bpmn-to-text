@@ -37,6 +37,8 @@ public class SentenceGenerator {
         return this.finalSentence;
     }
 
+    public NLGElement getFinalPhrase() { return this.finalPhrase; }
+
     private String generateFinalSentence() {
         if (actions == null) {
             return generateWithoutActions();
