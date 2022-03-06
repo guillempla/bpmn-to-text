@@ -23,12 +23,12 @@ public class JSONReader {
             JSONObject jsonElement = (JSONObject) jsonElements.get(key);
             System.out.println(jsonElement.get("type"));
             this.generateSentence(jsonElement);
-            this.buildFinalSentence(jsonElement);
+            this.buildFinalSentences(jsonElement);
             System.out.println();
         }
     }
 
-    private void buildFinalSentence(JSONObject jsonElement) {
+    private void buildFinalSentences(JSONObject jsonElement) {
         jsonElement.put("finalSentence", this.finalSentence);
         System.out.println(this.finalSentence);
     }
