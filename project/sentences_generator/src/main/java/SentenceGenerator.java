@@ -16,6 +16,7 @@ public class SentenceGenerator {
     String lane;
     Map<String, String> actions;
     String finalSentence;
+    NLGElement finalPhrase;
 
     public SentenceGenerator(String originalSentence, String lane, Map<String, String> actions) {
         this.lexicon = Lexicon.getDefaultLexicon();
@@ -52,6 +53,7 @@ public class SentenceGenerator {
             phrase.setFeature(Feature.INTERROGATIVE_TYPE, InterrogativeType.YES_NO);
         }
 
+        this.finalPhrase = phrase;
         return realiser.realiseSentence(phrase);
     }
 
@@ -84,6 +86,7 @@ public class SentenceGenerator {
             phrase.addModifier(complement); // Complement has to be added as modified to
         }
 
+        this.finalPhrase = phrase;
         return realiser.realiseSentence(phrase);
     }
 
@@ -134,12 +137,16 @@ public class SentenceGenerator {
         // Add determiner "the", only if it doesn't start by "the" or "for"
         if (object != null) {
             String firstWord = object.split(" ")[0];
-            if (!firstWord.equals("the") && !firstWord.equals("for") && !wordIsGerund(firstWord)) {
+            if (needsDeterminer(firstWord)) {
                 objectPhrase.setDeterminer("the");
             }
         }
 
         return objectPhrase;
+    }
+
+    private boolean needsDeterminer(String word) {
+        return !word.equals("the") && !word.equals("for") && !wordIsGerund(word);
     }
 
     private boolean wordIsGerund(String firstWord) {
