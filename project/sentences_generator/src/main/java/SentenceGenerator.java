@@ -131,7 +131,20 @@ public class SentenceGenerator {
                 }
             }
         }
+
+        // Add determiner "the", only if it doesn't start by "the" or "for"
+        if (object != null) {
+            String firstWord = object.split(" ")[0];
+            if (!firstWord.equals("the") && !firstWord.equals("for") && !wordIsGerund(firstWord)) {
+                objectPhrase.setDeterminer("the");
+            }
+        }
+
         return objectPhrase;
+    }
+
+    private boolean wordIsGerund(String firstWord) {
+        return firstWord.contains("ing");
     }
 
     private String searchComplement() {
