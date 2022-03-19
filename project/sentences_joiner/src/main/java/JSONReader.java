@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class JSONReader {
     public static final String GENERATED_PATH = "../sentences_joined/";
@@ -30,10 +31,10 @@ public class JSONReader {
 
         for (Object key : jsonElements.keySet()) {
             JSONObject jsonElement = (JSONObject) jsonElements.get(key);
-            String id = jsonElement.get("id").toString();
-            String sentence = jsonElement.get("finalSentence").toString();
+            String id = getStringFromJSON(jsonElement, "id");
+            String sentence = getStringFromJSON(jsonElement, "finalSentence");
             SPhraseSpec phrase = retrievePhrase((JSONObject) jsonElement.get("finalPhrase"));
-            String type = jsonElement.get("type").toString();
+            String type = getStringFromJSON(jsonElement, "type");
             ElementVertex vertex = new ElementVertex(id, sentence, phrase, type);
 
             elements.add(vertex);
@@ -43,7 +44,24 @@ public class JSONReader {
     }
 
     private SPhraseSpec retrievePhrase(JSONObject jsonElement) {
+        Boolean objectDeterminant = getBooleanFromJSON(jsonElement, "objectDeterminant");
+        Boolean interrogative = getBooleanFromJSON(jsonElement, "interrogative");
+        Boolean objectPlural = getBooleanFromJSON(jsonElement, "objectPlural");
+        Boolean existActions = getBooleanFromJSON(jsonElement, "existsActions");
+        String subject = getStringFromJSON(jsonElement, "subject");
+        String verb = getStringFromJSON(jsonElement, "verb");
+        String complement = getStringFromJSON(jsonElement, "complement");
+        String object = getStringFromJSON(jsonElement, "object");
+
         return null;
+    }
+
+    private String getStringFromJSON(JSONObject jsonElement, String target) {
+        return jsonElement.get(target).toString();
+    }
+
+    private Boolean getBooleanFromJSON(JSONObject jsonElement, String target) {
+        return Objects.equals(jsonElement.get(target).toString(), "true");
     }
 
 //    private void testJBPT() {
