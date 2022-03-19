@@ -4,10 +4,20 @@ import java.util.Objects;
 
 public class JSONUtils {
     static String getStringFromJSON(JSONObject jsonElement, String target) {
-        return jsonElement.get(target).toString();
+        try {
+            return jsonElement.get(target).toString();
+        } catch (NullPointerException e) {
+//            System.out.println("NullPointerException: " + target + " is null!");
+            return null;
+        }
     }
 
     static Boolean getBooleanFromJSON(JSONObject jsonElement, String target) {
-        return Objects.equals(jsonElement.get(target).toString(), "true");
+        try {
+            return Objects.equals(jsonElement.get(target).toString(), "true");
+        } catch (NullPointerException e) {
+//            System.out.println("NullPointerException: " + target + " is null!");
+            return null;
+        }
     }
 }
