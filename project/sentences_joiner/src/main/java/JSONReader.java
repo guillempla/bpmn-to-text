@@ -1,3 +1,7 @@
+import org.jbpt.algo.tree.rpst.RPST;
+import org.jbpt.graph.DirectedEdge;
+import org.jbpt.graph.MultiDirectedGraph;
+import org.jbpt.hypergraph.abs.Vertex;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -7,6 +11,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JSONReader {
     public static final String GENERATED_PATH = "../sentences_joined/";
@@ -15,65 +21,69 @@ public class JSONReader {
     String path;
 
     JSONObject jsonElements;
-    ArrayList<ElementVertex> vertexElements;
+    Map<String, ElementVertex> vertexElements;
+    MultiDirectedGraph graph;
+    RPST<DirectedEdge, Vertex> rpst;
 
     public JSONReader(String fileName, String path) {
         this.fileName = fileName;
         this.path = path;
         this.jsonElements = parseJSON(this.path);
-//        testJBPT();
-        this.vertexElements = this.retrieveElements();
+        this.vertexElements = this.createVertexes();
+        this.graph = this.buildGraph();
+        this.rpst = new RPST<>(graph);
     }
 
-    private ArrayList<ElementVertex> retrieveElements() {
-        ArrayList<ElementVertex> elements = new ArrayList<>();
+    private MultiDirectedGraph buildGraph() {
+        MultiDirectedGraph graph = new MultiDirectedGraph();
+
+        for (Object key : jsonElements.keySet()) {
+            String elementId = key.toString();
+            JSONObject jsonElement = (JSONObject) jsonElements.get(key);
+            ArrayList<String> nextIds = getNextIds(jsonElement);
+            for (String nextId : nextIds) {
+                Vertex sourceVertex = vertexElements.get(elementId);
+                Vertex nextVertex = vertexElements.get(nextId);
+                graph.addEdge(sourceVertex, nextVertex);
+            }
+        }
+
+        return graph;
+    }
+
+    private ArrayList<String> getNextIds(JSONObject jsonElement) {
+        return (ArrayList<String>) jsonElement.get("next");
+    }
+
+    private Map<String, ElementVertex> createVertexes() {
+        Map<String, ElementVertex> elements = new HashMap<>();
 
         for (Object key : jsonElements.keySet()) {
             JSONObject jsonElement = (JSONObject) jsonElements.get(key);
 
-            String id = jsonElement.get("id").toString();
-            String sentence = jsonElement.get("finalSentence").toString();
-            String type = jsonElement.get("type").toString();
-
-            String originalSentence = jsonElement.get("name").toString();
-            JSONObject finalPhraseJSON = (JSONObject) jsonElement.get("finalPhrase");
-            NLGElement phrase = retrievePhrase(originalSentence, finalPhraseJSON);
-
-            ElementVertex vertex = new ElementVertex(id, sentence, phrase, type);
-
-            elements.add(vertex);
+            ElementVertex vertex = createVertex(jsonElement);
+            elements.put(key.toString(), vertex);
         }
 
         return elements;
+    }
+
+    private ElementVertex createVertex(JSONObject jsonElement) {
+        String id = JSONUtils.getStringFromJSON(jsonElement, "id");
+        String sentence = JSONUtils.getStringFromJSON(jsonElement, "finalSentence");
+        String type = JSONUtils.getStringFromJSON(jsonElement, "type");
+
+        String originalSentence = JSONUtils.getStringFromJSON(jsonElement, "name");
+        JSONObject finalPhraseJSON = (JSONObject) jsonElement.get("finalPhrase");
+        NLGElement phrase = retrievePhrase(originalSentence, finalPhraseJSON);
+
+        return new ElementVertex(id, sentence, phrase, type);
     }
 
     private NLGElement retrievePhrase(String originalSentence, JSONObject jsonElement) {
         PhraseRetriever retriever = new PhraseRetriever(originalSentence, jsonElement);
         return retriever.getPhrase();
     }
-
-//    private void testJBPT() {
-//        MultiDirectedGraph g = new MultiDirectedGraph();
-//
-//        Vertex s = new Vertex("s");
-//        Vertex u = new Vertex("u");
-//        Vertex v = new Vertex("v");
-//        Vertex w = new Vertex("w");
-//        Vertex x = new Vertex("x");
-//        Vertex t = new Vertex("t");
-//
-//        g.addEdge(s,u);
-//        g.addEdge(u,v);
-//        g.addEdge(v,x);
-//        g.addEdge(u,w);
-//        g.addEdge(w,x);
-//        g.addEdge(v,w);
-//        g.addEdge(x,t);
-//
-//        RPST<DirectedEdge,Vertex> rpst = new RPST<DirectedEdge,Vertex>(g);
-//        System.out.println(rpst);
-//        System.out.println("test");
-//    }
 
     private JSONObject parseJSON(String path) {
         JSONParser parser = new JSONParser();
@@ -91,7 +101,7 @@ public class JSONReader {
             FileWriter file = new FileWriter(GENERATED_PATH + fileName + ".json");
             file.write(jsonElements.toJSONString());
             file.close();
-            System.out.println("JSON file with final sentence created");
+            System.out.println("JSON file with joined sentences created");
         } catch (IOException e) {
             e.printStackTrace();
         }
