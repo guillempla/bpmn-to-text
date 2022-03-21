@@ -1,5 +1,3 @@
-import org.jbpt.algo.tree.rpst.RPST;
-import org.jbpt.graph.DirectedEdge;
 import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.hypergraph.abs.Vertex;
 import org.json.simple.JSONObject;
@@ -23,7 +21,6 @@ public class JSONReader {
     JSONObject jsonElements;
     Map<String, ElementVertex> vertexElements;
     MultiDirectedGraph graph;
-    RPST<DirectedEdge, Vertex> rpst;
 
     public JSONReader(String fileName, String path) {
         this.fileName = fileName;
@@ -31,7 +28,8 @@ public class JSONReader {
         this.jsonElements = parseJSON(this.path);
         this.vertexElements = this.createVertexes();
         this.graph = this.buildGraph();
-        this.rpst = new RPST<>(graph);
+        SentencesJoiner joiner = new SentencesJoiner(this.graph);
+        System.out.println(joiner.getJoinedSentences());
     }
 
     private MultiDirectedGraph buildGraph() {

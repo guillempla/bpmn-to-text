@@ -1,16 +1,27 @@
-import org.json.simple.JSONObject;
-import simplenlg.framework.NLGElement;
-
-import java.util.ArrayList;
+import org.jbpt.algo.tree.rpst.RPST;
+import org.jbpt.graph.DirectedEdge;
+import org.jbpt.graph.MultiDirectedGraph;
+import org.jbpt.graph.abs.IDirectedGraph;
+import org.jbpt.hypergraph.abs.Vertex;
 
 public class SentencesJoiner {
-    JSONObject jsonElements;
-    ArrayList<NLGElement> finalPhrases;
+    private MultiDirectedGraph graph;
+    private RPST<DirectedEdge, Vertex> rpst;
 
-    String joinedSentences;
+    private String joinedSentences;
 
-    public SentencesJoiner(JSONObject jsonElements, ArrayList<NLGElement> finalPhrases) {
-        this.jsonElements = jsonElements;
-        this.finalPhrases = finalPhrases;
+    public SentencesJoiner(MultiDirectedGraph graph) {
+        this.graph = graph;
+        this.rpst = new RPST<>(graph);
+        this.joinSentences();
+    }
+
+    public String getJoinedSentences() {
+        return joinedSentences;
+    }
+
+    private void joinSentences() {
+        IDirectedGraph<DirectedEdge, Vertex> g = rpst.getGraph();
+        this.joinedSentences = "";
     }
 }
