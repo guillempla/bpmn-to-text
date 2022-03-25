@@ -16,7 +16,7 @@ public class Application {
       String bpmnName = getBpmnNameFromPath(path);
       System.out.println(bpmnName);
       ModelReader model = new ModelReader(path);
-      ModelJSON modelJSON = new ModelJSON(bpmnName, model.getElements(), model.getNextElements(), model.getLanes());
+      ModelJSON modelJSON = new ModelJSON(bpmnName, model.getElements(), model.getNextElements());
       modelJSON.createElementsJSON();
       System.out.println();
     }

@@ -15,7 +15,6 @@ public class ModelReader {
     BpmnModelInstance modelInstance;
     Map<String, ModelElementInstance> elements;
     Map<String, ArrayList<String>> nextElements;
-    Map<String, ArrayList<ModelElementInstance>> lanes;
 
     public ModelReader(String path) {
         this.path = path;
@@ -23,8 +22,6 @@ public class ModelReader {
         this.modelInstance = Bpmn.readModelFromFile(file);
         this.elements = new HashMap<>();
         this.nextElements = new HashMap<>();
-        this.lanes = new HashMap<>();
-        this.saveLanesFromModel();
         this.saveElementsFromModel();
     }
 
@@ -33,28 +30,6 @@ public class ModelReader {
     }
 
     public Map<String, ArrayList<String>> getNextElements() { return this.nextElements; }
-
-    public Map<String, ArrayList<ModelElementInstance>> getLanes() {
-        return this.lanes;
-    }
-
-    private void saveLanesFromModel() {
-        Collection<ModelElementInstance> lanesSets = getElementsOfType(LaneSet.class);
-        for (ModelElementInstance laneSetInstance : lanesSets) {
-            LaneSet laneSet = (LaneSet) laneSetInstance;
-            for (Lane lane : laneSet.getLanes()) {
-                String laneName = lane.getName();
-                ArrayList<ModelElementInstance> elements = new ArrayList<>();
-                for (FlowNode flowNodeRef : lane.getFlowNodeRefs()) {
-                    String elementId = flowNodeRef.getId();
-                    ModelElementInstance element = modelInstance.getModelElementById(elementId);
-                    element.setAttributeValue("lane", laneName);
-                    elements.add(element);
-                }
-                lanes.put(laneName, elements);
-            }
-        }
-    }
 
     private void saveElementsFromModel() {
         // Find all elements of type Start Event
@@ -93,7 +68,6 @@ public class ModelReader {
         // Checks if instance have been previously saved, if not it saves the instance in elements
         if (!elements.containsKey(instanceId)) {
             elements.put(instanceId, instance);
-//            System.out.println(instanceId + " " + instance.getAttributeValue("name"));
             return true;
         }
         return false;

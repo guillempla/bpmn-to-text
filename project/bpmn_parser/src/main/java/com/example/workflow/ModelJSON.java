@@ -17,23 +17,20 @@ public class ModelJSON {
     String jsonPath;
     Map<String, ModelElementInstance> elements;
     Map<String, ArrayList<String>> nextElements;
-    Map<String, ArrayList<ModelElementInstance>> lanes;
     ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "type", "name", "lane", "next"));
 
-    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<String>> nextElements, Map<String, ArrayList<ModelElementInstance>> lanes) {
+    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<String>> nextElements) {
         this.fileName = fileName;
         this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
         this.elements = elements;
         this.nextElements = nextElements;
-        this.lanes = lanes;
     }
 
-    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<String>> nextElements, Map<String, ArrayList<ModelElementInstance>> lanes, ArrayList<String> attributes) {
+    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<String>> nextElements, ArrayList<String> attributes) {
         this.fileName = fileName;
         this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
         this.elements = elements;
         this.nextElements = nextElements;
-        this.lanes = lanes;
         this.attributes = attributes;
     }
 
