@@ -16,8 +16,7 @@ public class Application {
       String bpmnName = getBpmnNameFromPath(path);
       System.out.println(bpmnName);
       ModelReader model = new ModelReader(path);
-      ModelJSON modelJSON = new ModelJSON(bpmnName, model.getElements(), model.getNextElements());
-      modelJSON.createElementsJSON();
+      saveToJSON(bpmnName, model);
       System.out.println();
     }
 
@@ -50,6 +49,16 @@ public class Application {
   public static String getBpmnNameFromPath(String path) {
     String[] pathsElements = path.split("/");
     return pathsElements[pathsElements.length-1].replace(".bpmn", "");
+  }
+
+  private static void saveToJSON(String bpmnName, ModelReader model) {
+    ArrayList<BPMNElements> bpmnElements = model.getBpmnElements();
+    int index = 1;
+    for (BPMNElements bpmnElement : bpmnElements) {
+      String name = bpmnName + "." + index++;
+      ModelJSON modelJSON = new ModelJSON(name, bpmnElement.getElements(), bpmnElement.getNextElements());
+      modelJSON.createElementsJSON();
+    }
   }
 
 }
