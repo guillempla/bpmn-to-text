@@ -10,26 +10,39 @@ import java.io.File;
 import java.util.*;
 
 public class ModelReader {
-    String path;
-    File file;
-    BpmnModelInstance modelInstance;
-    Map<String, ModelElementInstance> elements;
-    Map<String, ArrayList<String>> nextElements;
+    private BpmnModelInstance modelInstance;
+    private ArrayList<BPMNElements> bpmnElements;
 
     public ModelReader(String path) {
-        this.path = path;
-        this.file = new File(path);
+        File file = new File(path);
         this.modelInstance = Bpmn.readModelFromFile(file);
-        this.elements = new HashMap<>();
-        this.nextElements = new HashMap<>();
+        this.bpmnElements = new ArrayList<>();
         this.saveElementsFromModel();
     }
 
-    public Map<String, ModelElementInstance> getElements() {
-        return this.elements;
+    public ArrayList<Map<String, ModelElementInstance>> getElements() {
+        ArrayList<Map<String, ModelElementInstance>> allElements = new ArrayList<>();
+
+        for (BPMNElements bpmnElement : bpmnElements) {
+            allElements.add(bpmnElement.getElements());
+        }
+
+        return allElements;
     }
 
-    public Map<String, ArrayList<String>> getNextElements() { return this.nextElements; }
+    public ArrayList<Map<String, ArrayList<String>>> getNextElements() {
+        ArrayList<Map<String, ArrayList<String>>> allNextElements = new ArrayList<>();
+
+        for (BPMNElements bpmnElement : bpmnElements) {
+            allNextElements.add(bpmnElement.getNextElements());
+        }
+
+        return allNextElements;
+    }
+
+    public ArrayList<BPMNElements> getBpmnElements() {
+        return bpmnElements;
+    }
 
     private void saveElementsFromModel() {
         // Find all elements of type Start Event
@@ -37,14 +50,17 @@ public class ModelReader {
 
         // For each startEvent, save it and save its following elements
         for (ModelElementInstance startInstance : startInstances) {
+            BPMNElements bpmnElement = new BPMNElements();
+
             FlowNode start = (FlowNode) startInstance;
-            if (addElement(startInstance)) {
-                saveFollowingElements(start);
+            if (addElement(startInstance, bpmnElement)) {
+                saveFollowingElements(start, bpmnElement);
             }
+            bpmnElements.add(bpmnElement);
         }
     }
 
-    private void saveFollowingElements(FlowNode node) {
+    private void saveFollowingElements(FlowNode node, BPMNElements bpmnElement) {
         ArrayList<String> nextIDs = new ArrayList<>();
 
         // For each following node, save it and save its following elements
@@ -53,21 +69,21 @@ public class ModelReader {
             nextIDs.add(next.getAttributeValue("id"));
 
             // If element has been saved, then save its following elements
-            if (addElement(next)) {
-                saveFollowingElements(next);
+            if (addElement(next, bpmnElement)) {
+                saveFollowingElements(next, bpmnElement);
             }
         }
 
         String nodeID = node.getAttributeValue("id");
-        nextElements.put(nodeID, nextIDs);
+        bpmnElement.addNextElements(nodeID, nextIDs);
     }
 
-    private boolean addElement(ModelElementInstance instance) {
+    private boolean addElement(ModelElementInstance instance, BPMNElements bpmnElement) {
         String instanceId = instance.getAttributeValue("id");
 
         // Checks if instance have been previously saved, if not it saves the instance in elements
-        if (!elements.containsKey(instanceId)) {
-            elements.put(instanceId, instance);
+        if (!bpmnElement.elementsContainId(instanceId)) {
+            bpmnElement.addElements(instanceId, instance);
             return true;
         }
         return false;
