@@ -23,12 +23,17 @@ public class SentencesJoiner {
 
     private void joinSentences() {
         IRPSTNode<DirectedEdge, Vertex> root = rpst.getRoot();
-        if (root.getEntry() == null) {
-            System.out.println("ROOT:" + root);
-        }
-        IFragment<DirectedEdge, Vertex> fragment = root.getFragment();
-//        ElementVertex entry = (ElementVertex) root.getEntry();
-//        System.out.println(entry.getSentence());
+        traverseTree(root);
         this.joinedSentences = "";
+    }
+
+    private void traverseTree(IRPSTNode<DirectedEdge, Vertex> root) {
+        ElementVertex entry = (ElementVertex) root.getEntry();
+        System.out.println(entry.getSentence());
+
+        IFragment<DirectedEdge, Vertex> fragment = root.getFragment();
+        for (DirectedEdge directedEdge : fragment) {
+            System.out.println(directedEdge.toString());
+        }
     }
 }
