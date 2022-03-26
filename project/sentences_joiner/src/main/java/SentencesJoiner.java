@@ -1,7 +1,8 @@
+import org.jbpt.algo.tree.rpst.IRPSTNode;
 import org.jbpt.algo.tree.rpst.RPST;
 import org.jbpt.graph.DirectedEdge;
 import org.jbpt.graph.MultiDirectedGraph;
-import org.jbpt.graph.abs.IDirectedGraph;
+import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
 
 public class SentencesJoiner {
@@ -21,7 +22,13 @@ public class SentencesJoiner {
     }
 
     private void joinSentences() {
-        IDirectedGraph<DirectedEdge, Vertex> g = rpst.getGraph();
+        IRPSTNode<DirectedEdge, Vertex> root = rpst.getRoot();
+        if (root.getEntry() == null) {
+            System.out.println("ROOT:" + root);
+        }
+        IFragment<DirectedEdge, Vertex> fragment = root.getFragment();
+//        ElementVertex entry = (ElementVertex) root.getEntry();
+//        System.out.println(entry.getSentence());
         this.joinedSentences = "";
     }
 }
