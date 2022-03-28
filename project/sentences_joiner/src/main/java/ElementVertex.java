@@ -6,16 +6,22 @@ public class ElementVertex extends Vertex {
     private final String sentence;
     private final NLGElement phrase;
     private final String type;
+    private boolean visited;
 
     public ElementVertex(String id, String sentence, NLGElement phrase, String type) {
         super(id);
         this.sentence = sentence;
         this.phrase = phrase;
         this.type = type;
+        this.visited = false;
     }
 
     public Boolean isGate() {
         return this.type.toLowerCase().contains("gateway");
+    }
+
+    public Boolean isVisited() {
+        return this.visited;
     }
 
     public String getSentence() {
@@ -28,5 +34,9 @@ public class ElementVertex extends Vertex {
 
     public String getType() {
         return this.type;
+    }
+
+    public void setVisited(Boolean visited) {
+        this.visited = visited;
     }
 }
