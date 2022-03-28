@@ -24,6 +24,10 @@ public class ElementVertex extends Vertex {
         return this.visited;
     }
 
+    public String getElementId() {
+        return super.getName();
+    }
+
     public String getSentence() {
         return this.sentence;
     }
