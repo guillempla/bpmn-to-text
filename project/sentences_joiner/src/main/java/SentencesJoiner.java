@@ -9,6 +9,7 @@ public class SentencesJoiner {
     }
 
     public String joinSentences(TCType nodeType, ArrayList<String> sentences) {
+        sentences.removeIf(sentence -> sentence.equals(""));
         StringBuilder joinedSentence = new StringBuilder(sentences.get(0));
         sentences.remove(0);
         for (String sentence : sentences) {
