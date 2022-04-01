@@ -41,8 +41,17 @@ public class ParagraphGenerator {
         }
 
         // Recursive case
-        Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren = rpst.getChildren(node);
+
+        // Join entry sentence only if different of parent entry sentence
         ArrayList<String> childrenSentences = new ArrayList<>();
+        Vertex parentEntry = getParentEntryVertex(node);
+        if (parentEntry != node.getEntry() || parentEntry == null) {
+            ElementVertex entry = (ElementVertex) node.getEntry();
+            String sentence = entry.getSentence() == null ? "" : entry.getSentence();
+            childrenSentences.add(sentence);
+        }
+
+        Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren = rpst.getChildren(node);
         for (IRPSTNode<DirectedEdge, Vertex> rpstNode : nodesChildren) {
             ElementVertex entry = (ElementVertex) rpstNode.getEntry();
             entry.setVisited(true);
@@ -50,12 +59,6 @@ public class ParagraphGenerator {
             childrenSentences.add(sentence);
         }
 
-        // Join entry sentence only if different of parent entry sentence
-        Vertex parentEntry = getParentEntryVertex(node);
-        if (parentEntry != node.getEntry()) {
-            ElementVertex entry = (ElementVertex) node.getEntry();
-            childrenSentences.add(entry.getSentence());
-        }
         return joiner.joinSentences(node.getType(), childrenSentences);
     }
 
