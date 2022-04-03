@@ -3,7 +3,8 @@ import org.jbpt.algo.tree.tctree.TCType;
 import java.util.ArrayList;
 
 public class SentencesJoiner {
-    private final String auxiliarJoin = ", ";
+    private final String commaJoin = ", ";
+    private final String dotJoin = ". ";
 
     public SentencesJoiner() {
     }
@@ -13,7 +14,12 @@ public class SentencesJoiner {
         StringBuilder joinedSentence = new StringBuilder(sentences.get(0));
         sentences.remove(0);
         for (String sentence : sentences) {
-            joinedSentence.append(auxiliarJoin).append(sentence);
+            int totalWordCount = countWords(sentence) + countWords(joinedSentence.toString());
+            if (totalWordCount < 50) {
+                joinedSentence.append(commaJoin).append(sentence);
+            } else {
+                joinedSentence.append(dotJoin).append(sentence);
+            }
         }
         return joinedSentence.toString();
     }
@@ -26,7 +32,7 @@ public class SentencesJoiner {
 //        return joinedSentence;
 //    }
 
-    private int countSentenceLenght(String sentence) {
+    private int countWords(String sentence) {
         if (sentence == null || sentence.isEmpty()) {
             return 0;
         }
