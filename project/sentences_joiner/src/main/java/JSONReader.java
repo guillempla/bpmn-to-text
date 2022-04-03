@@ -28,6 +28,8 @@ public class JSONReader {
         this.jsonElements = parseJSON(this.path);
         this.vertexElements = this.createVertexes();
         this.graph = this.buildGraph();
+        System.out.println(fileName);
+        System.out.println(this.vertexElements.size());
         ParagraphGenerator joiner = new ParagraphGenerator(this.graph);
         System.out.println(joiner.getJoinedSentences());
     }
