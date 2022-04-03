@@ -12,10 +12,11 @@ public class Application {
         ArrayList<String> jsonPaths = getJSONPaths(sentencesPath);
         for (String path: jsonPaths) {
             String bpmnName = getJSONNameFromPath(path);
-            System.out.println(bpmnName);
-            JSONReader reader = new JSONReader(bpmnName, path);
-            //reader.saveJSON();
-            System.out.println();
+            if (bpmnName.equals("A.4.0.2")) {
+                JSONReader reader = new JSONReader(bpmnName, path);
+                //reader.saveJSON();
+                System.out.println();
+            }
         }
     }
 
