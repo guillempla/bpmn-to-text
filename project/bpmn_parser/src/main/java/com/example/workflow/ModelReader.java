@@ -10,8 +10,8 @@ import java.io.File;
 import java.util.*;
 
 public class ModelReader {
-    private BpmnModelInstance modelInstance;
-    private ArrayList<BPMNElements> bpmnElements;
+    private final BpmnModelInstance modelInstance;
+    private final ArrayList<BPMNElements> bpmnElements;
 
     public ModelReader(String path) {
         File file = new File(path);
