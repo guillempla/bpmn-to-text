@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BPMNElements {
-    private Map<String, ModelElementInstance> elements;
-    private Map<String, ArrayList<String>> nextElements;
+    private final Map<String, ModelElementInstance> elements;
+    private final Map<String, ArrayList<String>> nextElements;
 
     public BPMNElements() {
         this.elements = new HashMap<>();
