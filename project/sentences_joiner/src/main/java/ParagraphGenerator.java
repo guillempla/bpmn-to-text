@@ -55,9 +55,9 @@ public class ParagraphGenerator {
         Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren = rpst.getChildren(node); // Children are unsorted
 //        nodesChildren.forEach(this::printRPSTNode);
 
-        if (node.getType() == TCType.RIGID) {
-            printRPSTNode(node);
-        }
+//        if (node.getType() == TCType.RIGID) {
+//            printRPSTNode(node);
+//        }
 
         /* If the node doesn't bifurcate, or it isn't a RIGID, we want to traverse the tree in a sorted way.
          * That means, handle the nodes that happen before in the BPMN.

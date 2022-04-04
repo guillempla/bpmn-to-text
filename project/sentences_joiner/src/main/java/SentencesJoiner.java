@@ -3,6 +3,7 @@ import simplenlg.framework.CoordinatedPhraseElement;
 import simplenlg.framework.NLGElement;
 import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
+import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.realiser.english.Realiser;
 
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ public class SentencesJoiner {
     }
 
     public String sentenceToString(NLGElement sentence) {
+        return realizeSentence(sentence);
+    }
+
+    private String realizeSentence(NLGElement sentence) {
         try {
             return realiser.realiseSentence(sentence);
         } catch (Exception e) {
@@ -32,28 +37,38 @@ public class SentencesJoiner {
 
     public NLGElement joinSentences(TCType nodeType, ArrayList<NLGElement> sentences) {
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        sentences.removeIf(Objects::isNull);
-        coordinatedPhrase.addCoordinate(sentences.get(0));
+        coordinatedPhrase.setConjunction("then");
+        sentences.removeIf(this::sentenceIsVoid);
+        addCoordinateSentence(coordinatedPhrase, sentences.get(0));
         sentences.remove(0);
         for (NLGElement sentence : sentences) {
             int totalWordCount = countWords(sentence) + countWords(coordinatedPhrase);
             if (totalWordCount < 50) {
-                coordinatedPhrase.addCoordinate(sentence);
+                addCoordinateSentence(coordinatedPhrase, sentence);
             }
             else {
-                coordinatedPhrase.addCoordinate(sentence);
+                addCoordinateSentence(coordinatedPhrase, sentence);
             }
         }
         return coordinatedPhrase;
     }
 
-    private int countWords(NLGElement element) {
-        String sentence = "";
-        try {
-            sentence = realiser.realiseSentence(element);
-        } catch (Exception e) {
-//            e.printStackTrace();
+    private boolean sentenceIsVoid(NLGElement sentence) {
+        return sentence == null || realizeSentence(sentence).equals("");
+    }
+
+    private void addCoordinateSentence(CoordinatedPhraseElement coordinatedPhrase, NLGElement sentence) {
+        if (sentence instanceof SPhraseSpec) {
+            coordinatedPhrase.addCoordinate(sentence);
         }
+        else {
+            String removedDotSentence = realizeSentence(sentence).replace(".", "");
+            coordinatedPhrase.addCoordinate(removedDotSentence);
+        }
+    }
+
+    private int countWords(NLGElement element) {
+        String sentence = realizeSentence(element);
         if (sentence.isEmpty()) {
             return 0;
         }
