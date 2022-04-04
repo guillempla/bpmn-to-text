@@ -1,3 +1,4 @@
+import org.apache.commons.lang3.tuple.Pair;
 import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.hypergraph.abs.Vertex;
 import org.json.simple.JSONObject;
@@ -39,6 +40,7 @@ public class JSONReader {
         for (Object key : jsonElements.keySet()) {
             String elementId = key.toString();
             JSONObject jsonElement = (JSONObject) jsonElements.get(key);
+            // TODO fix getNextIds
             ArrayList<String> nextIds = getNextIds(jsonElement);
             for (String nextId : nextIds) {
                 Vertex sourceVertex = vertexElements.get(elementId);
@@ -51,6 +53,8 @@ public class JSONReader {
     }
 
     private ArrayList<String> getNextIds(JSONObject jsonElement) {
+        // TODO next returns an arraylist of pairs<string, string>.
+        //  Must change it and return only IDs
         return (ArrayList<String>) jsonElement.get("next");
     }
 
@@ -76,7 +80,15 @@ public class JSONReader {
         JSONObject finalPhraseJSON = (JSONObject) jsonElement.get("finalPhrase");
         NLGElement phrase = retrievePhrase(originalSentence, finalPhraseJSON);
 
-        return new ElementVertex(id, sentence, phrase, type);
+        JSONObject nextJSON = (JSONObject) jsonElement.get("next");
+        ArrayList<Pair<String, String>> next = retrieveNext(nextJSON);
+
+        return new ElementVertex(id, sentence, phrase, type, next);
+    }
+
+    private ArrayList<Pair<String, String>> retrieveNext(JSONObject nextJSON) {
+        // TODO
+        return null;
     }
 
     private NLGElement retrievePhrase(String originalSentence, JSONObject jsonElement) {

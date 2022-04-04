@@ -7,7 +7,6 @@ public class JSONUtils {
         try {
             return jsonElement.get(target).toString();
         } catch (NullPointerException e) {
-//            System.out.println("NullPointerException: " + target + " is null!");
             return null;
         }
     }
@@ -16,7 +15,6 @@ public class JSONUtils {
         try {
             return Objects.equals(jsonElement.get(target).toString(), "true");
         } catch (NullPointerException e) {
-//            System.out.println("NullPointerException: " + target + " is null!");
             return null;
         }
     }

@@ -1,5 +1,8 @@
+import org.apache.commons.lang3.tuple.Pair;
 import org.jbpt.hypergraph.abs.Vertex;
 import simplenlg.framework.NLGElement;
+
+import java.util.ArrayList;
 
 public class ElementVertex extends Vertex {
     // Inspired in https://github.com/pawelgalka/pm_split_miner/blob/5c140f1d31303a5afc0337c481c80568f10d6416/java-joiner/src/main/java/pl/edu/agh/Graph.java
@@ -8,7 +11,7 @@ public class ElementVertex extends Vertex {
     private final String type;
     private boolean visited;
 
-    public ElementVertex(String id, String sentence, NLGElement phrase, String type) {
+    public ElementVertex(String id, String sentence, NLGElement phrase, String type, ArrayList<Pair<String, String>> next) {
         super(id);
         this.sentence = sentence;
         this.phrase = phrase;
