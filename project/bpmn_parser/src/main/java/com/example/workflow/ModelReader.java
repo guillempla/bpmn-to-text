@@ -1,5 +1,7 @@
 package com.example.workflow;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.*;
@@ -18,26 +20,6 @@ public class ModelReader {
         this.modelInstance = Bpmn.readModelFromFile(file);
         this.bpmnElements = new ArrayList<>();
         this.saveElementsFromModel();
-    }
-
-    public ArrayList<Map<String, ModelElementInstance>> getElements() {
-        ArrayList<Map<String, ModelElementInstance>> allElements = new ArrayList<>();
-
-        for (BPMNElements bpmnElement : bpmnElements) {
-            allElements.add(bpmnElement.getElements());
-        }
-
-        return allElements;
-    }
-
-    public ArrayList<Map<String, ArrayList<String>>> getNextElements() {
-        ArrayList<Map<String, ArrayList<String>>> allNextElements = new ArrayList<>();
-
-        for (BPMNElements bpmnElement : bpmnElements) {
-            allNextElements.add(bpmnElement.getNextElements());
-        }
-
-        return allNextElements;
     }
 
     public ArrayList<BPMNElements> getBpmnElements() {
@@ -61,12 +43,13 @@ public class ModelReader {
     }
 
     private void saveFollowingElements(FlowNode node, BPMNElements bpmnElement) {
-        ArrayList<String> nextIDs = new ArrayList<>();
+        ArrayList<Pair<String, String>> nextIDs = new ArrayList<>();
 
         // For each following node, save it and save its following elements
         for (SequenceFlow sequenceFlow : node.getOutgoing()) {
             FlowNode next = sequenceFlow.getTarget();
-            nextIDs.add(next.getAttributeValue("id"));
+            Pair<String, String> pair = new ImmutablePair<>(next.getAttributeValue("id"), sequenceFlow.getName());
+            nextIDs.add(pair);
 
             // If element has been saved, then save its following elements
             if (addElement(next, bpmnElement)) {

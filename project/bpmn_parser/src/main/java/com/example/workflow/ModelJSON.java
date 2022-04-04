@@ -1,5 +1,6 @@
 package com.example.workflow;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 import org.json.simple.JSONObject;
 
@@ -16,22 +17,15 @@ public class ModelJSON {
     String fileName;
     String jsonPath;
     Map<String, ModelElementInstance> elements;
-    Map<String, ArrayList<String>> nextElements;
+    Map<String, ArrayList<Pair<String, String>>> nextElements;
     ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "type", "name", "lane", "next"));
 
-    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<String>> nextElements) {
+    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String,
+            ArrayList<Pair<String, String>>> nextElements) {
         this.fileName = fileName;
         this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
         this.elements = elements;
         this.nextElements = nextElements;
-    }
-
-    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String, ArrayList<String>> nextElements, ArrayList<String> attributes) {
-        this.fileName = fileName;
-        this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
-        this.elements = elements;
-        this.nextElements = nextElements;
-        this.attributes = attributes;
     }
 
     public void createElementsJSON() {
@@ -59,7 +53,13 @@ public class ModelJSON {
 
             if (attributeName.equals("next")) {
                 String valueID = value.getAttributeValue("id");
-                attributeValue = nextElements.get(valueID);
+                JSONObject nextValue = new JSONObject();
+                ArrayList<Pair<String, String>> pairs = nextElements.get(valueID);
+                for (Pair<String, String> pair : pairs) {
+                    nextValue.put("id", pair.getKey());
+                    nextValue.put("name", pair.getValue());
+                }
+                attributeValue = nextValue;
             }
             else if (attributeName.equals("type")) {
                 attributeValue = value.getElementType().getTypeName();
