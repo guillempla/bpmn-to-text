@@ -52,27 +52,19 @@ public class ParagraphGenerator {
             ElementVertex entry = (ElementVertex) node.getEntry();
             childrenSentences.add(entry.getPhrase());
         }
-        Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren = rpst.getChildren(node); // Children are unsorted
-//        nodesChildren.forEach(this::printRPSTNode);
-
-//        if (node.getType() == TCType.RIGID) {
-//            printRPSTNode(node);
-//        }
 
         /* If the node doesn't bifurcate, or it isn't a RIGID, we want to traverse the tree in a sorted way.
          * That means, handle the nodes that happen before in the BPMN.
          * If the node is a Gateway (or a RIGID) the order doesn't matter. */
+        ElementVertex entry = (ElementVertex) node.getEntry();
+        Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren = rpst.getChildren(node); // Children are unsorted
         Vertex currentVertex = node.getEntry();
         if (!nodeBifurcates(node, nodesChildren)) {
             while (nodesChildren.size() > 0) {
-//                System.out.println("Children length: " + nodesChildren.size());
                 ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = getChildrenEqualToCurrentVertex(currentVertex, nodesChildren);
 
                 IRPSTNode<DirectedEdge, Vertex> child = children.get(0);
-                ElementVertex entry = (ElementVertex) child.getEntry();
-                entry.setVisited(true);
-                NLGElement sentence = traverseTree(child);
-                childrenSentences.add(sentence);
+                updateChildrenSentences(child, childrenSentences);
 
                 currentVertex = child.getExit();
                 nodesChildren.remove(child);
@@ -80,14 +72,18 @@ public class ParagraphGenerator {
         }
         else {
             for (IRPSTNode<DirectedEdge, Vertex> child : nodesChildren) {
-                ElementVertex entry = (ElementVertex) child.getEntry();
-                entry.setVisited(true);
-                NLGElement sentence = traverseTree(child);
-                childrenSentences.add(sentence);
+                updateChildrenSentences(child, childrenSentences);
             }
         }
 
-        return joiner.joinSentences(node.getType(), childrenSentences);
+        return joiner.joinSentences(entry, childrenSentences);
+    }
+
+    private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<NLGElement> childrenSentences) {
+        ElementVertex entry = (ElementVertex) child.getEntry();
+        entry.setVisited(true);
+        NLGElement sentence = traverseTree(child);
+        childrenSentences.add(sentence);
     }
 
     private boolean nodeBifurcates(IRPSTNode<DirectedEdge, Vertex> node, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
