@@ -80,14 +80,13 @@ public class JSONReader {
         JSONObject finalPhraseJSON = (JSONObject) jsonElement.get("finalPhrase");
         NLGElement phrase = retrievePhrase(originalSentence, finalPhraseJSON);
 
-        JSONObject nextJSON = (JSONObject) jsonElement.get("next");
-        ArrayList<Pair<String, String>> next = retrieveNext(nextJSON);
+        ArrayList<Pair<String, String>> next = retrieveNext(jsonElement);
 
         return new ElementVertex(id, sentence, phrase, type, next);
     }
 
-    private ArrayList<Pair<String, String>> retrieveNext(JSONObject nextJSON) {
-        // TODO
+    private ArrayList<Pair<String, String>> retrieveNext(JSONObject jsonElement) {
+        Object next = jsonElement.get("next");
         return null;
     }
 
