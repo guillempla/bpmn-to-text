@@ -1,3 +1,4 @@
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.hypergraph.abs.Vertex;
@@ -40,7 +41,6 @@ public class JSONReader {
         for (Object key : jsonElements.keySet()) {
             String elementId = key.toString();
             JSONObject jsonElement = (JSONObject) jsonElements.get(key);
-            // TODO fix getNextIds
             ArrayList<String> nextIds = getNextIds(jsonElement);
             for (String nextId : nextIds) {
                 Vertex sourceVertex = vertexElements.get(elementId);
@@ -53,9 +53,12 @@ public class JSONReader {
     }
 
     private ArrayList<String> getNextIds(JSONObject jsonElement) {
-        // TODO next returns an arraylist of pairs<string, string>.
-        //  Must change it and return only IDs
-        return (ArrayList<String>) jsonElement.get("next");
+        ArrayList<String> nextIds = new ArrayList<>();
+        ArrayList<Pair<String, String>> pairs = retrieveNext(jsonElement);
+        for (Pair<String, String> pair : pairs) {
+            nextIds.add(pair.getKey());
+        }
+        return nextIds;
     }
 
     private Map<String, ElementVertex> createVertexes() {
@@ -86,8 +89,15 @@ public class JSONReader {
     }
 
     private ArrayList<Pair<String, String>> retrieveNext(JSONObject jsonElement) {
-        Object next = jsonElement.get("next");
-        return null;
+        ArrayList<Pair<String, String>> next = new ArrayList<>();
+        ArrayList<JSONObject> nextJSON = (ArrayList<JSONObject>) jsonElement.get("next");
+        for (JSONObject jsonObject : nextJSON) {
+            String id = JSONUtils.getStringFromJSON(jsonObject, "id");
+            String name = JSONUtils.getStringFromJSON(jsonObject, "name");
+            Pair<String, String> pair = new ImmutablePair<>(id, name);
+            next.add(pair);
+        }
+        return next;
     }
 
     private NLGElement retrievePhrase(String originalSentence, JSONObject jsonElement) {
