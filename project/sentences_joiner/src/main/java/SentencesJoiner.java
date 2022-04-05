@@ -1,4 +1,3 @@
-import org.jbpt.algo.tree.tctree.TCType;
 import simplenlg.framework.CoordinatedPhraseElement;
 import simplenlg.framework.NLGElement;
 import simplenlg.framework.NLGFactory;
@@ -35,7 +34,23 @@ public class SentencesJoiner {
         }
     }
 
-    public NLGElement joinSentences(TCType nodeType, ArrayList<NLGElement> sentences) {
+    public NLGElement joinSentences(ElementVertex vertex, ArrayList<NLGElement> sentences) {
+        if (vertex.isGate()) {
+            return joinGateways(vertex.getType(), sentences);
+        }
+        return joinActivities(vertex.getType(), sentences);
+    }
+
+    private NLGElement joinGateways(String gatewayType, ArrayList<NLGElement> sentences) {
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        sentences.removeIf(Objects::isNull);
+        NLGElement firstSentence = sentences.get(0);
+        coordinatedPhrase.addCoordinate(firstSentence);
+        sentences.remove(0);
+        return coordinatedPhrase;
+    }
+
+    private NLGElement joinActivities(String type, ArrayList<NLGElement> sentences) {
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         coordinatedPhrase.setConjunction("then");
         sentences.removeIf(this::sentenceIsVoid);
@@ -84,13 +99,4 @@ public class SentencesJoiner {
 //        }
 //        return joinedSentence;
 //    }
-
-    public NLGElement joinGateways(String gatewayType, ArrayList<NLGElement> sentences) {
-        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        sentences.removeIf(Objects::isNull);
-        NLGElement firstSentence = sentences.get(0);
-        coordinatedPhrase.addCoordinate(firstSentence);
-        sentences.remove(0);
-        return coordinatedPhrase;
-    }
 }
