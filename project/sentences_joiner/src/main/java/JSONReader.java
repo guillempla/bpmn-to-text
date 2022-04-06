@@ -80,8 +80,9 @@ public class JSONReader {
         String type = JSONUtils.getStringFromJSON(jsonElement, "type");
 
         String originalSentence = JSONUtils.getStringFromJSON(jsonElement, "name");
+        String finalSentence = JSONUtils.getStringFromJSON(jsonElement, "finalSentence");
         JSONObject finalPhraseJSON = (JSONObject) jsonElement.get("finalPhrase");
-        NLGElement phrase = retrievePhrase(originalSentence, finalPhraseJSON);
+        NLGElement phrase = retrievePhrase(originalSentence, finalSentence, finalPhraseJSON);
 
         ArrayList<Pair<String, String>> next = retrieveNext(jsonElement);
 
@@ -100,8 +101,8 @@ public class JSONReader {
         return next;
     }
 
-    private NLGElement retrievePhrase(String originalSentence, JSONObject jsonElement) {
-        PhraseRetriever retriever = new PhraseRetriever(originalSentence, jsonElement);
+    private NLGElement retrievePhrase(String originalSentence, String finalSentence, JSONObject jsonElement) {
+        PhraseRetriever retriever = new PhraseRetriever(originalSentence, finalSentence, jsonElement);
         return retriever.getPhrase();
     }
 

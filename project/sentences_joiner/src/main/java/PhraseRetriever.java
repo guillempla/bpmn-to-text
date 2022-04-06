@@ -7,11 +7,13 @@ import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
 import simplenlg.phrasespec.NPPhraseSpec;
 import simplenlg.phrasespec.SPhraseSpec;
+import simplenlg.realiser.english.Realiser;
 
 public class PhraseRetriever {
     private final NLGFactory nlgFactory;
 
     private final String originalSentence;
+    private final String finalSentence;
     private final NLGElement phrase;
     private Boolean objectDeterminant;
     private Boolean interrogative;
@@ -22,14 +24,17 @@ public class PhraseRetriever {
     private String complement;
     private String object;
 
-    public PhraseRetriever(String originalSentence, JSONObject jsonElement) {
+    public PhraseRetriever(String originalSentence, String finalSentence, JSONObject jsonElement) {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
+        Realiser realiser = new Realiser(lexicon);
 
         this.originalSentence = originalSentence;
+        this.finalSentence = finalSentence;
 
         this.initializePhraseAttributes(jsonElement);
         this.phrase = this.retrievePhrase();
+        System.out.println("    " + realiser.realiseSentence(this.phrase));
     }
 
     public NLGElement getPhrase() {
@@ -48,9 +53,13 @@ public class PhraseRetriever {
     }
 
     private NLGElement retrievePhrase() {
+        if (finalSentence == null) {
+            return null;
+        }
         if (existActions) {
             return generateWithActions();
-        } else {
+        }
+        else {
             return generateWithoutActions();
         }
     }
