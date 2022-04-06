@@ -10,6 +10,7 @@ public class ElementVertex extends Vertex {
     private final NLGElement phrase;
     private final String type;
     private boolean visited;
+    private final ArrayList<Pair<String, String>> next;
 
     public ElementVertex(String id, String sentence, NLGElement phrase, String type, ArrayList<Pair<String, String>> next) {
         super(id);
@@ -17,6 +18,19 @@ public class ElementVertex extends Vertex {
         this.phrase = phrase;
         this.type = type;
         this.visited = false;
+        this.next = next;
+    }
+
+    public ArrayList<Pair<String, String>> getNext() {
+        return this.next;
+    }
+
+    public ArrayList<String> getNextIds() {
+        ArrayList<String> nextIds = new ArrayList<>();
+        for (Pair<String, String> pair : this.next) {
+            nextIds.add(pair.getKey());
+        }
+        return nextIds;
     }
 
     public Boolean isGate() {
