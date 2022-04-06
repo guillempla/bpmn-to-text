@@ -34,7 +34,6 @@ public class PhraseRetriever {
 
         this.initializePhraseAttributes(jsonElement);
         this.phrase = this.retrievePhrase();
-        System.out.println("    " + realiser.realiseSentence(this.phrase));
     }
 
     public NLGElement getPhrase() {
