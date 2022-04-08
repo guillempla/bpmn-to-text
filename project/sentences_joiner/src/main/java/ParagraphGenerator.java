@@ -87,11 +87,11 @@ public class ParagraphGenerator {
     }
 
     private boolean nodeBifurcates(IRPSTNode<DirectedEdge, Vertex> node, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
-        ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = getChildrenEqualToCurrentVertex(node.getEntry(), nodesChildren);
+        ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = findChildrenEqualToCurrentVertex(node.getEntry(), nodesChildren);
         return children.size() != 1 || node.getType() == TCType.RIGID;
     }
 
-    private ArrayList<IRPSTNode<DirectedEdge, Vertex>> getChildrenEqualToCurrentVertex(Vertex currentVertex, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
+    private ArrayList<IRPSTNode<DirectedEdge, Vertex>> findChildrenEqualToCurrentVertex(Vertex currentVertex, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
         ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = new ArrayList<>();
         for (IRPSTNode<DirectedEdge, Vertex> child : nodesChildren) {
             if (child.getEntry() == currentVertex) {
