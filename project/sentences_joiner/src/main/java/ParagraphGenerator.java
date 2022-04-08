@@ -5,6 +5,8 @@ import org.jbpt.graph.DirectedEdge;
 import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.hypergraph.abs.Vertex;
 import simplenlg.framework.NLGElement;
+import simplenlg.lexicon.Lexicon;
+import simplenlg.realiser.english.Realiser;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -12,12 +14,15 @@ import java.util.Set;
 public class ParagraphGenerator {
     private final RPST<DirectedEdge, Vertex> rpst;
     private final SentencesJoiner joiner;
+    private final Realiser realiser;
 
     private NLGElement joinedSentences;
 
     public ParagraphGenerator(MultiDirectedGraph graph) {
         this.rpst = new RPST<>(graph);
         this.joiner = new SentencesJoiner();
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        realiser = new Realiser(lexicon);
         this.joinSentences();
     }
 
@@ -29,9 +34,6 @@ public class ParagraphGenerator {
         IRPSTNode<DirectedEdge, Vertex> root = rpst.getRoot();
         ElementVertex rootEntry = (ElementVertex) root.getEntry();
         rootEntry.setVisited(true);
-
-//        printRPSTNode(root);
-//        System.out.println();
 
         this.joinedSentences = traverseTree(root);
     }
@@ -76,13 +78,17 @@ public class ParagraphGenerator {
             }
         }
 
-        return joiner.joinSentences(entry, childrenSentences);
+        NLGElement nlgElement = joiner.joinSentences(entry, childrenSentences);
+//        System.out.println(realiser.realiseSentence(nlgElement));
+        return nlgElement;
     }
 
     private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<NLGElement> childrenSentences) {
         ElementVertex entry = (ElementVertex) child.getEntry();
         entry.setVisited(true);
         NLGElement sentence = traverseTree(child);
+        childrenSentences.forEach(childtest -> System.out.println(realiser.realiseSentence(childtest)));
+        System.out.println();
         childrenSentences.add(sentence);
     }
 
@@ -117,6 +123,7 @@ public class ParagraphGenerator {
         ElementVertex entry = (ElementVertex) node.getEntry();
         ElementVertex exit = (ElementVertex) node.getExit();
         System.out.println(entry.getElementId());
+        System.out.println(entry.getType());
         System.out.println(exit != null ? exit.getElementId() : "ExitNull");
 //        System.out.println(entry.isVisited());
         System.out.println(node.getType());
