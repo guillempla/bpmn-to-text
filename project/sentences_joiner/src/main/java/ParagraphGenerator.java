@@ -3,6 +3,7 @@ import org.jbpt.algo.tree.rpst.RPST;
 import org.jbpt.algo.tree.tctree.TCType;
 import org.jbpt.graph.DirectedEdge;
 import org.jbpt.graph.MultiDirectedGraph;
+import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
 import simplenlg.framework.NLGElement;
 import simplenlg.lexicon.Lexicon;
@@ -72,7 +73,25 @@ public class ParagraphGenerator {
                 nodesChildren.remove(child);
             }
         }
-        else {
+        else if (entry.isGate()) { // Read gateway children in the same order as
+            ArrayList<String> nextId = entry.getNextIds();
+            while (nextId.size() > 0) {
+                String id = nextId.get(0);
+                IRPSTNode<DirectedEdge, Vertex> child = findChildEqualId(id, nodesChildren);
+                if (child != null) {
+                    updateChildrenSentences(child, childrenSentences);
+                    nodesChildren.remove(child);
+                    nextId.remove(0);
+                }
+                else {
+                    System.out.println("ERROR: Gate has no child with id: " + id);
+                    System.out.println(entry.getNextIds());
+                    printRPSTNode(node);
+                    return null;
+                }
+            }
+        }
+        else { // RIGID
             for (IRPSTNode<DirectedEdge, Vertex> child : nodesChildren) {
                 updateChildrenSentences(child, childrenSentences);
             }
@@ -105,6 +124,19 @@ public class ParagraphGenerator {
             }
         }
         return children;
+    }
+
+    private IRPSTNode<DirectedEdge, Vertex> findChildEqualId(String id, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
+        for (IRPSTNode<DirectedEdge, Vertex> child : nodesChildren) {
+            IFragment<DirectedEdge, Vertex> fragment = child.getFragment();
+            for (DirectedEdge directedEdge : fragment) {
+                if (directedEdge.getTarget().getName().equals(id)) {
+                    return child;
+                }
+            }
+        }
+
+        return null;
     }
 
     private Vertex getParentEntryVertex(IRPSTNode<DirectedEdge, Vertex> node) {
