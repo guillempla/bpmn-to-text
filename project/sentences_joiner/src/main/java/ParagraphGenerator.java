@@ -61,9 +61,9 @@ public class ParagraphGenerator {
         Vertex currentVertex = node.getEntry();
         if (!nodeBifurcates(node, nodesChildren)) {
             while (nodesChildren.size() > 0) {
-                ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = getChildrenEqualToCurrentVertex(currentVertex, nodesChildren);
+                ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = findChildrenEqualToCurrentVertex(currentVertex, nodesChildren);
 
-                IRPSTNode<DirectedEdge, Vertex> child = children.get(0);
+                IRPSTNode<DirectedEdge, Vertex> child = children.get(0); // if we are here we know that only one child is returned, so we can get the first (and only) one
                 updateChildrenSentences(child, childrenSentences);
 
                 currentVertex = child.getExit();
