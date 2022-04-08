@@ -6,7 +6,6 @@ import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.realiser.english.Realiser;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SentencesJoiner {
     Lexicon lexicon;
@@ -43,10 +42,19 @@ public class SentencesJoiner {
 
     private NLGElement joinGateways(String gatewayType, ArrayList<NLGElement> sentences) {
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        sentences.removeIf(Objects::isNull);
-        NLGElement firstSentence = sentences.get(0);
-        coordinatedPhrase.addCoordinate(firstSentence);
+        coordinatedPhrase.setConjunction("then");
+        sentences.removeIf(this::sentenceIsVoid);
+        addCoordinateSentence(coordinatedPhrase, sentences.get(0));
         sentences.remove(0);
+        for (NLGElement sentence : sentences) {
+            int totalWordCount = countWords(sentence) + countWords(coordinatedPhrase);
+            if (totalWordCount < 50) {
+                addCoordinateSentence(coordinatedPhrase, sentence);
+            }
+            else {
+                addCoordinateSentence(coordinatedPhrase, sentence);
+            }
+        }
         return coordinatedPhrase;
     }
 
