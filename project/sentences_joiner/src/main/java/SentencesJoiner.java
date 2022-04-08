@@ -91,12 +91,4 @@ public class SentencesJoiner {
         String[] words = sentence.split("\\s+");
         return words.length;
     }
-
-//    public NLGElement joinSentences(TCType nodeType, ArrayList<NLGElement> sentences) {
-//        NLGElement joinedSentence = null;
-//        for (NLGElement sentence : sentences) {
-//
-//        }
-//        return joinedSentence;
-//    }
 }
