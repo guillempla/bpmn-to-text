@@ -23,7 +23,7 @@ public class ParagraphGenerator {
         this.rpst = new RPST<>(graph);
         this.joiner = new SentencesJoiner();
         Lexicon lexicon = Lexicon.getDefaultLexicon();
-        realiser = new Realiser(lexicon);
+        this.realiser = new Realiser(lexicon);
         this.joinSentences();
     }
 
@@ -33,9 +33,6 @@ public class ParagraphGenerator {
 
     private void joinSentences() {
         IRPSTNode<DirectedEdge, Vertex> root = rpst.getRoot();
-        ElementVertex rootEntry = (ElementVertex) root.getEntry();
-        rootEntry.setVisited(true);
-
         this.joinedSentences = traverseTree(root);
     }
 
@@ -58,18 +55,9 @@ public class ParagraphGenerator {
 
         // Recursive case
 
-        // Join entry sentence only if different of parent entry sentence
-        ArrayList<NLGElement> childrenSentences = new ArrayList<>();
-        Vertex parentEntry = getParentEntryVertex(node);
-        if (parentEntry != node.getEntry() || parentEntry == null) {
-            ElementVertex entry = (ElementVertex) node.getEntry();
-            childrenSentences.add(entry.getPhrase());
-        }
-
         /* If the node doesn't bifurcate, or it isn't a RIGID, we want to traverse the tree in a sorted way.
          * That means, handle the nodes that happen before in the BPMN.
          * If the node is a Gateway (or a RIGID) the order doesn't matter. */
-        ElementVertex entry = (ElementVertex) node.getEntry();
         Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren = rpst.getChildren(node); // Children are unsorted
         Vertex currentVertex = node.getEntry();
         if (!nodeBifurcates(node, nodesChildren)) {
@@ -107,9 +95,7 @@ public class ParagraphGenerator {
             }
         }
 
-        NLGElement nlgElement = joiner.joinSentences(entry, childrenSentences);
-//        System.out.println(realiser.realiseSentence(nlgElement));
-        return nlgElement;
+        return joiner.joinSentences(entry, childrenSentences);
     }
 
     private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<NLGElement> childrenSentences) {
