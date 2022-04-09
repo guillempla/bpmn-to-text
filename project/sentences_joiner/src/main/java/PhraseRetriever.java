@@ -7,7 +7,6 @@ import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
 import simplenlg.phrasespec.NPPhraseSpec;
 import simplenlg.phrasespec.SPhraseSpec;
-import simplenlg.realiser.english.Realiser;
 
 public class PhraseRetriever {
     private final NLGFactory nlgFactory;
@@ -27,7 +26,6 @@ public class PhraseRetriever {
     public PhraseRetriever(String originalSentence, String finalSentence, JSONObject jsonElement) {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
-        Realiser realiser = new Realiser(lexicon);
 
         this.originalSentence = originalSentence;
         this.finalSentence = finalSentence;
@@ -58,9 +56,7 @@ public class PhraseRetriever {
         if (existActions) {
             return generateWithActions();
         }
-        else {
-            return generateWithoutActions();
-        }
+        return generateWithoutActions();
     }
 
     private SPhraseSpec generateWithActions() {
