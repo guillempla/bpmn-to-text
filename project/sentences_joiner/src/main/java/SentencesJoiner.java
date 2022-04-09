@@ -62,6 +62,8 @@ public class SentencesJoiner {
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         coordinatedPhrase.setConjunction("then");
         sentences.removeIf(this::sentenceIsVoid);
+        if (sentences.size() == 0) return null;
+
         addCoordinateSentence(coordinatedPhrase, sentences.get(0));
         sentences.remove(0);
         for (NLGElement sentence : sentences) {
