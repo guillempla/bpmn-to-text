@@ -40,10 +40,20 @@ public class ParagraphGenerator {
     }
 
     private NLGElement traverseTree(IRPSTNode<DirectedEdge, Vertex> node) {
+        // Join entry sentence only if different of parent entry sentence
+        ArrayList<NLGElement> childrenSentences = new ArrayList<>();
+        ElementVertex entry = (ElementVertex) node.getEntry();
+        if (!entry.isVisited()) {
+            entry.setVisited(true);
+            childrenSentences.add(entry.getPhrase());
+        }
+
         // Base case
         if (isLeaf(node)) {
             ElementVertex exit = (ElementVertex) node.getExit();
-            return exit.getPhrase();
+            exit.setVisited(true);
+            childrenSentences.add(exit.getPhrase());
+            return joiner.joinSentences(exit, childrenSentences);
         }
 
         // Recursive case
