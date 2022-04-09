@@ -33,7 +33,11 @@ public class ElementVertex extends Vertex {
         return nextIds;
     }
 
-    public Boolean isGate() {
+    public Boolean isOpenGateway() {
+        return isGateway() && next.size() > 1;
+    }
+
+    public Boolean isGateway() {
         return this.type.toLowerCase().contains("gateway");
     }
 
