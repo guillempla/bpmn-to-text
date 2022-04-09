@@ -81,11 +81,15 @@ public class SentencesJoiner {
     }
 
     private void addCoordinateSentence(CoordinatedPhraseElement coordinatedPhrase, NLGElement sentence) {
+        String realizedSentence = realizeSentence(sentence);
+        if (Character.isUpperCase(realizedSentence.charAt(0))) {
+            realizedSentence = realizedSentence.toLowerCase();
+        }
         if (sentence instanceof SPhraseSpec) {
             coordinatedPhrase.addCoordinate(sentence);
         }
         else {
-            String removedDotSentence = realizeSentence(sentence).replace(".", "");
+            String removedDotSentence = realizedSentence.replace(".", "");
             coordinatedPhrase.addCoordinate(removedDotSentence);
         }
     }
