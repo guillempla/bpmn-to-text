@@ -9,7 +9,7 @@ public class ElementVertex extends Vertex {
     private final String sentence;
     private final NLGElement phrase;
     private final String type;
-    private boolean visited;
+    private boolean added;
     private final ArrayList<Pair<String, String>> next;
 
     public ElementVertex(String id, String sentence, NLGElement phrase, String type, ArrayList<Pair<String, String>> next) {
@@ -17,7 +17,7 @@ public class ElementVertex extends Vertex {
         this.sentence = sentence;
         this.phrase = phrase;
         this.type = type;
-        this.visited = false;
+        this.added = false;
         this.next = next;
     }
 
@@ -41,8 +41,8 @@ public class ElementVertex extends Vertex {
         return this.type.toLowerCase().contains("gateway");
     }
 
-    public Boolean isVisited() {
-        return this.visited;
+    public Boolean isAdded() {
+        return this.added;
     }
 
     public String getElementId() {
@@ -61,7 +61,7 @@ public class ElementVertex extends Vertex {
         return this.type;
     }
 
-    public void setVisited(Boolean visited) {
-        this.visited = visited;
+    public void setAdded(Boolean visited) {
+        this.added = visited;
     }
 }

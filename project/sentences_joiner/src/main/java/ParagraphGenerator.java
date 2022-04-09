@@ -40,15 +40,15 @@ public class ParagraphGenerator {
         // Join entry sentence only if different of parent entry sentence
         ArrayList<NLGElement> childrenSentences = new ArrayList<>();
         ElementVertex entry = (ElementVertex) node.getEntry();
-        if (!entry.isVisited()) {
-            entry.setVisited(true);
+        if (!entry.isAdded()) {
+            entry.setAdded(true);
             childrenSentences.add(entry.getPhrase());
         }
 
         // Base case
         if (isLeaf(node)) {
             ElementVertex exit = (ElementVertex) node.getExit();
-            exit.setVisited(true);
+            exit.setAdded(true);
             childrenSentences.add(exit.getPhrase());
             return joiner.joinSentences(exit, childrenSentences);
         }
@@ -71,7 +71,7 @@ public class ParagraphGenerator {
                 nodesChildren.remove(child);
             }
         }
-        else if (entry.isGate()) { // Read gateway children in the same order as
+        else if (entry.isOpenGateway()) { // Read gateway children in the same order as
             ArrayList<String> nextId = entry.getNextIds();
             while (nextId.size() > 0) {
                 String id = nextId.get(0);
