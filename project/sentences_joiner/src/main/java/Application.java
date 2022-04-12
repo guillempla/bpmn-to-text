@@ -12,7 +12,7 @@ public class Application {
         ArrayList<String> jsonPaths = getJSONPaths(sentencesPath);
         for (String path: jsonPaths) {
             String bpmnName = getJSONNameFromPath(path);
-            if (bpmnName.equals("cook.1") || true) {
+            if (bpmnName.equals("cook.1")) {
                 JSONReader reader = new JSONReader(bpmnName, path);
                 //reader.saveJSON();
                 System.out.println();

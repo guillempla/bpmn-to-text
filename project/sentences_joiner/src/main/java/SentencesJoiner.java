@@ -34,18 +34,28 @@ public class SentencesJoiner {
     }
 
     public NLGElement joinSentences(ElementVertex vertex, ArrayList<NLGElement> sentences) {
-        if (vertex.isGate()) {
-            return joinGateways(vertex.getType(), sentences);
+        if (vertexIsFirstGateway(vertex, sentences)) {
+            return joinGateways(vertex, sentences);
         }
         return joinActivities(vertex.getType(), sentences);
     }
 
-    private NLGElement joinGateways(String gatewayType, ArrayList<NLGElement> sentences) {
-        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        coordinatedPhrase.setConjunction("then");
+    private boolean vertexIsFirstGateway(ElementVertex vertex, ArrayList<NLGElement> sentences) {
+        return vertex.isOpenGateway() && vertex.getPhrase().equals(sentences.get(0));
+    }
+
+    private NLGElement joinGateways(ElementVertex gateway, ArrayList<NLGElement> sentences) {
         sentences.removeIf(this::sentenceIsVoid);
-        addCoordinateSentence(coordinatedPhrase, sentences.get(0));
+        if (sentences.size() == 0) return null;
+
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        String firstSentence = realiser.realiseSentence(sentences.get(0));
+        firstSentence = "the condition " + firstSentence + " is checked";
+        NLGElement firstPhrase = nlgFactory.createSentence(firstSentence);
+        addCoordinateSentence(coordinatedPhrase, firstPhrase);
         sentences.remove(0);
+
+        coordinatedPhrase.setConjunction("then");
         for (NLGElement sentence : sentences) {
             int totalWordCount = countWords(sentence) + countWords(coordinatedPhrase);
             if (totalWordCount < 50) {

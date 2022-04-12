@@ -100,10 +100,10 @@ public class ParagraphGenerator {
 
     private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<NLGElement> childrenSentences) {
         ElementVertex entry = (ElementVertex) child.getEntry();
-        entry.setVisited(true);
         NLGElement sentence = traverseTree(child);
         childrenSentences.forEach(childtest -> System.out.println(realiser.realiseSentence(childtest)));
         System.out.println();
+        entry.setAdded(true);
         childrenSentences.add(sentence);
     }
 
@@ -133,14 +133,6 @@ public class ParagraphGenerator {
         }
 
         return null;
-    }
-
-    private Vertex getParentEntryVertex(IRPSTNode<DirectedEdge, Vertex> node) {
-        IRPSTNode<DirectedEdge, Vertex> parent = rpst.getParent(node);
-        if (parent == null) {
-            return null;
-        }
-        return parent.getEntry();
     }
 
     private boolean isLeaf(IRPSTNode<DirectedEdge, Vertex> node) {
