@@ -62,6 +62,7 @@ public class SentencesJoiner {
                 addCoordinateSentence(coordinatedPhrase, sentence);
             }
             else {
+                // TODO Treatment for long sentences
                 addCoordinateSentence(coordinatedPhrase, sentence);
             }
         }
@@ -82,6 +83,7 @@ public class SentencesJoiner {
                 addCoordinateSentence(coordinatedPhrase, sentence);
             }
             else {
+                // TODO Treatment for long sentences
                 addCoordinateSentence(coordinatedPhrase, sentence);
             }
         }
