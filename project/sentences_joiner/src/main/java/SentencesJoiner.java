@@ -37,7 +37,7 @@ public class SentencesJoiner {
         sentences.removeIf(this::sentenceIsVoid);
         if (sentences.size() == 0) return null;
 
-        if (vertex.isOpenGateway() && sentences.size() > 1) {
+        if (joiningBranches(vertex, sentences)) {
             System.out.println(vertexIsFirstGateway(vertex, sentences));
             System.out.println(sentences.size());
             vertex.getNextNames().forEach(System.out::println);
@@ -50,6 +50,11 @@ public class SentencesJoiner {
         }
 
         return joinActivities(vertex.getType(), sentences);
+    }
+
+    private boolean joiningBranches(ElementVertex vertex, ArrayList<NLGElement> sentences) {
+        // TODO Improve branches detection
+        return vertex.isOpenGateway() && sentences.size() > 1;
     }
 
     private boolean vertexIsFirstGateway(ElementVertex vertex, ArrayList<NLGElement> sentences) {
