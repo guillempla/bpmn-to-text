@@ -45,38 +45,34 @@ public class SentencesJoiner {
     }
 
     private NLGElement joinGateways(ElementVertex gateway, ArrayList<NLGElement> sentences) {
-        sentences.removeIf(this::sentenceIsVoid);
-        if (sentences.size() == 0) return null;
-
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        coordinatedPhrase.setConjunction("then");
+
         String firstSentence = realiser.realiseSentence(sentences.get(0));
         firstSentence = "the condition " + firstSentence + " is checked";
         NLGElement firstPhrase = nlgFactory.createSentence(firstSentence);
         addCoordinateSentence(coordinatedPhrase, firstPhrase);
         sentences.remove(0);
 
-        coordinatedPhrase.setConjunction("then");
-        for (NLGElement sentence : sentences) {
-            int totalWordCount = countWords(sentence) + countWords(coordinatedPhrase);
-            if (totalWordCount < 50) {
-                addCoordinateSentence(coordinatedPhrase, sentence);
-            }
-            else {
-                // TODO Treatment for long sentences
-                addCoordinateSentence(coordinatedPhrase, sentence);
-            }
-        }
+        addSentencesToCoordinate(sentences, coordinatedPhrase);
+
         return coordinatedPhrase;
     }
 
     private NLGElement joinActivities(String type, ArrayList<NLGElement> sentences) {
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         coordinatedPhrase.setConjunction("then");
-        sentences.removeIf(this::sentenceIsVoid);
-        if (sentences.size() == 0) return null;
 
         addCoordinateSentence(coordinatedPhrase, sentences.get(0));
         sentences.remove(0);
+
+        addSentencesToCoordinate(sentences, coordinatedPhrase);
+
+        return coordinatedPhrase;
+    }
+
+
+    private void addSentencesToCoordinate(ArrayList<NLGElement> sentences, CoordinatedPhraseElement coordinatedPhrase) {
         for (NLGElement sentence : sentences) {
             int totalWordCount = countWords(sentence) + countWords(coordinatedPhrase);
             if (totalWordCount < 50) {
@@ -87,7 +83,6 @@ public class SentencesJoiner {
                 addCoordinateSentence(coordinatedPhrase, sentence);
             }
         }
-        return coordinatedPhrase;
     }
 
     private boolean sentenceIsVoid(NLGElement sentence) {
