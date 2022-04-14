@@ -12,9 +12,6 @@ public class SentencesJoiner {
     NLGFactory nlgFactory;
     Realiser realiser;
 
-    private final String commaJoin = ", ";
-    private final String dotJoin = ". ";
-
     public SentencesJoiner() {
         this.lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
