@@ -34,14 +34,38 @@ public class SentencesJoiner {
     }
 
     public NLGElement joinSentences(ElementVertex vertex, ArrayList<NLGElement> sentences) {
+        sentences.removeIf(this::sentenceIsVoid);
+        if (sentences.size() == 0) return null;
+
+        if (vertex.isOpenGateway() && sentences.size() > 1) {
+            System.out.println(vertexIsFirstGateway(vertex, sentences));
+            System.out.println(sentences.size());
+            vertex.getNextNames().forEach(System.out::println);
+            sentences.forEach(childtest -> System.out.println(realiser.realiseSentence(childtest)));
+            return joinBranches(vertex, sentences);
+        }
+
         if (vertexIsFirstGateway(vertex, sentences)) {
             return joinGateways(vertex, sentences);
         }
+
         return joinActivities(vertex.getType(), sentences);
     }
 
     private boolean vertexIsFirstGateway(ElementVertex vertex, ArrayList<NLGElement> sentences) {
-        return vertex.isOpenGateway() && vertex.getPhrase().equals(sentences.get(0));
+        return vertex.isOpenGateway() && vertex.getPhrase() != null && vertex.getPhrase().equals(sentences.get(0));
+    }
+
+    private NLGElement joinBranches(ElementVertex vertex, ArrayList<NLGElement> sentences) {
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        coordinatedPhrase.setConjunction("then");
+
+        addCoordinateSentence(coordinatedPhrase, sentences.get(0));
+        sentences.remove(0);
+
+        addSentencesToCoordinate(sentences, coordinatedPhrase);
+
+        return coordinatedPhrase;
     }
 
     private NLGElement joinGateways(ElementVertex gateway, ArrayList<NLGElement> sentences) {
