@@ -50,7 +50,11 @@ public class Sentence {
         joinedVertex.add(vertex);
     }
 
-    private String sentenceToString() {
+    public void printSentence() {
+        System.out.println(sentenceToString());
+    }
+
+    public String sentenceToString() {
         try {
             return realiser.realiseSentence(phrase);
         } catch (Exception e) {
