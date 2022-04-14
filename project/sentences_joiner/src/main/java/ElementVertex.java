@@ -33,6 +33,14 @@ public class ElementVertex extends Vertex {
         return nextIds;
     }
 
+    public ArrayList<String> getNextNames() {
+        ArrayList<String> nextNames = new ArrayList<>();
+        for (Pair<String, String> pair : this.next) {
+            nextNames.add(pair.getValue());
+        }
+        return nextNames;
+    }
+
     public Boolean isOpenGateway() {
         return isGateway() && next.size() > 1;
     }
