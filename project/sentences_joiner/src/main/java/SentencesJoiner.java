@@ -8,12 +8,11 @@ import simplenlg.realiser.english.Realiser;
 import java.util.ArrayList;
 
 public class SentencesJoiner {
-    Lexicon lexicon;
-    NLGFactory nlgFactory;
-    Realiser realiser;
+    private final NLGFactory nlgFactory;
+    private final Realiser realiser;
 
     public SentencesJoiner() {
-        this.lexicon = Lexicon.getDefaultLexicon();
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
         this.realiser = new Realiser(lexicon);
     }
