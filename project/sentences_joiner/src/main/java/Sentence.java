@@ -25,8 +25,8 @@ public class Sentence {
         this.realiser = new Realiser(lexicon);
 
         this.phrase = phrase;
-        this.isFirstGateway = false;
-        this.joinedVertex = new ArrayList<>();
+        this.isFirstGateway = false; // TODO Check when isFirstGateway
+        this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
     }
 
     public NLGElement getPhrase() {
