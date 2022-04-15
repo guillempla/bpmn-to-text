@@ -5,9 +5,6 @@ import org.jbpt.graph.DirectedEdge;
 import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
-import simplenlg.framework.NLGElement;
-import simplenlg.lexicon.Lexicon;
-import simplenlg.realiser.english.Realiser;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -15,20 +12,17 @@ import java.util.Set;
 public class ParagraphGenerator {
     private final RPST<DirectedEdge, Vertex> rpst;
     private final SentencesJoiner joiner;
-    private final Realiser realiser;
 
-    private NLGElement joinedSentences;
+    private Sentence joinedSentences;
 
     public ParagraphGenerator(MultiDirectedGraph graph) {
         this.rpst = new RPST<>(graph);
         this.joiner = new SentencesJoiner();
-        Lexicon lexicon = Lexicon.getDefaultLexicon();
-        this.realiser = new Realiser(lexicon);
         this.joinSentences();
     }
 
     public String getJoinedSentences() {
-        return joiner.sentenceToString(this.joinedSentences);
+        return this.joinedSentences.sentenceToString();
     }
 
     private void joinSentences() {
@@ -36,20 +30,22 @@ public class ParagraphGenerator {
         this.joinedSentences = traverseTree(root);
     }
 
-    private NLGElement traverseTree(IRPSTNode<DirectedEdge, Vertex> node) {
+    private Sentence traverseTree(IRPSTNode<DirectedEdge, Vertex> node) {
         // Join entry sentence only if different of parent entry sentence
-        ArrayList<NLGElement> childrenSentences = new ArrayList<>();
+        ArrayList<Sentence> childrenSentences = new ArrayList<>();
         ElementVertex entry = (ElementVertex) node.getEntry();
         if (!entry.isAdded()) {
             entry.setAdded(true);
-            childrenSentences.add(entry.getPhrase());
+            Sentence sentence = new Sentence(entry.getPhrase());
+            childrenSentences.add(sentence);
         }
 
         // Base case
         if (isLeaf(node)) {
             ElementVertex exit = (ElementVertex) node.getExit();
             exit.setAdded(true);
-            childrenSentences.add(exit.getPhrase());
+            Sentence sentence = new Sentence(exit.getPhrase());
+            childrenSentences.add(sentence);
             return joiner.joinSentences(exit, childrenSentences);
         }
 
@@ -84,6 +80,7 @@ public class ParagraphGenerator {
                 else {
                     System.out.println("ERROR: Gate has no child with id: " + id);
                     System.out.println(entry.getNextIds());
+                    nodesChildren.forEach(nodeTest -> System.out.println(nodeTest.getName()));
                     printRPSTNode(node);
                     return null;
                 }
@@ -98,11 +95,11 @@ public class ParagraphGenerator {
         return joiner.joinSentences(entry, childrenSentences);
     }
 
-    private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<NLGElement> childrenSentences) {
+    private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<Sentence> childrenSentences) {
         ElementVertex entry = (ElementVertex) child.getEntry();
-        NLGElement sentence = traverseTree(child);
-        childrenSentences.forEach(childtest -> System.out.println(realiser.realiseSentence(childtest)));
-        System.out.println();
+        Sentence sentence = traverseTree(child);
+//        childrenSentences.forEach(Sentence::printSentence);
+//        System.out.println();
         entry.setAdded(true);
         childrenSentences.add(sentence);
     }

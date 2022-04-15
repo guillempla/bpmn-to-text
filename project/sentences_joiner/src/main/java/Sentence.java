@@ -1,40 +1,60 @@
+import simplenlg.framework.CoordinatedPhraseElement;
 import simplenlg.framework.NLGElement;
+import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
+import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.realiser.english.Realiser;
 
 import java.util.ArrayList;
 
 public class Sentence {
-    private NLGElement phrase;
+    protected final Realiser realiser;
     private boolean isFirstGateway;
     private ArrayList<ElementVertex> joinedVertex;
-
-    private final Realiser realiser;
+    private final CoordinatedPhraseElement coordinatedPhrase;
     protected final Lexicon lexicon;
 
     public Sentence() {
         this.lexicon = Lexicon.getDefaultLexicon();
         this.realiser = new Realiser(lexicon);
+        NLGFactory nlgFactory = new NLGFactory(lexicon);
 
         this.isFirstGateway = false;
         this.joinedVertex = new ArrayList<>();
+
+        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        this.coordinatedPhrase.setConjunction("then");
     }
 
     public Sentence(NLGElement phrase) {
         this.lexicon = Lexicon.getDefaultLexicon();
         this.realiser = new Realiser(lexicon);
+        NLGFactory nlgFactory = new NLGFactory(lexicon);
 
-        this.phrase = phrase;
+        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        this.coordinatedPhrase.setConjunction("then");
+
+        addCoordinateSentence(phrase);
         this.isFirstGateway = false; // TODO Check when isFirstGateway
         this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
     }
 
-    public NLGElement getPhrase() {
-        return phrase;
-    }
-
-    public void setPhrase(NLGElement phrase) {
-        this.phrase = phrase;
+    public void addCoordinateSentence(NLGElement sentence) {
+        // TODO Afegir els vertexs
+        String realizedSentence = realizeSentence(sentence);
+        if (realizedSentence.equals("")) {
+            return;
+        }
+        if (Character.isUpperCase(realizedSentence.charAt(0))) {
+            realizedSentence = realizedSentence.toLowerCase();
+        }
+        if (sentence instanceof SPhraseSpec) {
+            coordinatedPhrase.addCoordinate(sentence);
+        }
+        else {
+            String removedDotSentence = realizedSentence.replace(".", "");
+            coordinatedPhrase.addCoordinate(removedDotSentence);
+        }
     }
 
     public boolean isFirstGateway() {
@@ -61,12 +81,16 @@ public class Sentence {
         System.out.println(sentenceToString());
     }
 
-    public String sentenceToString() {
+    private String realizeSentence(NLGElement sentence) {
         try {
-            return realiser.realiseSentence(phrase);
+            return realiser.realiseSentence(sentence);
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public boolean isVoid() {
+        return coordinatedPhrase == null || sentenceToString().equals("");
     }
 
     public int numWords() {
@@ -79,7 +103,28 @@ public class Sentence {
         return words.length;
     }
 
-    public boolean isVoid() {
-        return phrase == null || sentenceToString().equals("");
+    public String sentenceToString() {
+        return realizeSentence(coordinatedPhrase);
+    }
+
+    public void addCoordinateSentence(Sentence sentence) {
+        // TODO Afegir els vertexs
+        String realizedSentence = sentence.sentenceToString();
+        if (Character.isUpperCase(realizedSentence.charAt(0))) {
+            realizedSentence = realizedSentence.toLowerCase();
+        }
+        if (sentence.getCoordinatedPhrase() instanceof SPhraseSpec) {
+            coordinatedPhrase.addCoordinate(sentence);
+        }
+        else {
+            String removedDotSentence = realizedSentence.replace(".", "");
+            coordinatedPhrase.addCoordinate(removedDotSentence);
+        }
+        // TODO Comprovar si cal afegir una coordinatedPhrase com a tal
+        //  (ara s'afegeix com a String)
+    }
+
+    public NLGElement getCoordinatedPhrase() {
+        return coordinatedPhrase;
     }
 }
