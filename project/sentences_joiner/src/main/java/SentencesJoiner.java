@@ -40,6 +40,12 @@ public class SentencesJoiner {
         return vertex.isOpenGateway() && sentences.size() > 1;
     }
 
+    private boolean vertexIsFirstGateway(ElementVertex vertex, ArrayList<Sentence> sentences) {
+        // TODO Fix comparison with getCoordinatedPhrase
+//        return vertex.isOpenGateway() && vertex.getPhrase() != null && vertex.getPhrase().equals(sentences.get(0).getCoordinatedPhrase());
+        return sentences.get(0).isFirstGateway();
+    }
+
     private Sentence joinBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
@@ -49,11 +55,6 @@ public class SentencesJoiner {
         addSentencesToCoordinate(sentences, coordinatedSentence);
 
         return coordinatedSentence;
-    }
-
-    private boolean vertexIsFirstGateway(ElementVertex vertex, ArrayList<Sentence> sentences) {
-        // TODO Fix comparison with getCoordinatedPhrase
-        return vertex.isOpenGateway() && vertex.getPhrase() != null && vertex.getPhrase().equals(sentences.get(0).getCoordinatedPhrase());
     }
 
     private Sentence joinGateways(ElementVertex gateway, ArrayList<Sentence> sentences) {
