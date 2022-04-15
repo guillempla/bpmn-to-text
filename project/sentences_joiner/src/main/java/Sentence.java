@@ -1,5 +1,4 @@
 import simplenlg.framework.NLGElement;
-import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
 import simplenlg.realiser.english.Realiser;
 
@@ -11,15 +10,23 @@ public class Sentence {
     private ArrayList<ElementVertex> joinedVertex;
 
     private final Realiser realiser;
+    protected final Lexicon lexicon;
+
+    public Sentence() {
+        this.lexicon = Lexicon.getDefaultLexicon();
+        this.realiser = new Realiser(lexicon);
+
+        this.isFirstGateway = false;
+        this.joinedVertex = new ArrayList<>();
+    }
 
     public Sentence(NLGElement phrase) {
+        this.lexicon = Lexicon.getDefaultLexicon();
+        this.realiser = new Realiser(lexicon);
+
         this.phrase = phrase;
         this.isFirstGateway = false;
         this.joinedVertex = new ArrayList<>();
-
-        Lexicon lexicon = Lexicon.getDefaultLexicon();
-        NLGFactory nlgFactory = new NLGFactory(lexicon);
-        this.realiser = new Realiser(lexicon);
     }
 
     public NLGElement getPhrase() {
@@ -60,5 +67,19 @@ public class Sentence {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public int numWords() {
+        String sentence = sentenceToString();
+        if (sentence.isEmpty()) {
+            return 0;
+        }
+
+        String[] words = sentence.split("\\s+");
+        return words.length;
+    }
+
+    public boolean isVoid() {
+        return phrase == null || sentenceToString().equals("");
     }
 }
