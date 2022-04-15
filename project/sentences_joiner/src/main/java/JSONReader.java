@@ -17,21 +17,18 @@ import java.util.Map;
 public class JSONReader {
     public static final String GENERATED_PATH = "../sentences_joined/";
 
-    String fileName;
-    String path;
+    private final String fileName;
 
-    JSONObject jsonElements;
-    Map<String, ElementVertex> vertexElements;
-    MultiDirectedGraph graph;
+    private final JSONObject jsonElements;
+    private final Map<String, ElementVertex> vertexElements;
 
     public JSONReader(String fileName, String path) {
         this.fileName = fileName;
-        this.path = path;
-        this.jsonElements = parseJSON(this.path);
+        this.jsonElements = parseJSON(path);
         this.vertexElements = this.createVertexes();
-        this.graph = this.buildGraph();
+        MultiDirectedGraph graph = this.buildGraph();
         System.out.println(fileName);
-        ParagraphGenerator joiner = new ParagraphGenerator(this.graph);
+        ParagraphGenerator joiner = new ParagraphGenerator(graph);
         System.out.println(joiner.getJoinedSentences());
     }
 
