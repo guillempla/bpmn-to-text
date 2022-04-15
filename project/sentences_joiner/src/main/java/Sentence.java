@@ -19,8 +19,8 @@ public class Sentence {
         this.realiser = new Realiser(lexicon);
         NLGFactory nlgFactory = new NLGFactory(lexicon);
 
-        this.isFirstGateway = false;
-        this.joinedVertex = new ArrayList<>();
+        this.isFirstGateway = false; // TODO Check when isFirstGateway
+        this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
 
         this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         this.coordinatedPhrase.setConjunction("then");
@@ -31,12 +31,13 @@ public class Sentence {
         this.realiser = new Realiser(lexicon);
         NLGFactory nlgFactory = new NLGFactory(lexicon);
 
+        this.isFirstGateway = false; // TODO Check when isFirstGateway
+        this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
+
         this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         this.coordinatedPhrase.setConjunction("then");
 
         addCoordinateSentence(phrase);
-        this.isFirstGateway = false; // TODO Check when isFirstGateway
-        this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
     }
 
     public void addCoordinateSentence(NLGElement sentence) {
