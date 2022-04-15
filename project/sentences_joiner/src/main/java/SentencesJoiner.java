@@ -63,7 +63,7 @@ public class SentencesJoiner {
         String sentenceString = sentences.get(0).sentenceToString();
         sentenceString = "the condition " + sentenceString + " is checked";
         NLGElement firstPhrase = nlgFactory.createSentence(sentenceString);
-        Sentence firstSentence = new Sentence(firstPhrase);
+        Sentence firstSentence = new Sentence(firstPhrase, gateway);
         coordinatedSentence.addCoordinateSentence(firstSentence);
         sentences.remove(0);
 

@@ -36,7 +36,7 @@ public class ParagraphGenerator {
         ElementVertex entry = (ElementVertex) node.getEntry();
         if (!entry.isAdded()) {
             entry.setAdded(true);
-            Sentence sentence = new Sentence(entry.getPhrase());
+            Sentence sentence = new Sentence(entry.getPhrase(), entry);
             childrenSentences.add(sentence);
         }
 
@@ -44,7 +44,7 @@ public class ParagraphGenerator {
         if (isLeaf(node)) {
             ElementVertex exit = (ElementVertex) node.getExit();
             exit.setAdded(true);
-            Sentence sentence = new Sentence(exit.getPhrase());
+            Sentence sentence = new Sentence(exit.getPhrase(), exit);
             childrenSentences.add(sentence);
             return joiner.joinSentences(exit, childrenSentences);
         }
@@ -98,7 +98,8 @@ public class ParagraphGenerator {
     private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<Sentence> childrenSentences) {
         ElementVertex entry = (ElementVertex) child.getEntry();
         Sentence sentence = traverseTree(child);
-//        childrenSentences.forEach(Sentence::printSentence);
+//        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printSentence);
+//        else System.out.println("Children Sentences contain NULL!");
 //        System.out.println();
         entry.setAdded(true);
         childrenSentences.add(sentence);

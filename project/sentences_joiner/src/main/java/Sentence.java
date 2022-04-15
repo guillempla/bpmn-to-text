@@ -19,20 +19,21 @@ public class Sentence {
         this.realiser = new Realiser(lexicon);
         NLGFactory nlgFactory = new NLGFactory(lexicon);
 
-        this.isFirstGateway = false; // TODO Check when isFirstGateway
         this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
+        this.isFirstGateway = false; // TODO Check when isFirstGateway
 
         this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         this.coordinatedPhrase.setConjunction("then");
     }
 
-    public Sentence(NLGElement phrase) {
+    public Sentence(NLGElement phrase, ElementVertex vertex) {
         this.lexicon = Lexicon.getDefaultLexicon();
         this.realiser = new Realiser(lexicon);
         NLGFactory nlgFactory = new NLGFactory(lexicon);
 
-        this.isFirstGateway = false; // TODO Check when isFirstGateway
-        this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
+        this.joinedVertex = new ArrayList<>();
+        this.joinedVertex.add(vertex);
+        this.isFirstGateway = vertex.isOpenGateway(); // TODO Check when isFirstGateway
 
         this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         this.coordinatedPhrase.setConjunction("then");
@@ -121,6 +122,9 @@ public class Sentence {
             String removedDotSentence = realizedSentence.replace(".", "");
             coordinatedPhrase.addCoordinate(removedDotSentence);
         }
+
+        joinedVertex.addAll(sentence.getJoinedVertex());
+
         // TODO Comprovar si cal afegir una coordinatedPhrase com a tal
         //  (ara s'afegeix com a String)
     }
