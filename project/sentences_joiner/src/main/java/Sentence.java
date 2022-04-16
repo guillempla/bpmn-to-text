@@ -63,6 +63,10 @@ public class Sentence {
         return isFirstGateway;
     }
 
+    public boolean onlyOneGateway() {
+        return joinedVertex.size() == 1 && joinedVertex.get(0).isOpenGateway();
+    }
+
     public void setFirstGateway(boolean firstGateway) {
         isFirstGateway = firstGateway;
     }
