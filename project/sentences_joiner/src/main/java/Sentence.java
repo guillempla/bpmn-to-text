@@ -11,13 +11,14 @@ public class Sentence {
     protected final Realiser realiser;
     private boolean isFirstGateway;
     private ArrayList<ElementVertex> joinedVertex;
-    private final CoordinatedPhraseElement coordinatedPhrase;
+    private final NLGFactory nlgFactory;
     protected final Lexicon lexicon;
+    private CoordinatedPhraseElement coordinatedPhrase;
 
     public Sentence() {
         this.lexicon = Lexicon.getDefaultLexicon();
         this.realiser = new Realiser(lexicon);
-        NLGFactory nlgFactory = new NLGFactory(lexicon);
+        this.nlgFactory = new NLGFactory(lexicon);
 
         this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
         this.isFirstGateway = false; // TODO Check when isFirstGateway
@@ -29,7 +30,7 @@ public class Sentence {
     public Sentence(NLGElement phrase, ElementVertex vertex) {
         this.lexicon = Lexicon.getDefaultLexicon();
         this.realiser = new Realiser(lexicon);
-        NLGFactory nlgFactory = new NLGFactory(lexicon);
+        this.nlgFactory = new NLGFactory(lexicon);
 
         this.joinedVertex = new ArrayList<>();
         this.joinedVertex.add(vertex);
@@ -135,5 +136,26 @@ public class Sentence {
 
     public NLGElement getCoordinatedPhrase() {
         return coordinatedPhrase;
+    }
+
+    public Sentence copySentence() {
+        Sentence copy = new Sentence();
+        copy.setCoordinatedPhrase(this.coordinatedPhrase);
+        copy.setFirstGateway(this.isFirstGateway);
+        copy.setJoinedVertex(this.joinedVertex);
+
+        return copy;
+    }
+
+    public void setCoordinatedPhrase(CoordinatedPhraseElement coordinatedPhrase) {
+        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        this.coordinatedPhrase.setConjunction("then");
+        addCoordinateSentence(coordinatedPhrase);
+    }
+
+    public void setCoordinatedPhrase(NLGElement phrase) {
+        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        this.coordinatedPhrase.setConjunction("then");
+        addCoordinateSentence(phrase);
     }
 }

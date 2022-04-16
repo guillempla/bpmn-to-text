@@ -47,6 +47,7 @@ public class SentencesJoiner {
     private Sentence joinBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
+        addNameToBranches(vertex.getNextNames(), sentences);
         addSentencesToCoordinate(sentences, coordinatedSentence);
 
         return coordinatedSentence;
@@ -87,4 +88,19 @@ public class SentencesJoiner {
             }
         }
     }
+
+    private void addNameToBranches(ArrayList<String> names, ArrayList<Sentence> sentences) {
+        if (names.size() != sentences.size()) {
+            System.out.println("Names size diferent than sentences size");
+            return;
+        }
+
+        for (int i = 0; i < names.size(); i++) {
+            String sentenceString = sentences.get(i).sentenceToString();
+            sentenceString = "If the answer is " + names.get(i) + " then " + sentenceString;
+            NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
+            sentences.get(i).setCoordinatedPhrase(branchPhrase);
+        }
+    }
+
 }
