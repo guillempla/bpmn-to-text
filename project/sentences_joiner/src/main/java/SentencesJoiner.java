@@ -47,9 +47,6 @@ public class SentencesJoiner {
     private Sentence joinBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
-        coordinatedSentence.addCoordinateSentence(sentences.get(0));
-        sentences.remove(0);
-
         addSentencesToCoordinate(sentences, coordinatedSentence);
 
         return coordinatedSentence;
@@ -72,9 +69,6 @@ public class SentencesJoiner {
 
     private Sentence joinActivities(String type, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
-
-        coordinatedSentence.addCoordinateSentence(sentences.get(0));
-        sentences.remove(0);
 
         addSentencesToCoordinate(sentences, coordinatedSentence);
 
