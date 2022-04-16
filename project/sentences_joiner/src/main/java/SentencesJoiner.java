@@ -1,43 +1,106 @@
-import org.jbpt.algo.tree.tctree.TCType;
+import simplenlg.framework.NLGElement;
+import simplenlg.framework.NLGFactory;
+import simplenlg.lexicon.Lexicon;
 
 import java.util.ArrayList;
 
 public class SentencesJoiner {
-    private final String commaJoin = ", ";
-    private final String dotJoin = ". ";
+    private final NLGFactory nlgFactory;
 
     public SentencesJoiner() {
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        this.nlgFactory = new NLGFactory(lexicon);
     }
 
-    public String joinSentences(TCType nodeType, ArrayList<String> sentences) {
-        sentences.removeIf(sentence -> sentence.equals(""));
-        StringBuilder joinedSentence = new StringBuilder(sentences.get(0));
+    public Sentence joinSentences(ElementVertex vertex, ArrayList<Sentence> sentences) {
+        sentences.removeIf(this::sentenceIsVoid);
+        if (sentences.size() == 0) return new Sentence();
+
+        if (joiningBranches(sentences)) {
+            System.out.println(sentences.size());
+//            System.out.println(vertexIsFirstGateway(vertex, sentences));
+            vertex.getNextNames().forEach(System.out::println);
+            sentences.forEach(Sentence::printSentence);
+            return joinBranches(vertex, sentences);
+        }
+
+        if (vertexIsFirstGateway(sentences)) {
+            return joinGateways(vertex, sentences);
+        }
+
+        return joinActivities(vertex.getType(), sentences);
+    }
+
+    private boolean sentenceIsVoid(Sentence sentence) {
+        return sentence == null || sentence.isVoid();
+    }
+
+    private boolean joiningBranches(ArrayList<Sentence> sentences) {
+        boolean notBranches = sentences.stream().anyMatch(Sentence::onlyOneGateway);
+        return sentences.size() > 1 && !notBranches;
+    }
+
+    private boolean vertexIsFirstGateway(ArrayList<Sentence> sentences) {
+        return sentences.get(0).isFirstGateway();
+    }
+
+    private Sentence joinBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
+        Sentence coordinatedSentence = new Sentence();
+
+        addNameToBranches(vertex.getNextNames(), sentences);
+        addSentencesToCoordinate(sentences, coordinatedSentence);
+
+        return coordinatedSentence;
+    }
+
+    private Sentence joinGateways(ElementVertex gateway, ArrayList<Sentence> sentences) {
+        Sentence coordinatedSentence = new Sentence();
+
+        String sentenceString = sentences.get(0).sentenceToString();
+        sentenceString = "the condition " + sentenceString + " is checked";
+        NLGElement firstPhrase = nlgFactory.createSentence(sentenceString);
+        Sentence firstSentence = new Sentence(firstPhrase, gateway);
+        coordinatedSentence.addCoordinateSentence(firstSentence);
         sentences.remove(0);
-        for (String sentence : sentences) {
-            int totalWordCount = countWords(sentence) + countWords(joinedSentence.toString());
+
+        addSentencesToCoordinate(sentences, coordinatedSentence);
+
+        return coordinatedSentence;
+    }
+
+    private Sentence joinActivities(String type, ArrayList<Sentence> sentences) {
+        Sentence coordinatedSentence = new Sentence();
+
+        addSentencesToCoordinate(sentences, coordinatedSentence);
+
+        return coordinatedSentence;
+    }
+
+    private void addSentencesToCoordinate(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
+        for (Sentence sentence : sentences) {
+            int totalWordCount = sentence.numWords() + coordinatedSentence.numWords();
             if (totalWordCount < 50) {
-                joinedSentence.append(commaJoin).append(sentence);
-            } else {
-                joinedSentence.append(dotJoin).append(sentence);
+                coordinatedSentence.addCoordinateSentence(sentence);
+            }
+            else {
+                // TODO Treatment for long sentences
+                coordinatedSentence.addCoordinateSentence(sentence);
             }
         }
-        return joinedSentence.toString();
     }
 
-//    public NLGElement joinSentences(TCType nodeType, ArrayList<NLGElement> sentences) {
-//        NLGElement joinedSentence = null;
-//        for (NLGElement sentence : sentences) {
-//
-//        }
-//        return joinedSentence;
-//    }
-
-    private int countWords(String sentence) {
-        if (sentence == null || sentence.isEmpty()) {
-            return 0;
+    private void addNameToBranches(ArrayList<String> names, ArrayList<Sentence> sentences) {
+        if (names.size() != sentences.size()) {
+            System.out.println("Names size diferent than sentences size");
+            return;
         }
 
-        String[] words = sentence.split("\\s+");
-        return words.length;
+        for (int i = 0; i < names.size(); i++) {
+            String sentenceString = sentences.get(i).sentenceToString();
+            sentenceString = "If the answer is " + names.get(i) + " then " + sentenceString;
+            NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
+            sentences.get(i).setCoordinatedPhrase(branchPhrase);
+        }
     }
+
 }

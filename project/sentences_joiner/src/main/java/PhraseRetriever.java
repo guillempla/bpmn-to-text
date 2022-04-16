@@ -12,6 +12,7 @@ public class PhraseRetriever {
     private final NLGFactory nlgFactory;
 
     private final String originalSentence;
+    private final String finalSentence;
     private final NLGElement phrase;
     private Boolean objectDeterminant;
     private Boolean interrogative;
@@ -22,11 +23,12 @@ public class PhraseRetriever {
     private String complement;
     private String object;
 
-    public PhraseRetriever(String originalSentence, JSONObject jsonElement) {
+    public PhraseRetriever(String originalSentence, String finalSentence, JSONObject jsonElement) {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
 
         this.originalSentence = originalSentence;
+        this.finalSentence = finalSentence;
 
         this.initializePhraseAttributes(jsonElement);
         this.phrase = this.retrievePhrase();
@@ -48,11 +50,13 @@ public class PhraseRetriever {
     }
 
     private NLGElement retrievePhrase() {
+        if (finalSentence == null) {
+            return null;
+        }
         if (existActions) {
             return generateWithActions();
-        } else {
-            return generateWithoutActions();
         }
+        return generateWithoutActions();
     }
 
     private SPhraseSpec generateWithActions() {

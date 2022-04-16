@@ -3,6 +3,7 @@ import org.jbpt.algo.tree.rpst.RPST;
 import org.jbpt.algo.tree.tctree.TCType;
 import org.jbpt.graph.DirectedEdge;
 import org.jbpt.graph.MultiDirectedGraph;
+import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class ParagraphGenerator {
     private final RPST<DirectedEdge, Vertex> rpst;
     private final SentencesJoiner joiner;
 
-    private String joinedSentences;
+    private Sentence joinedSentences;
 
     public ParagraphGenerator(MultiDirectedGraph graph) {
         this.rpst = new RPST<>(graph);
@@ -21,82 +22,95 @@ public class ParagraphGenerator {
     }
 
     public String getJoinedSentences() {
-        return joinedSentences;
+        return this.joinedSentences.sentenceToString();
     }
 
     private void joinSentences() {
         IRPSTNode<DirectedEdge, Vertex> root = rpst.getRoot();
-        ElementVertex rootEntry = (ElementVertex) root.getEntry();
-        rootEntry.setVisited(true);
-
-        printRPSTNode(root);
-        System.out.println();
-
         this.joinedSentences = traverseTree(root);
-        String[] separated = this.joinedSentences.split(",");
-        System.out.println(separated.length);
     }
 
-    private String traverseTree(IRPSTNode<DirectedEdge, Vertex> node) {
+    private Sentence traverseTree(IRPSTNode<DirectedEdge, Vertex> node) {
+        // Join entry sentence only if different of parent entry sentence
+        ArrayList<Sentence> childrenSentences = new ArrayList<>();
+        ElementVertex entry = (ElementVertex) node.getEntry();
+        if (!entry.isAdded()) {
+            entry.setAdded(true);
+            Sentence sentence = new Sentence(entry.getPhrase(), entry);
+            childrenSentences.add(sentence);
+        }
+
         // Base case
         if (isLeaf(node)) {
             ElementVertex exit = (ElementVertex) node.getExit();
-            return (exit.getSentence() == null) ? "" : exit.getSentence();
+            exit.setAdded(true);
+            Sentence sentence = new Sentence(exit.getPhrase(), exit);
+            childrenSentences.add(sentence);
+            return joiner.joinSentences(exit, childrenSentences);
         }
 
         // Recursive case
 
-        // Join entry sentence only if different of parent entry sentence
-        ArrayList<String> childrenSentences = new ArrayList<>();
-        Vertex parentEntry = getParentEntryVertex(node);
-        if (parentEntry != node.getEntry() || parentEntry == null) {
-            ElementVertex entry = (ElementVertex) node.getEntry();
-            String sentence = entry.getSentence() == null ? "" : entry.getSentence();
-            childrenSentences.add(sentence);
-        }
-        Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren = rpst.getChildren(node); // Children are unsorted
-        nodesChildren.forEach(this::printRPSTNode);
-
-        /* If the parent is not a Gateway or a Rigid. We want to traverse the tree in a sorted way.
+        /* If the node doesn't bifurcate, or it isn't a RIGID, we want to traverse the tree in a sorted way.
          * That means, handle the nodes that happen before in the BPMN.
-         * If the node is a Gateway the order doesn't matter. */
+         * If the node is a Gateway (or a RIGID) the order doesn't matter. */
+        Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren = rpst.getChildren(node); // Children are unsorted
         Vertex currentVertex = node.getEntry();
-        if (nodeBifucates(node)) {
+        if (!nodeBifurcates(node, nodesChildren)) {
             while (nodesChildren.size() > 0) {
-                System.out.println("Children length: " + nodesChildren.size());
-                ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = getChildEqualToCurrentVertex(currentVertex, nodesChildren);
+                ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = findChildrenEqualToCurrentVertex(currentVertex, nodesChildren);
 
-                IRPSTNode<DirectedEdge, Vertex> child = children.get(0);
-                ElementVertex entry = (ElementVertex) child.getEntry();
-                entry.setVisited(true);
-                String sentence = traverseTree(child);
-                childrenSentences.add(sentence);
+                IRPSTNode<DirectedEdge, Vertex> child = children.get(0); // if we are here we know that only one child is returned, so we can get the first (and only) one
+                updateChildrenSentences(child, childrenSentences);
 
                 currentVertex = child.getExit();
                 nodesChildren.remove(child);
             }
-        } else {
+        }
+        else if (entry.isOpenGateway()) { // Read gateway children in the same order as
+            ArrayList<String> nextId = entry.getNextIds();
+            while (nextId.size() > 0) {
+                String id = nextId.get(0);
+                IRPSTNode<DirectedEdge, Vertex> child = findChildEqualId(id, nodesChildren);
+                if (child != null) {
+                    updateChildrenSentences(child, childrenSentences);
+                    nodesChildren.remove(child);
+                    nextId.remove(0);
+                }
+                else {
+                    System.out.println("ERROR: Gate has no child with id: " + id);
+                    System.out.println(entry.getNextIds());
+                    nodesChildren.forEach(nodeTest -> System.out.println(nodeTest.getName()));
+                    printRPSTNode(node);
+                    return null;
+                }
+            }
+        }
+        else { // RIGID
             for (IRPSTNode<DirectedEdge, Vertex> child : nodesChildren) {
-                ElementVertex entry = (ElementVertex) child.getEntry();
-                entry.setVisited(true);
-                String sentence = traverseTree(child);
-                childrenSentences.add(sentence);
+                updateChildrenSentences(child, childrenSentences);
             }
         }
 
-        return joiner.joinSentences(node.getType(), childrenSentences);
+        return joiner.joinSentences(entry, childrenSentences);
     }
 
-    private boolean nodeBifucates(IRPSTNode<DirectedEdge, Vertex> node) {
-        // TODO Check when an activity or task bifurcates.
-        // TODO Segurament la forma més fàcil de comprovar-ho è amb la funció getChildEqualToCurrentVertex.
-        // TODO Hauria de comprovar si la mida de children è diferent d'1.
-        ElementVertex nodeEntry = (ElementVertex) node.getEntry();
-        return !nodeEntry.isGate() && node.getType() != TCType.RIGID;
+    private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<Sentence> childrenSentences) {
+        ElementVertex entry = (ElementVertex) child.getEntry();
+        Sentence sentence = traverseTree(child);
+//        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printSentence);
+//        else System.out.println("Children Sentences contain NULL!");
+//        System.out.println();
+        entry.setAdded(true);
+        childrenSentences.add(sentence);
     }
 
-    private ArrayList<IRPSTNode<DirectedEdge, Vertex>> getChildEqualToCurrentVertex(Vertex currentVertex, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
-        // TODO Return arraylist with all possible children that have the same entry as **currentVertex**
+    private boolean nodeBifurcates(IRPSTNode<DirectedEdge, Vertex> node, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
+        ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = findChildrenEqualToCurrentVertex(node.getEntry(), nodesChildren);
+        return children.size() != 1 || node.getType() == TCType.RIGID;
+    }
+
+    private ArrayList<IRPSTNode<DirectedEdge, Vertex>> findChildrenEqualToCurrentVertex(Vertex currentVertex, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
         ArrayList<IRPSTNode<DirectedEdge, Vertex>> children = new ArrayList<>();
         for (IRPSTNode<DirectedEdge, Vertex> child : nodesChildren) {
             if (child.getEntry() == currentVertex) {
@@ -106,12 +120,17 @@ public class ParagraphGenerator {
         return children;
     }
 
-    private Vertex getParentEntryVertex(IRPSTNode<DirectedEdge, Vertex> node) {
-        IRPSTNode<DirectedEdge, Vertex> parent = rpst.getParent(node);
-        if (parent == null) {
-            return null;
+    private IRPSTNode<DirectedEdge, Vertex> findChildEqualId(String id, Set<IRPSTNode<DirectedEdge, Vertex>> nodesChildren) {
+        for (IRPSTNode<DirectedEdge, Vertex> child : nodesChildren) {
+            IFragment<DirectedEdge, Vertex> fragment = child.getFragment();
+            for (DirectedEdge directedEdge : fragment) {
+                if (directedEdge.getTarget().getName().equals(id)) {
+                    return child;
+                }
+            }
         }
-        return parent.getEntry();
+
+        return null;
     }
 
     private boolean isLeaf(IRPSTNode<DirectedEdge, Vertex> node) {
@@ -122,6 +141,7 @@ public class ParagraphGenerator {
         ElementVertex entry = (ElementVertex) node.getEntry();
         ElementVertex exit = (ElementVertex) node.getExit();
         System.out.println(entry.getElementId());
+        System.out.println(entry.getType());
         System.out.println(exit != null ? exit.getElementId() : "ExitNull");
 //        System.out.println(entry.isVisited());
         System.out.println(node.getType());

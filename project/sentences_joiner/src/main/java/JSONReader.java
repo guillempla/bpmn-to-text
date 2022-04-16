@@ -1,3 +1,5 @@
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.hypergraph.abs.Vertex;
 import org.json.simple.JSONObject;
@@ -15,22 +17,18 @@ import java.util.Map;
 public class JSONReader {
     public static final String GENERATED_PATH = "../sentences_joined/";
 
-    String fileName;
-    String path;
+    private final String fileName;
 
-    JSONObject jsonElements;
-    Map<String, ElementVertex> vertexElements;
-    MultiDirectedGraph graph;
+    private final JSONObject jsonElements;
+    private final Map<String, ElementVertex> vertexElements;
 
     public JSONReader(String fileName, String path) {
         this.fileName = fileName;
-        this.path = path;
-        this.jsonElements = parseJSON(this.path);
+        this.jsonElements = parseJSON(path);
         this.vertexElements = this.createVertexes();
-        this.graph = this.buildGraph();
+        MultiDirectedGraph graph = this.buildGraph();
         System.out.println(fileName);
-        System.out.println(this.vertexElements.size());
-        ParagraphGenerator joiner = new ParagraphGenerator(this.graph);
+        ParagraphGenerator joiner = new ParagraphGenerator(graph);
         System.out.println(joiner.getJoinedSentences());
     }
 
@@ -52,7 +50,12 @@ public class JSONReader {
     }
 
     private ArrayList<String> getNextIds(JSONObject jsonElement) {
-        return (ArrayList<String>) jsonElement.get("next");
+        ArrayList<String> nextIds = new ArrayList<>();
+        ArrayList<Pair<String, String>> pairs = retrieveNext(jsonElement);
+        for (Pair<String, String> pair : pairs) {
+            nextIds.add(pair.getKey());
+        }
+        return nextIds;
     }
 
     private Map<String, ElementVertex> createVertexes() {
@@ -74,14 +77,29 @@ public class JSONReader {
         String type = JSONUtils.getStringFromJSON(jsonElement, "type");
 
         String originalSentence = JSONUtils.getStringFromJSON(jsonElement, "name");
+        String finalSentence = JSONUtils.getStringFromJSON(jsonElement, "finalSentence");
         JSONObject finalPhraseJSON = (JSONObject) jsonElement.get("finalPhrase");
-        NLGElement phrase = retrievePhrase(originalSentence, finalPhraseJSON);
+        NLGElement phrase = retrievePhrase(originalSentence, finalSentence, finalPhraseJSON);
 
-        return new ElementVertex(id, sentence, phrase, type);
+        ArrayList<Pair<String, String>> next = retrieveNext(jsonElement);
+
+        return new ElementVertex(id, sentence, phrase, type, next);
     }
 
-    private NLGElement retrievePhrase(String originalSentence, JSONObject jsonElement) {
-        PhraseRetriever retriever = new PhraseRetriever(originalSentence, jsonElement);
+    private ArrayList<Pair<String, String>> retrieveNext(JSONObject jsonElement) {
+        ArrayList<Pair<String, String>> next = new ArrayList<>();
+        ArrayList<JSONObject> nextJSON = (ArrayList<JSONObject>) jsonElement.get("next");
+        for (JSONObject jsonObject : nextJSON) {
+            String id = JSONUtils.getStringFromJSON(jsonObject, "id");
+            String name = JSONUtils.getStringFromJSON(jsonObject, "name");
+            Pair<String, String> pair = new ImmutablePair<>(id, name);
+            next.add(pair);
+        }
+        return next;
+    }
+
+    private NLGElement retrievePhrase(String originalSentence, String finalSentence, JSONObject jsonElement) {
+        PhraseRetriever retriever = new PhraseRetriever(originalSentence, finalSentence, jsonElement);
         return retriever.getPhrase();
     }
 
