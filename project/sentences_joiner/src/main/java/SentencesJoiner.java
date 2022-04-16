@@ -17,14 +17,14 @@ public class SentencesJoiner {
         if (sentences.size() == 0) return new Sentence();
 
         if (joiningBranches(vertex, sentences)) {
-//            System.out.println(sentences.size());
+            System.out.println(sentences.size());
 //            System.out.println(vertexIsFirstGateway(vertex, sentences));
-//            vertex.getNextNames().forEach(System.out::println);
-//            sentences.forEach(Sentence::printSentence);
+            vertex.getNextNames().forEach(System.out::println);
+            sentences.forEach(Sentence::printSentence);
             return joinBranches(vertex, sentences);
         }
 
-        if (vertexIsFirstGateway(vertex, sentences)) {
+        if (vertexIsFirstGateway(sentences)) {
             return joinGateways(vertex, sentences);
         }
 
@@ -40,9 +40,7 @@ public class SentencesJoiner {
         return vertex.isOpenGateway() && sentences.size() > 1;
     }
 
-    private boolean vertexIsFirstGateway(ElementVertex vertex, ArrayList<Sentence> sentences) {
-        // TODO Fix comparison with getCoordinatedPhrase
-//        return vertex.isOpenGateway() && vertex.getPhrase() != null && vertex.getPhrase().equals(sentences.get(0).getCoordinatedPhrase());
+    private boolean vertexIsFirstGateway(ArrayList<Sentence> sentences) {
         return sentences.get(0).isFirstGateway();
     }
 
