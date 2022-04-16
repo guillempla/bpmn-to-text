@@ -91,7 +91,7 @@ public class SentencesJoiner {
 
     private void addNameToBranches(ArrayList<String> names, ArrayList<Sentence> sentences) {
         if (names.size() != sentences.size()) {
-            System.out.println("Names size diferent than sentences size");
+            System.out.println("Names size different than sentences size");
             return;
         }
 
