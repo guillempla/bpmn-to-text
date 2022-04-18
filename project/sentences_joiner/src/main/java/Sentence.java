@@ -89,7 +89,7 @@ public class Sentence {
 
     private String realizeSentence(NLGElement sentence) {
         try {
-            return realiser.realiseSentence(sentence);
+            return realiser.realise(sentence).getRealisation();
         } catch (Exception e) {
             return "";
         }
