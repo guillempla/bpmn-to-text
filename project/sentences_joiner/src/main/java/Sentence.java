@@ -114,7 +114,6 @@ public class Sentence {
     }
 
     public void addCoordinateSentence(Sentence sentence) {
-        // TODO Afegir els vertexs
         String realizedSentence = sentence.sentenceToString();
         if (Character.isUpperCase(realizedSentence.charAt(0))) {
             realizedSentence = realizedSentence.toLowerCase();
