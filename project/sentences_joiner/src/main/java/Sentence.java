@@ -20,8 +20,8 @@ public class Sentence {
         this.realiser = new Realiser(lexicon);
         this.nlgFactory = new NLGFactory(lexicon);
 
-        this.joinedVertex = new ArrayList<>(); // TODO Add joined vertexes
-        this.isFirstGateway = false; // TODO Check when isFirstGateway
+        this.joinedVertex = new ArrayList<>();
+        this.isFirstGateway = false;
 
         this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         this.coordinatedPhrase.setConjunction("then");
@@ -34,7 +34,7 @@ public class Sentence {
 
         this.joinedVertex = new ArrayList<>();
         this.joinedVertex.add(vertex);
-        this.isFirstGateway = vertex.isOpenGateway(); // TODO Check when isFirstGateway
+        this.isFirstGateway = vertex.isOpenGateway();
 
         this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         this.coordinatedPhrase.setConjunction("then");
@@ -43,7 +43,6 @@ public class Sentence {
     }
 
     public void addCoordinateSentence(NLGElement sentence) {
-        // TODO Afegir els vertexs
         String realizedSentence = realizeSentence(sentence);
         if (realizedSentence.equals("")) {
             return;
