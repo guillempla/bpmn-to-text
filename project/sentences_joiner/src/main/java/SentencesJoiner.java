@@ -17,10 +17,10 @@ public class SentencesJoiner {
         if (sentences.size() == 0) return new Sentence();
 
         if (joiningBranches(sentences)) {
-            System.out.println(sentences.size());
+//            System.out.println(sentences.size());
 //            System.out.println(vertexIsFirstGateway(vertex, sentences));
-            vertex.getNextNames().forEach(System.out::println);
-            sentences.forEach(Sentence::printSentence);
+//            vertex.getNextNames().forEach(System.out::println);
+//            sentences.forEach(Sentence::printSentence);
             return joinBranches(vertex, sentences);
         }
 
@@ -91,7 +91,9 @@ public class SentencesJoiner {
 
     private void addNameToBranches(ArrayList<String> names, ArrayList<Sentence> sentences) {
         if (names.size() != sentences.size()) {
-            System.out.println("Names size different than sentences size");
+            System.out.println("ERROR: Names size different than sentences size");
+            System.out.println("    " + names);
+            System.out.println("    " + sentences);
             return;
         }
 

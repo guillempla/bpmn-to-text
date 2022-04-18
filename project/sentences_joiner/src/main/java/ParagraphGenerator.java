@@ -79,8 +79,9 @@ public class ParagraphGenerator {
                 }
                 else {
                     System.out.println("ERROR: Gate has no child with id: " + id);
-                    System.out.println(entry.getNextIds());
-                    nodesChildren.forEach(nodeTest -> System.out.println(nodeTest.getName()));
+                    System.out.println("    " + entry.getNextIds());
+                    nodesChildren.forEach(nodeTest -> System.out.println("    " + nodeTest.getName()));
+                    System.out.println();
                     printRPSTNode(node);
                     return null;
                 }
@@ -140,11 +141,11 @@ public class ParagraphGenerator {
     private void printRPSTNode(IRPSTNode<DirectedEdge, Vertex> node) {
         ElementVertex entry = (ElementVertex) node.getEntry();
         ElementVertex exit = (ElementVertex) node.getExit();
-        System.out.println(entry.getElementId());
-        System.out.println(entry.getType());
-        System.out.println(exit != null ? exit.getElementId() : "ExitNull");
-//        System.out.println(entry.isVisited());
-        System.out.println(node.getType());
-        System.out.println(isLeaf(node) ? "LEAF" : "No Leaf");
+        System.out.println("    " + entry.getElementId());
+        System.out.println("    " + entry.getType());
+        System.out.println(exit != null ? "    " + exit.getElementId() : "    ExitNull");
+//        System.out.println("    " + entry.isVisited());
+        System.out.println("    " + node.getType());
+        System.out.println(isLeaf(node) ? "    LEAF" : "    No Leaf");
     }
 }
