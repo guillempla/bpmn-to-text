@@ -50,7 +50,7 @@ public class ElementVertex extends Vertex {
     }
 
     public Boolean isBifurcation() {
-        return this.getNext().size() > 1;
+        return next.size() > 1;
     }
 
     public Boolean isAdded() {
