@@ -105,7 +105,7 @@ public class ParagraphGenerator {
         ElementVertex entry = (ElementVertex) child.getEntry();
         Sentence sentence = traverseTree(child);
         if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printlnSentence);
-        else System.out.println("ERROR: Children Sentences contain NULL!");
+        else System.out.println("WARNING: Children Sentences contain NULL!");
         System.out.println();
         entry.setAdded(true);
         childrenSentences.add(sentence);
