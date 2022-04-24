@@ -49,6 +49,10 @@ public class ElementVertex extends Vertex {
         return this.type.toLowerCase().contains("gateway");
     }
 
+    public Boolean isBifurcation() {
+        return this.getNext().size() > 1;
+    }
+
     public Boolean isAdded() {
         return this.added;
     }
