@@ -59,6 +59,10 @@ public class Sentence {
         }
     }
 
+    public String getIdOfFirstJoinedVertex() {
+        return joinedVertex.get(0).getElementId();
+    }
+
     public boolean isFirstGateway() {
         return isFirstGateway;
     }
