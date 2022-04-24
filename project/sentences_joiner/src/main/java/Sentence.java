@@ -84,6 +84,10 @@ public class Sentence {
     }
 
     public void printSentence() {
+        System.out.print(sentenceToString() + ", ");
+    }
+
+    public void printlnSentence() {
         System.out.println(sentenceToString());
     }
 
