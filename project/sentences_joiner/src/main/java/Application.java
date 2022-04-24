@@ -13,14 +13,11 @@ public class Application {
         ArrayList<String> jsonPaths = getJSONPaths(sentencesPath);
         for (String path: jsonPaths) {
             String bpmnName = getJSONNameFromPath(path);
-            ArrayList<String> namesDifferentSize = new ArrayList<>(Arrays.asList("C.6.0.1", "A.2.0.1",
-                    "A.4.1.3", "B.2.0.3", "C.1.1.1", "B.2.0.7", "C.4.0.1", "B.1.0.3", "Order Fulfillment and Procurement.3",
-                    "B.2.0.6", "A.4.0.2", "C.1.0.2"));
             ArrayList<String> gateNoChild = new ArrayList<>(Arrays.asList("A.2.0.1", "C.3.0.1",
                     "Order Fulfillment and Procurement.3", "B.2.0.6"));
             ArrayList<String> rigids = new ArrayList<>(Arrays.asList("C.2.0.4", "C.3.0.1", "C.1.1.1", "B.2.0.6", "A.2.1.1",
                     "C.1.0.2", "C.5.0.1"));
-            if (bpmnName.equals("A.4.0.2") /*namesDifferentSize.contains(bpmnName)*/ /* bpmnName.equals("cook.1")*/
+            if (/*true || bpmnName.equals("A.4.0.2")*/ gateNoChild.contains(bpmnName)
                 /*!namesDifferentSize.contains(bpmnName) && !gateNoChild.contains(bpmnName)*/) {
                 JSONReader reader = new JSONReader(bpmnName, path);
                 //reader.saveJSON();
