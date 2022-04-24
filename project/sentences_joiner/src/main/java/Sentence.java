@@ -59,12 +59,16 @@ public class Sentence {
         }
     }
 
+    public String getIdOfFirstJoinedVertex() {
+        return joinedVertex.get(0).getElementId();
+    }
+
     public boolean isFirstGateway() {
         return isFirstGateway;
     }
 
-    public boolean onlyOneGateway() {
-        return joinedVertex.size() == 1 && joinedVertex.get(0).isOpenGateway();
+    public boolean onlyOneBifurcation() {
+        return joinedVertex.size() == 1 && joinedVertex.get(0).isBifurcation();
     }
 
     public void setFirstGateway(boolean firstGateway) {

@@ -1,227 +1,123 @@
-/home/guillem/.jdks/openjdk-16.0.2/bin/java -javaagent:/usr/share/idea/lib/idea_rt.jar=37721:/usr/share/idea/bin -Dfile.encoding=UTF-8 -classpath /home/guillem/Documents/upc/TFG/project/sentences_joiner/target/classes:/home/guillem/.m2/repository/uk/ac/abdn/SimpleNLG/4.5.0/SimpleNLG-4.5.0.jar:/home/guillem/.m2/repository/gov/nih/nlm/nls/lexaccess/lexaccess-dist/2013/lexaccess-dist-2013.jar:/home/guillem/.m2/repository/org/apache/maven/plugins/maven-antrun-plugin/1.8/maven-antrun-plugin-1.8.jar:/home/guillem/.m2/repository/org/apache/maven/maven-plugin-api/2.2.1/maven-plugin-api-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-project/2.2.1/maven-project-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-settings/2.2.1/maven-settings-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-profile/2.2.1/maven-profile-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-model/2.2.1/maven-model-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-artifact-manager/2.2.1/maven-artifact-manager-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-repository-metadata/2.2.1/maven-repository-metadata-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar:/home/guillem/.m2/repository/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-plugin-registry/2.2.1/maven-plugin-registry-2.2.1.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.jar:/home/guillem/.m2/repository/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar:/home/guillem/.m2/repository/org/apache/maven/maven-artifact/2.2.1/maven-artifact-2.2.1.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-utils/3.0.20/plexus-utils-3.0.20.jar:/home/guillem/.m2/repository/org/apache/ant/ant/1.9.4/ant-1.9.4.jar:/home/guillem/.m2/repository/org/apache/ant/ant-launcher/1.9.4/ant-launcher-1.9.4.jar:/home/guillem/.m2/repository/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar:/home/guillem/.m2/repository/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar:/home/guillem/.m2/repository/com/sun/xml/bind/jaxb-core/2.3.0.1/jaxb-core-2.3.0.1.jar:/home/guillem/.m2/repository/com/sun/xml/bind/jaxb-impl/2.3.1/jaxb-impl-2.3.1.jar:/home/guillem/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar:/home/guillem/.m2/repository/junit/junit/4.10/junit-4.10.jar:/home/guillem/.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-core/0.3.1/jbpt-core-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-deco/0.3.1/jbpt-deco-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-petri/0.3.1/jbpt-petri-0.3.1.jar:/home/guillem/.m2/repository/org/json/json/20090211/json-20090211.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-bpm/0.3.1/jbpt-bpm-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-bp/0.3.1/jbpt-bp-0.3.1.jar:/home/guillem/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar Application
+/home/guillem/.jdks/openjdk-16.0.2/bin/java -javaagent:/usr/share/idea/lib/idea_rt.jar=35317:/usr/share/idea/bin -Dfile.encoding=UTF-8 -classpath /home/guillem/Documents/upc/TFG/project/sentences_joiner/target/classes:/home/guillem/.m2/repository/uk/ac/abdn/SimpleNLG/4.5.0/SimpleNLG-4.5.0.jar:/home/guillem/.m2/repository/gov/nih/nlm/nls/lexaccess/lexaccess-dist/2013/lexaccess-dist-2013.jar:/home/guillem/.m2/repository/org/apache/maven/plugins/maven-antrun-plugin/1.8/maven-antrun-plugin-1.8.jar:/home/guillem/.m2/repository/org/apache/maven/maven-plugin-api/2.2.1/maven-plugin-api-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-project/2.2.1/maven-project-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-settings/2.2.1/maven-settings-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-profile/2.2.1/maven-profile-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-model/2.2.1/maven-model-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-artifact-manager/2.2.1/maven-artifact-manager-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-repository-metadata/2.2.1/maven-repository-metadata-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar:/home/guillem/.m2/repository/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-plugin-registry/2.2.1/maven-plugin-registry-2.2.1.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.jar:/home/guillem/.m2/repository/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar:/home/guillem/.m2/repository/org/apache/maven/maven-artifact/2.2.1/maven-artifact-2.2.1.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-utils/3.0.20/plexus-utils-3.0.20.jar:/home/guillem/.m2/repository/org/apache/ant/ant/1.9.4/ant-1.9.4.jar:/home/guillem/.m2/repository/org/apache/ant/ant-launcher/1.9.4/ant-launcher-1.9.4.jar:/home/guillem/.m2/repository/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar:/home/guillem/.m2/repository/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar:/home/guillem/.m2/repository/com/sun/xml/bind/jaxb-core/2.3.0.1/jaxb-core-2.3.0.1.jar:/home/guillem/.m2/repository/com/sun/xml/bind/jaxb-impl/2.3.1/jaxb-impl-2.3.1.jar:/home/guillem/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar:/home/guillem/.m2/repository/junit/junit/4.10/junit-4.10.jar:/home/guillem/.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-core/0.3.1/jbpt-core-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-deco/0.3.1/jbpt-deco-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-petri/0.3.1/jbpt-petri-0.3.1.jar:/home/guillem/.m2/repository/org/json/json/20090211/json-20090211.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-bpm/0.3.1/jbpt-bpm-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-bp/0.3.1/jbpt-bp-0.3.1.jar:/home/guillem/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar Application
 B.1.0.5
-start event none 3
 
-start event none 3
-the task 8 is abstracted
 
 start event none 3, the task 8 is abstracted then end event none 4
 
 payment.1
-payment retrieval requested
 
 RIGID
 
 
 
-the payment is approved
 
-the credit card is charged
 
-payment retrieval requested
-the condition payment amount? is checked
 
-payment retrieval requested, the condition payment amount? is checked then if the answer is < 1000 € then the credit card is charged then if the answer is >= 1000 € then the payment is approved then the condition approved? is checked
+payment retrieval requested, the condition payment amount? is checked then if the answer is < 1000 € then the condition approved? is checked then the credit card is charged then if the answer is >= 1000 € then the payment is approved then the condition approved? is checked
 
 C.5.0.1
-customer interested in bank offer
 
-customer interested in bank offer
-the customer is interviewed
 
-customer interested in bank offer
-the customer is interviewed
-prove/provide identity
 
 RIGID
 
 
 
-the identity of the economic owner is documented
 
-the condition identity of the economic owner certifiable? is checked
 
-customer interested in bank offer
-the customer is interviewed
-prove/provide identity
-the condition legal entity or individual? is checked
 
 customer interested in bank offer, the customer is interviewed, prove/provide identity, the condition legal entity or individual? is checked then if the answer is individual person then the condition identity of the economic owner certifiable? is checked then if the answer is legal entity then the identity of the economic owner is documented then the condition identity of the economic owner certifiable? is checked
 
 C.2.0.2
-the items are picked
 
-the items are picked
-the truck is loaded
 
-the items are picked
-the truck is loaded
-the items are delivered
 
 the items are picked, the truck is loaded then the items are delivered
 
 A.4.1.2
-the event 3 is started
 
-the event 3 is started
-task 4
 
 the event 3 is started, task 4 then the event 3 is ended
 
 C.1.0.2
-the received is invoiced
 
-the received is invoiced
-is assigned
 
 RIGID
 
-does invoice the approved
-
-does invoice the approved
-rechnung klären
 
 
-the condition does invoice the approved is checked, rechnung klären then the condition does review the successful is checked
-
-the condition does invoice the approved is checked, rechnung klären then the condition does review the successful is checked
-the condition does invoice the approved is checked
 
 
-the bank transfer is prepared
 
-the bank transfer is prepared
-the invoice is archived
 
-ERROR: Names size different than sentences size
-    [yes, no]
-    [Sentence@75ae2ffd, Sentence@2552e0af, Sentence@3f741947]
-    [the bank transfer is prepared, the invoice is archived, the processed is invoiced, ]
-the condition does invoice the approved is checked, rechnung klären then the condition does review the successful is checked
-the condition does invoice the approved is checked
-the invoice is approved
 
-the condition does invoice the approved is checked, rechnung klären then the condition does review the successful is checked
-the condition does invoice the approved is checked
-the invoice is approved
-the bank transfer is prepared, the invoice is archived then the processed is invoiced
 
-the received is invoiced
-is assigned
-the invoice is approved
 
-the received is invoiced, is assigned, the invoice is approved then the condition does invoice the approved is checked, rechnung klären then the condition does review the successful is checked, the condition does invoice the approved is checked, the invoice is approved, the bank transfer is prepared, the invoice is archived then the processed is invoiced then invoice not processed
+
+
+the received is invoiced, is assigned, the invoice is approved then the condition does invoice the approved is checked, the bank transfer is prepared, the invoice is archived then the processed is invoiced, the condition does review the successful is checked then invoice not processed, the condition does invoice the approved is checked, the invoice is approved then rechnung klären then the condition does review the successful is checked
 
 A.4.0.4
-the event 4 is started
 
-the event 4 is started
-task 6
 
 the event 4 is started, task 6 then the event 4 is ended
 
 B.1.0.4
-start event none 2
 
-start event none 2
-the task 6 is abstracted
 
 start event none 2, the task 6 is abstracted then end event none 3
 
 A.4.0.2
-the event 2 is started
-
-
-expanded sub-process 2
 
 
 
-expanded sub-process 1
 
-expanded sub-process 1
-task 5
 
-ERROR: Names size different than sentences size
-    [null, null]
-    [Sentence@8625919, Sentence@2017c718, Sentence@3c04edee]
-    [expanded sub-process 1, task 5, the event 2 is ended, ]
-if the answer is null then expanded sub-process 2 then if the answer is null then the event 5 is ended
 
-the event 2 is started
-task 3
 
-the event 2 is started, task 3 then if the answer is null then if the answer is null then expanded sub-process 2 then if the answer is null then the event 5 is ended then if the answer is null then expanded sub-process 1, task 5 then the event 2 is ended
+
+
+the event 2 is started, task 3 then if the answer is null then expanded sub-process 2 then the event 5 is ended then if the answer is null then expanded sub-process 1, task 5 then the event 2 is ended
 
 A.2.1.1
-the event is started
 
-the event is started
-task 1
 
 RIGID
 
 
-task 2
 
-task 2
-task 3
 
-the event is started
-task 1
-the condition gateway  (split flow) is checked
 
 the event is started, task 1, the condition gateway  (split flow) is checked then if the answer is default then task 2, if the answer is null then task 3 then if the answer is null then task 4
 
 C.6.0.3
-booking
-
-
-hotel
 
 
 
-flight
-
-hotel
-
-booking
 
 
-booking
 
-if the answer is null then hotel then if the answer is null then flight
+
+
 
 booking then if the answer is null then hotel then if the answer is null then flight
 
 B.2.0.6
-start event 2 message
 
-start event 2 message
-task 11
 
 RIGID
 
 
-intermediate event message catch 2
 
-intermediate event message catch 2
-task 21
 
-intermediate event message catch 2
-task 21
-expanded sub-process 2
 
-ERROR: Names size different than sentences size
-    [null, null, null]
-    [Sentence@7774558a, Sentence@53d2af4d, Sentence@1c5ac765, Sentence@29fdb35a]
-    [intermediate event message catch 2, task 21, expanded sub-process 2, task 23, ]
 
 ERROR: Gate has no child with id: _034907bf-d3d7-4629-818c-14c3e69d5bc6
     [_05c6bc89-5265-435c-8a9e-533c44a6888b, _034907bf-d3d7-4629-818c-14c3e69d5bc6, _f2081fdb-3b8a-480b-9f61-fbf683e2018c]
-    P0
     P1
-    P3
     [_73343358-7838-48a1-baf2-2b0266e3a55b->_087d0602-ff51-491e-a021-d2e7c940dbd8]
+    P0
+    P3
 
     _be29f267-9d56-46ef-8bbc-e13513b25fce
     eventBasedGateway
@@ -230,25 +126,10 @@ ERROR: Gate has no child with id: _034907bf-d3d7-4629-818c-14c3e69d5bc6
     No Leaf
 
 
-intermediate event timer catch
 
-intermediate event timer catch
-expanded call activity
 
-intermediate event timer catch
-expanded call activity
-the task 15 is serviced
 
-intermediate event timer catch
-expanded call activity
-the task 15 is serviced
-the task 16 is received
 
-ERROR: Names size different than sentences size
-    [null, null, null]
-    [Sentence@5d314db, Sentence@19b3aa32, Sentence@7e1fb3f2, Sentence@6894112d, Sentence@757cb528]
-    [intermediate event timer catch, expanded call activity, the task 15 is serviced, the task 16 is received, end event 6 message, ]
-ERROR: Children Sentences contain NULL!
 
 ERROR: Gate has no child with id: _f2081fdb-3b8a-480b-9f61-fbf683e2018c
     [_05c6bc89-5265-435c-8a9e-533c44a6888b, _034907bf-d3d7-4629-818c-14c3e69d5bc6, _f2081fdb-3b8a-480b-9f61-fbf683e2018c]
@@ -258,70 +139,37 @@ ERROR: Gate has no child with id: _f2081fdb-3b8a-480b-9f61-fbf683e2018c
     ExitNull
     BOND
     No Leaf
-start event 2 message
-task 11
-the condition event base gateway 3 is checked
 
 start event 2 message, task 11 then the condition event base gateway 3 is checked
 
 B.2.0.4
-the event 2 is started
 
-the event 2 is started
-user task 7 standard loop
 
 the event 2 is started, user task 7 standard loop then the event 2 is ended
 
 B.2.0.5
-start event 5 none
 
-start event 5 none
-the task 22 is serviced
 
 start event 5 none, the task 22 is serviced then end event 8 none
 
 B.2.0.8
-the event 7 is started
-
-the event 7 is started
-intermediate event signal catch
-
-the event 7 is started
-intermediate event signal catch
-task 31
 
 
-the event 12 is ended
 
-the event 7 is started
-intermediate event signal catch
-task 31
-the condition exclusive gateway 7 is checked
+
+
 
 the event 7 is started, intermediate event signal catch, task 31, the condition exclusive gateway 7 is checked then if the answer is null then the event 12 is ended then if the answer is null then end event 13 error
 
 B.1.0.2
-the event timer is started
 
-the event timer is started
-the task 1 is abstracted
 
-the event timer is started
-the task 1 is abstracted
-user task 2
 
-the event timer is started
-the task 1 is abstracted
-user task 2
-the task 3 is serviced
 
 the event timer is started, the task 1 is abstracted, user task 2, the task 3 is serviced then end event none 1
 
 Order Fulfillment and Procurement.2
-stock level below minimum
 
-stock level below minimum
-procurement
 
 stock level below minimum then procurement
 
@@ -329,13 +177,10 @@ Order Fulfillment and Procurement.3
 
 
 
-the availability is checked with supplier
-
-
 ERROR: Gate has no child with id: _CB87E85E-0561-4EBB-84F8-6AB108ADC29B
     [_CB87E85E-0561-4EBB-84F8-6AB108ADC29B, _46776D85-8D02-4C88-A4CE-AEAF6A9EA545, _F47CA4E4-62CB-4DCB-BFC3-6EB7583EE758]
+    P1
     [_AFA53968-8985-4F4D-A274-606F4C63F547->_46776D85-8D02-4C88-A4CE-AEAF6A9EA545]
-    P3
 
     _AFA53968-8985-4F4D-A274-606F4C63F547
     exclusiveGateway
@@ -343,15 +188,8 @@ ERROR: Gate has no child with id: _CB87E85E-0561-4EBB-84F8-6AB108ADC29B
     BOND
     No Leaf
 
-ERROR: Children Sentences contain NULL!
 
-ERROR: Children Sentences contain NULL!
 
-ERROR: Names size different than sentences size
-    [No, <= 2 Days, >2 Days]
-    [Sentence@200c98b0, Sentence@7736e62b]
-    [is ordered from supplier then the received is articled, the procured is articled, ]
-undeliverable
 
 ERROR: Gate has no child with id: _F47CA4E4-62CB-4DCB-BFC3-6EB7583EE758
     [_CB87E85E-0561-4EBB-84F8-6AB108ADC29B, _46776D85-8D02-4C88-A4CE-AEAF6A9EA545, _F47CA4E4-62CB-4DCB-BFC3-6EB7583EE758]
@@ -362,431 +200,153 @@ ERROR: Gate has no child with id: _F47CA4E4-62CB-4DCB-BFC3-6EB7583EE758
     BOND
     No Leaf
 
-the availability is checked with supplier
-the condition deliverable? is checked
-
 the availability is checked with supplier then the condition deliverable? is checked
 
 B.1.0.3
-the event message is started
-
-
-user task 5
-
-
-collapsed sub-process
-
-collapsed sub-process
-sub process - expanded
-
-ERROR: Names size different than sentences size
-    [null, null]
-    [Sentence@5e97c1c0, Sentence@15471416, Sentence@a68f5b5]
-    [collapsed sub-process, sub process - expanded, exclusive gateway convergence 2, ]
-
-
-the task 7 is serviced
-
-collapsed sub-process, sub process - expanded then exclusive gateway convergence 2
-
-user task 5
-the condition exclusive gateway divergence 2 is checked
-
-user task 5
-the condition exclusive gateway divergence 2 is checked
-if the answer is null then collapsed sub-process, sub process - expanded then exclusive gateway convergence 2 then if the answer is null then if the answer is null then the task 7 is serviced then if the answer is null then exclusive gateway convergence 2
 
 
 
 
-call activity collapsed
-
-call activity collapsed
-call activity - expanded
-
-ERROR: Names size different than sentences size
-    [null, null]
-    [Sentence@455369, Sentence@40de5d00, Sentence@2979e63]
-    [call activity collapsed, call activity - expanded, exclusive gateway convergence 1, ]
 
 
-the activity calling a global task is called
 
-call activity collapsed, call activity - expanded then exclusive gateway convergence 1
 
-the condition exclusive gateway divergence 1 is checked
 
-the condition exclusive gateway divergence 1 is checked
-if the answer is null then call activity collapsed, call activity - expanded then exclusive gateway convergence 1 then if the answer is null then if the answer is null then the activity calling a global task is called then if the answer is null then exclusive gateway convergence 1
 
-user task 5, the condition exclusive gateway divergence 2 is checked, if the answer is null then collapsed sub-process, sub process - expanded then exclusive gateway convergence 2 then if the answer is null then if the answer is null then the task 7 is serviced then if the answer is null then exclusive gateway convergence 2 then end event terminate
 
-the event message is started
-the condition the gateway divergence is paralleled is checked
 
-the event message is started, the condition the gateway divergence is paralleled is checked then if the answer is null then user task 5, the condition exclusive gateway divergence 2 is checked, if the answer is null then collapsed sub-process, sub process - expanded then exclusive gateway convergence 2 then if the answer is null then if the answer is null then the task 7 is serviced then if the answer is null then exclusive gateway convergence 2 then end event terminate then if the answer is null then the condition exclusive gateway divergence 1 is checked, if the answer is null then call activity collapsed, call activity - expanded then exclusive gateway convergence 1 then if the answer is null then if the answer is null then the activity calling a global task is called then if the answer is null then exclusive gateway convergence 1 then the event message is ended
+
+
+
+
+
+
+
+
+
+
+
+
+
+the event message is started, the condition the gateway divergence is paralleled is checked then if the answer is null then user task 5, the condition exclusive gateway divergence 2 is checked, if the answer is null then collapsed sub-process, sub process - expanded then exclusive gateway convergence 2 then if the answer is null then the task 7 is serviced then exclusive gateway convergence 2 then end event terminate then if the answer is null then the condition exclusive gateway divergence 1 is checked, if the answer is null then call activity collapsed, call activity - expanded then exclusive gateway convergence 1 then if the answer is null then the activity calling a global task is called then exclusive gateway convergence 1 then the event message is ended
 
 C.5.0.2
-is checked for connected clients
-
-is checked for connected clients
-check if group of connected clients exists
 
 
-document group of connected clients according to capital requirements regulation (crr)
 
 
-document group of connected clients according to capital requirements regulation (crr)
 
-is checked for connected clients
-check if group of connected clients exists
-the condition does group of connected clients existing is checked
 
-is checked for connected clients
-check if group of connected clients exists
-the condition does group of connected clients existing is checked
-document group of connected clients according to capital requirements regulation (crr)
+
 
 is checked for connected clients, check if group of connected clients exists, the condition does group of connected clients existing is checked then document group of connected clients according to capital requirements regulation (crr)
 
 A.4.0.1
-the event 1 is started
 
-the event 1 is started
-task 1
 
-the event 1 is started
-task 1
-task 2
 
 the event 1 is started, task 1, task 2 then the event 1 is ended
 
 C.4.0.2
-new  employee hired
 
-new  employee hired
-the domain account is created
 
-new  employee hired
-the domain account is created
-the workstation is prepared
 
-new  employee hired
-the domain account is created
-the workstation is prepared
-the required applications and permissions is assigned
 
-new  employee hired
-the domain account is created
-the workstation is prepared
-the required applications and permissions is assigned
-the workstation is configured
 
-new  employee hired
-the domain account is created
-the workstation is prepared
-the required applications and permissions is assigned
-the workstation is configured
-the IT part of welcome package is prepared
 
 new  employee hired, the domain account is created, the workstation is prepared, the required applications and permissions is assigned, the workstation is configured, the IT part of welcome package is prepared then workstation and permissions ready
 
 C.1.0.1
-the received is invoiced
-
-the received is invoiced
-the invoice is scanned
-
-the received is invoiced
-the invoice is scanned
-the original is archived
-
-the received is invoiced
-the invoice is scanned
-the original is archived
-approver to  be assigned
-
-the received is invoiced
-the invoice is scanned
-the original is archived
-approver to  be assigned
-is assigned
-
-
-7 days
 
 
 
-invoice review  needed
-
-invoice review  needed
-review and document result
-
-7 days
-
-the received is invoiced
-the invoice is scanned
-the original is archived
-approver to  be assigned
-is assigned
 
 
-the received is invoiced, the invoice is scanned, the original is archived, approver to  be assigned, is assigned then if the answer is null then 7 days then if the answer is null then if the answer is null then invoice review  needed then if the answer is null then review and document result
+
+
+
+
+
+
+
+
+the received is invoiced, the invoice is scanned, the original is archived, approver to  be assigned, is assigned then if the answer is null then 7 days then if the answer is null then invoice review  needed then review and document result
 
 C.4.0.1
-candidate accepted offer
 
 
 
-the terms of contract are reviewed
-
-the condition contract terms accepted ? is checked
-
-candidate accepted offer
-the candidate contract is sent
-
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
 
 
-the employee of company policies is informed
-
-the employee of company policies is informed
-introduce employee to company mission, vision and values
-
-the employee of company policies is informed
-introduce employee to company mission, vision and values
-training for time reports sick leave and holidays is performed
-
-the employee of company policies is informed
-introduce employee to company mission, vision and values
-training for time reports sick leave and holidays is performed
-is registered for medical insurance
-
-ERROR: Names size different than sentences size
-    [null, null]
-    [Sentence@3eec6bc3, Sentence@54d46e49, Sentence@412216a0, Sentence@349fb6fb, Sentence@69f071d8]
-    [the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance, non-exclusive gateway, ]
 
 
-the preparations for a new employee are requested
-
-the preparations for a new employee are requested
-new employee in department x
-
-ERROR: Names size different than sentences size
-    [null, null]
-    [Sentence@a7fa3b3, Sentence@7f0a1475, Sentence@6c2b37fc]
-    [the preparations for a new employee are requested, new employee in department x, non-exclusive gateway, ]
-the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway
-
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
-the condition non-exclusive gateway is checked
-
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
-the condition non-exclusive gateway is checked
-if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway
-
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
-the condition non-exclusive gateway is checked
-if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway
-the new employee is introduced to the team
-
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
-the condition non-exclusive gateway is checked
-if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway
-the new employee is introduced to the team
-training for position is performed
 
 
-input from it ready
-
-ERROR: Names size different than sentences size
-    [null, null, null]
-    [Sentence@6a47a94a, Sentence@4f5cf09a]
-    [input from it ready, non-exclusive gateway, ]
 
 
-is inputed from payroll ready
-
-ERROR: Names size different than sentences size
-    [null, null, null]
-    [Sentence@5f038b53, Sentence@8822682]
-    [is inputed from payroll ready, non-exclusive gateway, ]
-input from it ready then non-exclusive gateway
 
 
-input from facilities ready
 
-ERROR: Names size different than sentences size
-    [null, null, null]
-    [Sentence@581d5783, Sentence@568b0990]
-    [input from facilities ready, non-exclusive gateway, ]
-input from it ready then non-exclusive gateway
-is inputed from payroll ready then non-exclusive gateway
 
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
-the condition non-exclusive gateway is checked
-if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway
-the new employee is introduced to the team
-training for position is performed
-the condition non-exclusive gateway is checked
 
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
-the condition non-exclusive gateway is checked
-if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway
-the new employee is introduced to the team
-training for position is performed
-the condition non-exclusive gateway is checked
-if the answer is null then input from it ready then non-exclusive gateway, if the answer is null then is inputed from payroll ready then non-exclusive gateway then if the answer is null then input from facilities ready then non-exclusive gateway
 
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
-the condition non-exclusive gateway is checked
-if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway
-the new employee is introduced to the team
-training for position is performed
-the condition non-exclusive gateway is checked
-if the answer is null then input from it ready then non-exclusive gateway, if the answer is null then is inputed from payroll ready then non-exclusive gateway then if the answer is null then input from facilities ready then non-exclusive gateway
-the welcome package is compiled
 
-candidate accepted offer
-the candidate contract is sent
-the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent
-get signature on contract and notify responsible department
-the condition non-exclusive gateway is checked
-if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway
-the new employee is introduced to the team
-training for position is performed
-the condition non-exclusive gateway is checked
-if the answer is null then input from it ready then non-exclusive gateway, if the answer is null then is inputed from payroll ready then non-exclusive gateway then if the answer is null then input from facilities ready then non-exclusive gateway
-the welcome package is compiled
-the employee welcome package is given
 
-candidate accepted offer, the candidate contract is sent, the condition contract terms accepted ? is checked then if the answer is yes then the terms of contract are reviewed then if the answer is no then the candidate contract is sent, get signature on contract and notify responsible department, the condition non-exclusive gateway is checked, if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway, the new employee is introduced to the team, training for position is performed, the condition non-exclusive gateway is checked, if the answer is null then input from it ready then non-exclusive gateway, if the answer is null then is inputed from payroll ready then non-exclusive gateway then if the answer is null then input from facilities ready then non-exclusive gateway, the welcome package is compiled, the employee welcome package is given then the event is ended
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+candidate accepted offer, the candidate contract is sent, the condition contract terms accepted ? is checked then the terms of contract are reviewed then the candidate contract is sent, get signature on contract and notify responsible department, the condition non-exclusive gateway is checked, if the answer is null then the employee of company policies is informed, introduce employee to company mission, vision and values, training for time reports sick leave and holidays is performed, is registered for medical insurance then non-exclusive gateway then if the answer is null then the preparations for a new employee are requested, new employee in department x then non-exclusive gateway, the new employee is introduced to the team, training for position is performed, the condition non-exclusive gateway is checked, if the answer is null then input from it ready then non-exclusive gateway, if the answer is null then is inputed from payroll ready then non-exclusive gateway then if the answer is null then input from facilities ready then non-exclusive gateway, the welcome package is compiled, the employee welcome package is given then the event is ended
 
 B.2.0.7
-start event 6 signal
-
-start event 6 signal
-task 25
 
 
-task 26
-
-task 26
-intermediate event signal throw 2
-
-task 26
-intermediate event signal throw 2
-inclusive gateway 6
-
-task 26
-intermediate event signal throw 2
-inclusive gateway 6
-task 28
-
-ERROR: Names size different than sentences size
-    [null, null]
-    [Sentence@3da9a2e9, Sentence@5c84d35d, Sentence@7a671149, Sentence@75e207f7, Sentence@52c5d48]
-    [task 26, intermediate event signal throw 2, inclusive gateway 6, task 28, the gateway 7 is paralleled, ]
 
 
-expanded sub-process 3
 
-expanded sub-process 3
-task 32
 
-ERROR: Names size different than sentences size
-    [null, null]
-    [Sentence@6fc19ec6, Sentence@7f70c1af, Sentence@48e8ecbe]
-    [expanded sub-process 3, task 32, the gateway 7 is paralleled, ]
-task 26, intermediate event signal throw 2, inclusive gateway 6, task 28 then the gateway 7 is paralleled
 
-start event 6 signal
-task 25
-the condition the gateway 5 is paralleled is checked
 
-start event 6 signal
-task 25
-the condition the gateway 5 is paralleled is checked
-if the answer is null then task 26, intermediate event signal throw 2, inclusive gateway 6, task 28 then the gateway 7 is paralleled then if the answer is null then expanded sub-process 3, task 32 then the gateway 7 is paralleled
+
+
+
+
+
 
 start event 6 signal, task 25, the condition the gateway 5 is paralleled is checked, if the answer is null then task 26, intermediate event signal throw 2, inclusive gateway 6, task 28 then the gateway 7 is paralleled then if the answer is null then expanded sub-process 3, task 32 then the gateway 7 is paralleled then end event 11 escalation
 
 C.1.1.1
-the received is invoiced
 
-the received is invoiced
-is assigned
 
 RIGID
 
 
-the condition does review the successful is checked then the invoice is approved
 
 
-rechnung klären
-
-the condition does review the successful is checked then the invoice is approved
-the condition does invoice the approved is checked
 
 
-the bank transfer is prepared
 
-the bank transfer is prepared
-the invoice is archived
 
-ERROR: Names size different than sentences size
-    [yes, no]
-    [Sentence@62e99e24, Sentence@6197c57a, Sentence@761ffb1f]
-    [the bank transfer is prepared, the invoice is archived, the processed is invoiced, ]
-the condition does review the successful is checked then the invoice is approved
-the condition does invoice the approved is checked
-rechnung klären then the condition does review the successful is checked
 
-the condition does review the successful is checked then the invoice is approved
-the condition does invoice the approved is checked
-rechnung klären then the condition does review the successful is checked
-the bank transfer is prepared, the invoice is archived then the processed is invoiced
 
-the received is invoiced
-is assigned
-the invoice is approved
 
-the received is invoiced, is assigned, the invoice is approved then the condition does review the successful is checked then the invoice is approved, the condition does invoice the approved is checked, rechnung klären then the condition does review the successful is checked, the bank transfer is prepared, the invoice is archived then the processed is invoiced then invoice not processed
+
+the received is invoiced, is assigned, the invoice is approved then the condition does review the successful is checked then the invoice is approved, invoice not processed, the condition does invoice the approved is checked, rechnung klären then the condition does review the successful is checked, the condition does invoice the approved is checked then the bank transfer is prepared, the invoice is archived then the processed is invoiced
 
 B.1.0.1
-start event none 1
 
-start event none 1
-the task 4 is abstracted
 
 start event none 1, the task 4 is abstracted then end event none 2
 
@@ -794,124 +354,63 @@ C.2.0.3
 
 
 
-the item is added to cart
 
 
-the item is added to cart then the condition done shopping? is checked
 
 
-the products are browsed on amazon
 
-
-the products are browsed on amazon
-the item is added to cart then the condition done shopping? is checked then the products are browsed on amazon
-
-
-the products are browsed on amazon
-the item is added to cart then the condition done shopping? is checked then the products are browsed on amazon
-checkout
-
-
-the products are browsed on amazon
-the item is added to cart then the condition done shopping? is checked then the products are browsed on amazon
-checkout
-the items are received
 
 the products are browsed on amazon, the item is added to cart then the condition done shopping? is checked then the products are browsed on amazon, checkout then the items are received
 
 C.2.0.1
-the credit card information is received
 
-the credit card information is received
-the payment is taken
 
 the credit card information is received, the payment is taken then the result is sent
 
 C.2.0.5
-the order is received
 
-the order is received
-the items are picked
 
-the order is received
-the items are picked
-is placed in bin
 
-the order is received
-the items are picked
-is placed in bin
-receive and package items
 
-the order is received
-the items are picked
-is placed in bin
-receive and package items
-is sent to carrier dock
 
 the order is received, the items are picked, is placed in bin, receive and package items then is sent to carrier dock
 
 C.4.0.4
-new  employee  hired
 
-new  employee  hired
-the access card is prepared
 
-new  employee  hired
-the access card is prepared
-the access details are configured
 
 new  employee  hired, the access card is prepared, the access details are configured then the card ready is accessed
 
 C.4.0.3
-new  employee hired
-
-new  employee hired
-the provided information is validated
 
 
-missing points are clarified
 
 
-if the answer is no then missing points are clarified then if the answer is yes then the payroll system is updated
 
-new  employee hired
-the provided information is validated
-the condition all necessary data available? is checked
 
-new  employee hired
-the provided information is validated
-the condition all necessary data available? is checked
-if the answer is no then if the answer is no then missing points are clarified then if the answer is yes then the payroll system is updated then if the answer is yes then the payroll system is updated
+
 
 new  employee hired, the provided information is validated, the condition all necessary data available? is checked, if the answer is no then if the answer is no then missing points are clarified then if the answer is yes then the payroll system is updated then if the answer is yes then the payroll system is updated then payroll ready
 
 A.4.1.4
-the event 4 is started
 
-the event 4 is started
-task 6
 
 the event 4 is started, task 6 then the event 4 is ended
 
 C.3.0.1
-the customer request is received
 
-the customer request is received
-the customer request is analysed
 
 RIGID
 
 
 
-the emergency repair is performed
 
-the fridge is replaced
 
 ERROR: Gate has no child with id: _2b6bc88e-d3be-4704-87d1-c264bf704589
     [_a92069f7-377b-4dbd-a1fd-1da071aabf6d, _cd6f230f-13c3-4027-aa3e-57de601a1ab2, _2b6bc88e-d3be-4704-87d1-c264bf704589]
-    [_a92069f7-377b-4dbd-a1fd-1da071aabf6d->_177bd313-c6c9-4df5-8f82-313beb30d2eb]
     [_936c0bfa-5ebf-4546-8d1a-cce556148788->_b3dc1906-d4d3-40c5-aaf6-5a74148ae887]
-    [_936c0bfa-5ebf-4546-8d1a-cce556148788->_a92069f7-377b-4dbd-a1fd-1da071aabf6d]
+    [_a92069f7-377b-4dbd-a1fd-1da071aabf6d->_177bd313-c6c9-4df5-8f82-313beb30d2eb]
+    [_604be023-654c-44df-a64c-365254a100cd->_a92069f7-377b-4dbd-a1fd-1da071aabf6d]
 
     _604be023-654c-44df-a64c-365254a100cd
     exclusiveGateway
@@ -921,16 +420,13 @@ ERROR: Gate has no child with id: _2b6bc88e-d3be-4704-87d1-c264bf704589
 
 ERROR: Gate has no child with id: _cd6f230f-13c3-4027-aa3e-57de601a1ab2
     [_a92069f7-377b-4dbd-a1fd-1da071aabf6d, _cd6f230f-13c3-4027-aa3e-57de601a1ab2, _2b6bc88e-d3be-4704-87d1-c264bf704589]
-    P4
+    P3
 
     _604be023-654c-44df-a64c-365254a100cd
     exclusiveGateway
     ExitNull
     BOND
     No Leaf
-the customer request is received
-the customer request is analysed
-the condition service type is checked
 
 the customer request is received, the customer request is analysed then the condition service type is checked
 
@@ -938,382 +434,160 @@ model_01.1
 
 
 
-which option?
-
-
-up
 
 
 
-down
-
-up
-
-
-which option?
 
 
 
-which option?
-
-if the answer is null then up then if the answer is null then down
-
-
-which option?
-
-if the answer is null then up then if the answer is null then down
-manual task 2
-
-
-which option?
-
-if the answer is null then up then if the answer is null then down
-manual task 2
-task 3
-
-
-task up
 
 
 
-task down
-
-task up
-
-
-which option?
-
-if the answer is null then up then if the answer is null then down
-manual task 2
-task 3
 
 
 
-which option?
 
-if the answer is null then up then if the answer is null then down
-manual task 2
-task 3
 
-if the answer is option==1 then task up then if the answer is null then task down
+
+
 
 which option?, if the answer is null then up then if the answer is null then down, manual task 2, task 3 then if the answer is option==1 then task up then if the answer is null then task down
 
 cook.1
-the noticed is hungered
-
-the noticed is hungered
-the recipe is chosen
 
 
 
-the pasta is cooked
 
 
 
-the steak is cooked
-
-the pasta is cooked
-
-the condition desired dish? is checked
-
-the condition desired dish? is checked
-if the answer is pasta then the pasta is cooked then if the answer is steak then the steak is cooked
 
 
 
-the salad is prepared
 
-the condition desired dish? is checked then if the answer is pasta then the pasta is cooked then if the answer is steak then the steak is cooked
 
-the noticed is hungered
-the recipe is chosen
-the condition desired components? is checked
 
-the noticed is hungered
-the recipe is chosen
-the condition desired components? is checked
-if the answer is something real then the condition desired dish? is checked then if the answer is pasta then the pasta is cooked then if the answer is steak then the steak is cooked then if the answer is salad then the salad is prepared
 
-the noticed is hungered
-the recipe is chosen
-the condition desired components? is checked
-if the answer is something real then the condition desired dish? is checked then if the answer is pasta then the pasta is cooked then if the answer is steak then the steak is cooked then if the answer is salad then the salad is prepared
-the meal is eaten
+
+
+
+
 
 the noticed is hungered, the recipe is chosen, the condition desired components? is checked, if the answer is something real then the condition desired dish? is checked then if the answer is pasta then the pasta is cooked then if the answer is steak then the steak is cooked then if the answer is salad then the salad is prepared, the meal is eaten then the satisfied is hungered
 
 B.2.0.9
-the event 8 is started
 
-the event 8 is started
-task 34
 
 the event 8 is started, task 34 then the event 15 is ended
 
 B.2.0.1
-the event 3 is started
 
-the event 3 is started
-user task 12 muti-inst seq
 
-the event 3 is started
-user task 12 muti-inst seq
-user task 13
 
-the event 3 is started
-user task 12 muti-inst seq
-user task 13
-the task 14 is serviced
 
 the event 3 is started, user task 12 muti-inst seq, user task 13, the task 14 is serviced then the event 4 is ended
 
 A.3.0.1
-the event is started
 
-the event is started
-task 1
 
-the event is started
-task 1
-collapsed sub-process
 
-the event is started
-task 1
-collapsed sub-process
-task 2
 
 the event is started, task 1, collapsed sub-process, task 2 then the event 1 is ended
 
 B.2.0.3
-start event 1 timer
-
-start event 1 timer
-the task 1 is abstracted
-
-start event 1 timer
-the task 1 is abstracted
-the task 2 is sent
-
-start event 1 timer
-the task 1 is abstracted
-the task 2 is sent
-user task 3
 
 
-the task 4 is serviced
-
-the task 4 is serviced
-intermediate event signal throw 1
-
-the task 4 is serviced
-intermediate event signal throw 1
-collapsed sub-process 1 multi-instances
-
-the task 4 is serviced
-intermediate event signal throw 1
-collapsed sub-process 1 multi-instances
-task 5
-
-ERROR: Names size different than sentences size
-    [Conditional Sequence Flow, Default Sequence Flow 1]
-    [Sentence@409c8fe5, Sentence@139a236e, Sentence@4763aa4a, Sentence@2cf6318d, Sentence@8b17051]
-    [the task 4 is serviced, intermediate event signal throw 1, collapsed sub-process 1 multi-instances, task 5, the gateway 2 is paralleled, ]
 
 
-the activity calling a global user task is called
 
-the activity calling a global user task is called
-expanded sub-process 1
 
-the activity calling a global user task is called
-expanded sub-process 1
-user task 8
 
-ERROR: Names size different than sentences size
-    [Conditional Sequence Flow, Default Sequence Flow 1]
-    [Sentence@4d78f46b, Sentence@2b4dedfa, Sentence@1b876e1, Sentence@dafedbb]
-    [the activity calling a global user task is called, expanded sub-process 1, user task 8, the gateway 2 is paralleled, ]
-the task 4 is serviced, intermediate event signal throw 1, collapsed sub-process 1 multi-instances, task 5 then the gateway 2 is paralleled
 
-start event 1 timer
-the task 1 is abstracted
-the task 2 is sent
-user task 3
-the condition inclusive gateway 1 is checked
 
-start event 1 timer
-the task 1 is abstracted
-the task 2 is sent
-user task 3
-the condition inclusive gateway 1 is checked
-if the answer is conditional sequence flow then the task 4 is serviced, intermediate event signal throw 1, collapsed sub-process 1 multi-instances, task 5 then the gateway 2 is paralleled then if the answer is default sequence flow 1 then the activity calling a global user task is called, expanded sub-process 1, user task 8 then the gateway 2 is paralleled
+
+
+
+
+
+
+
 
 start event 1 timer, the task 1 is abstracted, the task 2 is sent, user task 3, the condition inclusive gateway 1 is checked, if the answer is conditional sequence flow then the task 4 is serviced, intermediate event signal throw 1, collapsed sub-process 1 multi-instances, task 5 then the gateway 2 is paralleled then if the answer is default sequence flow 1 then the activity calling a global user task is called, expanded sub-process 1, user task 8 then the gateway 2 is paralleled then end event 1 message
 
 A.4.1.1
-the event 1 is started
 
-the event 1 is started
-task 1
 
-the event 1 is started
-task 1
-task 2
 
 the event 1 is started, task 1, task 2 then the event 1 is ended
 
 B.2.0.2
-start event 4 conditional
 
-start event 4 conditional
-user task 12 muti-inst seq
 
-start event 4 conditional
-user task 12 muti-inst seq
-user task 13
 
-start event 4 conditional
-user task 12 muti-inst seq
-user task 13
-the task 14 is serviced
 
 start event 4 conditional, user task 12 muti-inst seq, user task 13, the task 14 is serviced then the event 4 is ended
 
 A.1.0.1
-the event is started
 
-the event is started
-task 1
 
-the event is started
-task 1
-task 2
 
-the event is started
-task 1
-task 2
-task 3
 
 the event is started, task 1, task 2, task 3 then the event is ended
 
 A.4.1.3
-the event 2 is started
-
-
-expanded sub-process 2
 
 
 
-expanded sub-process 1
 
-expanded sub-process 1
-task 5
 
-ERROR: Names size different than sentences size
-    [null, null]
-    [Sentence@34954899, Sentence@79e5f7d2, Sentence@25cd4b7d]
-    [expanded sub-process 1, task 5, the event 2 is ended, ]
-if the answer is null then expanded sub-process 2 then if the answer is null then the event 5 is ended
 
-the event 2 is started
-task 3
 
-the event 2 is started, task 3 then if the answer is null then if the answer is null then expanded sub-process 2 then if the answer is null then the event 5 is ended then if the answer is null then expanded sub-process 1, task 5 then the event 2 is ended
+
+
+the event 2 is started, task 3 then if the answer is null then expanded sub-process 2 then the event 5 is ended then if the answer is null then expanded sub-process 1, task 5 then the event 2 is ended
 
 C.2.0.4
-
 
 RIGID
 
 
-the condition payment accepted? is checked then does retry
 
 
-the order is sent
-
-the condition payment accepted? is checked then does retry
-the condition payment accepted? is checked
-
-the condition payment accepted? is checked then does retry
-the condition payment accepted? is checked
-the order is sent
-
-the condition payment accepted? is checked then does retry
-the condition payment accepted? is checked
-the order is sent
-the order is payed
 
 
-the order is payed
 
-the order is payed then the condition payment accepted? is checked then does retry, the condition payment accepted? is checked, the order is sent then the order is payed
+
+
+the order is payed then the condition does retry is checked then the order is payed, the condition payment accepted? is checked then the order is sent, the condition does retry is checked then the condition payment accepted? is checked
 
 C.7.0.1
-the vacancy is jobed
-
-the vacancy is jobed
-the description is written
-
-
-the advertisement is approved
-
-
-the advertisement is approved then the condition advertisement approved? is checked
-
-the vacancy is jobed
-the description is written
-the advertisement is completed
-
-the vacancy is jobed
-the description is written
-the advertisement is completed
-the advertisement is approved then the condition advertisement approved? is checked then the advertisement is completed
-
-
-is published on homepage
 
 
 
-the other platforms are selected
-
-the other platforms are selected
-is published on other platforms
-
-is published on homepage
-
-the vacancy is jobed
-the description is written
-the advertisement is completed
-the advertisement is approved then the condition advertisement approved? is checked then the advertisement is completed
 
 
-the vacancy is jobed
-the description is written
-the advertisement is completed
-the advertisement is approved then the condition advertisement approved? is checked then the advertisement is completed
 
-if the answer is null then is published on homepage then if the answer is null then if the answer is null then the other platforms are selected then if the answer is null then is published on other platforms
 
-the vacancy is jobed, the description is written, the advertisement is completed, the advertisement is approved then the condition advertisement approved? is checked then the advertisement is completed, if the answer is null then is published on homepage then if the answer is null then if the answer is null then the other platforms are selected then if the answer is null then is published on other platforms then vacancy  advertised
+
+
+
+
+
+
+
+
+
+
+the vacancy is jobed, the description is written, the advertisement is completed, the advertisement is approved then the condition advertisement approved? is checked then the advertisement is completed, if the answer is null then is published on homepage then if the answer is null then the other platforms are selected then is published on other platforms then vacancy  advertised
 
 A.2.0.1
-the event is started
-
-the event is started
-task 1
 
 
-task 2
 
-ERROR: Names size different than sentences size
-    [null, null, null]
-    [Sentence@18b8a32d, Sentence@3f865a53]
-    [task 2, the event is ended, ]
+
 
 ERROR: Gate has no child with id: _4f7d62d7-f0e6-46bc-be00-69e02da38f65
     [_4f7d62d7-f0e6-46bc-be00-69e02da38f65, _e6eb725a-34bc-45c7-aed0-9f9596cd7bee, _7d399717-1aba-47ac-8d7d-8aaa033255e0]
-    P0
+    P1
     P3
 
     _35fe57a7-1302-44e2-bf58-032f11af7ecb
@@ -1322,9 +596,7 @@ ERROR: Gate has no child with id: _4f7d62d7-f0e6-46bc-be00-69e02da38f65
     BOND
     No Leaf
 
-ERROR: Children Sentences contain NULL!
 
-task 2 then the event is ended
 
 ERROR: Gate has no child with id: _7d399717-1aba-47ac-8d7d-8aaa033255e0
     [_4f7d62d7-f0e6-46bc-be00-69e02da38f65, _e6eb725a-34bc-45c7-aed0-9f9596cd7bee, _7d399717-1aba-47ac-8d7d-8aaa033255e0]
@@ -1334,9 +606,6 @@ ERROR: Gate has no child with id: _7d399717-1aba-47ac-8d7d-8aaa033255e0
     _258f51eb-b764-4a71-b681-3a01cca14143
     BOND
     No Leaf
-the event is started
-task 1
-the condition gateway (split flow) is checked
 
 the event is started, task 1 then the condition gateway (split flow) is checked
 
@@ -1344,112 +613,49 @@ C.6.0.2
 
 
 
-the flight is booked
-
-
-
-the hotel is booked
-
-the flight is booked
 
 
 
 
 
-
-if the answer is null then the flight is booked then if the answer is null then the hotel is booked
 
 if the answer is null then the flight is booked then if the answer is null then the hotel is booked then the booked is traveled
 
 Order Fulfillment and Procurement.1
-the received is ordered
-
-the received is ordered
-the availability is checked
 
 
-procurement
 
 
-if the answer is no then procurement then if the answer is yes then the article is shipped
 
-the received is ordered
-the availability is checked
-the condition the available is articled is checked
 
-the received is ordered
-the availability is checked
-the condition the available is articled is checked
-if the answer is no then if the answer is no then procurement then if the answer is yes then the article is shipped then if the answer is yes then the article is shipped
 
-the received is ordered
-the availability is checked
-the condition the available is articled is checked
-if the answer is no then if the answer is no then procurement then if the answer is yes then the article is shipped then if the answer is yes then the article is shipped
-financial settlement
+
 
 the received is ordered, the availability is checked, the condition the available is articled is checked, if the answer is no then if the answer is no then procurement then if the answer is yes then the article is shipped then if the answer is yes then the article is shipped, financial settlement then payment received
 
 C.6.0.1
-the travel request is received
-
-the travel request is received
-the flights and hotel offer is made
-
-
-24 Hours
-
-24 Hours
-the customer offer expired is notified
 
 
 
-the approved is offered
-
-the approved is offered
-the credit card information is requested
-
-the approved is offered
-the credit card information is requested
-booking is made
-
-the approved is offered
-the credit card information is requested
-booking is made
-the credit card is charged
-
-the approved is offered
-the credit card information is requested
-booking is made
-the credit card is charged
-booking is confirmed
-
-ERROR: Names size different than sentences size
-    [null, null, null]
-    [Sentence@69b4766b, Sentence@2e034b59, Sentence@1a246da, Sentence@5ba6a7f8, Sentence@116b95c9, Sentence@25064d3e]
-    [the approved is offered, the credit card information is requested, booking is made, the credit card is charged, booking is confirmed, booking  confirmed, ]
-if the answer is null then 24 hours, if the answer is null then the customer offer expired is notified then if the answer is null then the expired is offered
 
 
-the request is canceled
-
-the request is canceled
-the customer record is updated
-
-if the answer is null then 24 hours, if the answer is null then the customer offer expired is notified then if the answer is null then the expired is offered
-the approved is offered, the credit card information is requested, booking is made, the credit card is charged, booking is confirmed then booking  confirmed
-
-the travel request is received
-the flights and hotel offer is made
 
 
-the travel request is received, the flights and hotel offer is made then if the answer is null then if the answer is null then 24 hours, if the answer is null then the customer offer expired is notified then if the answer is null then the expired is offered, if the answer is null then the approved is offered, the credit card information is requested, booking is made, the credit card is charged, booking is confirmed then booking  confirmed then if the answer is null then if the answer is null then the request is canceled, if the answer is null then the customer record is updated then if the answer is null then the cancelled is requested
+
+
+
+
+
+
+
+
+
+
+
+the travel request is received, the flights and hotel offer is made then if the answer is null then 24 hours, the customer offer expired is notified then the expired is offered, if the answer is null then the approved is offered, the credit card information is requested, booking is made, the credit card is charged, booking is confirmed then booking  confirmed then if the answer is null then the request is canceled, the customer record is updated then the cancelled is requested
 
 A.4.0.3
-the event 3 is started
 
-the event 3 is started
-task 4
 
 the event 3 is started, task 4 then the event 3 is ended
 
