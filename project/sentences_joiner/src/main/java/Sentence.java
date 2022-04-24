@@ -67,8 +67,8 @@ public class Sentence {
         return isFirstGateway;
     }
 
-    public boolean onlyOneGateway() {
-        return joinedVertex.size() == 1 && joinedVertex.get(0).isOpenGateway();
+    public boolean onlyOneBifurcation() {
+        return joinedVertex.size() == 1 && joinedVertex.get(0).isBifurcation();
     }
 
     public void setFirstGateway(boolean firstGateway) {
