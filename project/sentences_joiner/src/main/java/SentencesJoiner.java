@@ -38,8 +38,26 @@ public class SentencesJoiner {
     }
 
     private boolean joiningBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
-        boolean notBranches = sentences.stream().anyMatch(Sentence::onlyOneGateway);
-        return vertex.getNext().size() > 1 && sentences.size() > 1 && !notBranches;
+        if (!vertex.isBifurcation()) return false;
+
+        boolean joiningBranches = true;
+        ArrayList<String> nextIds = vertex.getNextIds();
+
+        for (String id : nextIds) {
+            boolean coincidenceId = false;
+            for (Sentence sentence : sentences) {
+                if (id.equals(sentence.getIdOfFirstJoinedVertex())) {
+                    coincidenceId = true;
+                    break;
+                }
+            }
+            if (!coincidenceId) {
+                joiningBranches = false;
+                break;
+            }
+        }
+
+        return joiningBranches;
     }
 
     private boolean vertexIsFirstGateway(ArrayList<Sentence> sentences) {
