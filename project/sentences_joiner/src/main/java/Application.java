@@ -17,7 +17,7 @@ public class Application {
                     "Order Fulfillment and Procurement.3", "B.2.0.6"));
             ArrayList<String> rigids = new ArrayList<>(Arrays.asList("C.2.0.4", "C.3.0.1", "C.1.1.1", "B.2.0.6", "A.2.1.1",
                     "C.1.0.2", "C.5.0.1"));
-            if (/*true || bpmnName.equals("A.4.0.2")*/ gateNoChild.contains(bpmnName)
+            if (true || bpmnName.equals("A.4.0.2") /*gateNoChild.contains(bpmnName)*/
                 /*!namesDifferentSize.contains(bpmnName) && !gateNoChild.contains(bpmnName)*/) {
                 JSONReader reader = new JSONReader(bpmnName, path);
                 //reader.saveJSON();
