@@ -1,8 +1,10 @@
+import org.apache.commons.lang3.tuple.Pair;
 import simplenlg.framework.NLGElement;
 import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SentencesJoiner {
     private final NLGFactory nlgFactory;
@@ -68,7 +70,7 @@ public class SentencesJoiner {
         Sentence coordinatedSentence = new Sentence();
 //        System.out.println("VERTEX: " + vertex.getSentence());
 //        System.out.println("VERTEX: " + vertex.isBifurcation());
-        addNameToBranches(vertex.getNextNames(), sentences);
+        addNameToBranches(vertex.getNext(), sentences);
         addSentencesToCoordinate(sentences, coordinatedSentence);
 
         return coordinatedSentence;
@@ -110,10 +112,10 @@ public class SentencesJoiner {
         }
     }
 
-    private void addNameToBranches(ArrayList<String> names, ArrayList<Sentence> sentences) {
-        if (names.size() != sentences.size()) {
+    private void addNameToBranches(Map<String, Pair<String, Boolean>> next, ArrayList<Sentence> sentences) {
+        if (next.size() != sentences.size()) {
             System.out.println("ERROR: Names size different than sentences size");
-            System.out.println("    " + names);
+            System.out.println("    " + next);
             System.out.println("    " + sentences);
             System.out.print("    [");
             sentences.forEach(Sentence::printSentence);
@@ -121,11 +123,13 @@ public class SentencesJoiner {
             return;
         }
 
-        for (int i = 0; i < names.size(); i++) {
-            String sentenceString = sentences.get(i).sentenceToString();
-            sentenceString = "If the answer is " + names.get(i) + " then " + sentenceString;
+        for (Sentence sentence : sentences) {
+            String elementId = sentence.getIdOfFirstJoinedVertex();
+            String name = next.get(elementId).getKey();
+            String sentenceString = sentence.sentenceToString();
+            sentenceString = "If the answer is " + name + " then " + sentenceString;
             NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
-            sentences.get(i).setCoordinatedPhrase(branchPhrase);
+            sentence.setCoordinatedPhrase(branchPhrase);
         }
     }
 
