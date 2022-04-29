@@ -1,0 +1,184 @@
+/home/guillem/.jdks/openjdk-16.0.2/bin/java -javaagent:/usr/share/idea/lib/idea_rt.jar=37769:/usr/share/idea/bin -Dfile.encoding=UTF-8 -classpath /home/guillem/Documents/upc/TFG/project/sentences_joiner/target/classes:/home/guillem/.m2/repository/uk/ac/abdn/SimpleNLG/4.5.0/SimpleNLG-4.5.0.jar:/home/guillem/.m2/repository/gov/nih/nlm/nls/lexaccess/lexaccess-dist/2013/lexaccess-dist-2013.jar:/home/guillem/.m2/repository/org/apache/maven/plugins/maven-antrun-plugin/1.8/maven-antrun-plugin-1.8.jar:/home/guillem/.m2/repository/org/apache/maven/maven-plugin-api/2.2.1/maven-plugin-api-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-project/2.2.1/maven-project-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-settings/2.2.1/maven-settings-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-profile/2.2.1/maven-profile-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-model/2.2.1/maven-model-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-artifact-manager/2.2.1/maven-artifact-manager-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-repository-metadata/2.2.1/maven-repository-metadata-2.2.1.jar:/home/guillem/.m2/repository/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar:/home/guillem/.m2/repository/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar:/home/guillem/.m2/repository/org/apache/maven/maven-plugin-registry/2.2.1/maven-plugin-registry-2.2.1.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.jar:/home/guillem/.m2/repository/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar:/home/guillem/.m2/repository/org/apache/maven/maven-artifact/2.2.1/maven-artifact-2.2.1.jar:/home/guillem/.m2/repository/org/codehaus/plexus/plexus-utils/3.0.20/plexus-utils-3.0.20.jar:/home/guillem/.m2/repository/org/apache/ant/ant/1.9.4/ant-1.9.4.jar:/home/guillem/.m2/repository/org/apache/ant/ant-launcher/1.9.4/ant-launcher-1.9.4.jar:/home/guillem/.m2/repository/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar:/home/guillem/.m2/repository/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar:/home/guillem/.m2/repository/com/sun/xml/bind/jaxb-core/2.3.0.1/jaxb-core-2.3.0.1.jar:/home/guillem/.m2/repository/com/sun/xml/bind/jaxb-impl/2.3.1/jaxb-impl-2.3.1.jar:/home/guillem/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar:/home/guillem/.m2/repository/junit/junit/4.10/junit-4.10.jar:/home/guillem/.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-core/0.3.1/jbpt-core-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-deco/0.3.1/jbpt-deco-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-petri/0.3.1/jbpt-petri-0.3.1.jar:/home/guillem/.m2/repository/org/json/json/20090211/json-20090211.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-bpm/0.3.1/jbpt-bpm-0.3.1.jar:/home/guillem/.m2/repository/org/jbpt/jbpt-bp/0.3.1/jbpt-bp-0.3.1.jar:/home/guillem/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar Application
+B.1.0.5
+start event none 3, the task 8 is abstracted then end event none 4
+
+payment.1
+RIGID
+
+payment retrieval requested, the condition payment amount? is checked then if the answer is >= 1000 € then the payment is approved then the condition approved? is checked then if the answer is < 1000 € then the credit card is charged
+
+C.5.0.1
+RIGID
+
+customer interested in bank offer, private customer account manager interviews the customer, prove/provide identity, the condition legal entity or individual? is checked then corporate account manager documents the identity of the economic owner then the condition identity of the economic owner certifiable? is checked
+
+C.2.0.2
+the items are picked, the truck is loaded then the items are delivered
+
+A.4.1.2
+the event 3 is started, task 4 then the event 3 is ended
+
+C.1.0.2
+RIGID
+
+team assistant invoices the received, team assistant assigns, approver approves the invoice then the condition does review the successful is checked then approver approves the invoice, the condition does invoice the approved is checked, rechnung klären then the condition does review the successful is checked, accountant prepares the bank transfer, accountant archives the invoice then accountant invoices the processed, the condition does invoice the approved is checked then invoice not processed
+
+A.4.0.4
+the event 4 is started, task 6 then the event 4 is ended
+
+B.1.0.4
+start event none 2, the task 6 is abstracted then end event none 3
+
+A.4.0.2
+lane 1 starts the event 2, task 3 then if the answer is null then expanded sub-process 2 then lane 2 ends the event 5 then if the answer is null then expanded sub-process 1, task 5 then lane 1 ends the event 2
+
+A.2.1.1
+RIGID
+
+the event is started, task 1, the condition gateway  (split flow) is checked then task 4 then task 3, task 4 then task 2
+
+C.6.0.3
+booking then if the answer is null then hotel then if the answer is null then flight
+
+B.2.0.6
+RIGID
+
+start event 2 message, task 11, the condition event base gateway 3 is checked then intermediate event message catch 2, task 21, expanded sub-process 2 then task 23 then intermediate event message catch, collapsed sub-process 2 then the condition exclusive gateway 4 is checked then intermediate event timer catch, expanded call activity, lane 1 services the task 15, lane 1 receives the task 16 then end event 6 message
+
+B.2.0.4
+the event 2 is started, user task 7 standard loop then the event 2 is ended
+
+B.2.0.5
+start event 5 none, the task 22 is serviced then end event 8 none
+
+B.2.0.8
+the event 7 is started, intermediate event signal catch, task 31, the condition exclusive gateway 7 is checked then if the answer is null then the event 12 is ended then if the answer is null then end event 13 error
+
+B.1.0.2
+the event timer is started, the task 1 is abstracted, user task 2, the task 3 is serviced then end event none 1
+
+Order Fulfillment and Procurement.2
+stock level below minimum then procurement
+
+Order Fulfillment and Procurement.3
+ERROR: Gate has no child with id: _CB87E85E-0561-4EBB-84F8-6AB108ADC29B
+    [_46776D85-8D02-4C88-A4CE-AEAF6A9EA545, _F47CA4E4-62CB-4DCB-BFC3-6EB7583EE758, _CB87E85E-0561-4EBB-84F8-6AB108ADC29B]
+    P3
+    [_AFA53968-8985-4F4D-A274-606F4C63F547->_46776D85-8D02-4C88-A4CE-AEAF6A9EA545]
+
+    _AFA53968-8985-4F4D-A274-606F4C63F547
+    exclusiveGateway
+    _46776D85-8D02-4C88-A4CE-AEAF6A9EA545
+    BOND
+    No Leaf
+the availability is checked with supplier, the condition deliverable? is checked then the received is articled then the procured is articled
+
+B.1.0.3
+lane 1 starts the event message, the condition lane 1 parallels the gateway divergence is checked then if the answer is null then user task 5, the condition exclusive gateway divergence 2 is checked, if the answer is null then lane 2 services the task 7 then exclusive gateway convergence 2 then if the answer is null then collapsed sub-process, sub process - expanded then exclusive gateway convergence 2 then end event terminate then if the answer is null then the condition exclusive gateway divergence 1 is checked, if the answer is null then lane 1 calls the activity calling a global task then exclusive gateway convergence 1 then if the answer is null then call activity collapsed, call activity - expanded then exclusive gateway convergence 1 then lane 1 ends the event message
+
+C.5.0.2
+is checked for connected clients, check if group of connected clients exists, the condition does group of connected clients existing is checked then document group of connected clients according to capital requirements regulation (crr) then document group of connected clients according to capital requirements regulation (crr)
+
+A.4.0.1
+the event 1 is started, task 1, task 2 then the event 1 is ended
+
+C.4.0.2
+new  employee hired, the domain account is created, the workstation is prepared, the required applications and permissions is assigned, the workstation is configured, the IT part of welcome package is prepared then workstation and permissions ready
+
+C.1.0.1
+the received is invoiced, the invoice is scanned, the original is archived, approver to  be assigned, is assigned then if the answer is null then invoice review  needed then review and document result then if the answer is null then 7 days
+
+C.4.0.1
+candidate accepted offer, hr department sends the candidate contract, the condition contract terms accepted ? is checked then hr department reviews the terms of contract then hr department sends the candidate contract, get signature on contract and notify responsible department, the condition non-exclusive gateway is checked, if the answer is null then hr department informs the employee of company policies, introduce employee to company mission, vision and values, hr department performs training for time reports sick leave and holidays, hr department registers for medical insurance then non-exclusive gateway then if the answer is null then responsible department requests the preparations for a new employee, new employee in department x then non-exclusive gateway, responsible department introduces the new employee to the team, responsible department performs training for position, the condition non-exclusive gateway is checked, if the answer is null then input from facilities ready then non-exclusive gateway, if the answer is null then input from it ready then non-exclusive gateway then if the answer is null then responsible department inputs from payroll ready then non-exclusive gateway, responsible department compiles the welcome package, responsible department gives the employee welcome package then responsible department ends the event
+
+B.2.0.7
+start event 6 signal, task 25, the condition lane 2 parallels the gateway 5 is checked, if the answer is null then expanded sub-process 3, task 32 then lane 2 parallels the gateway 7 then if the answer is null then task 26, intermediate event signal throw 2, inclusive gateway 6, task 28 then lane 2 parallels the gateway 7 then end event 11 escalation
+
+C.1.1.1
+RIGID
+
+the received is invoiced, is assigned, the invoice is approved then the condition does invoice the approved is checked, the condition does review the successful is checked then the invoice is approved, the bank transfer is prepared, the invoice is archived then the processed is invoiced, rechnung klären then the condition does review the successful is checked then invoice not processed
+
+B.1.0.1
+start event none 1, the task 4 is abstracted then end event none 2
+
+C.2.0.3
+the products are browsed on amazon, the item is added to cart then the condition done shopping? is checked then the products are browsed on amazon, checkout then the items are received
+
+C.2.0.1
+the credit card information is received, the payment is taken then the result is sent
+
+C.2.0.5
+picker receives the order, picker picks the items, picker places in bin, receive and package items then packager sends to carrier dock
+
+C.4.0.4
+new  employee  hired, the access card is prepared, the access details are configured then the card ready is accessed
+
+C.4.0.3
+new  employee hired, the provided information is validated, the condition all necessary data available? is checked, if the answer is no then missing points are clarified then if the answer is yes then the payroll system is updated then if the answer is no then missing points are clarified then if the answer is yes then the payroll system is updated then payroll ready
+
+A.4.1.4
+the event 4 is started, task 6 then the event 4 is ended
+
+C.3.0.1
+RIGID
+
+RIGID
+
+the customer request is received, the customer request is analysed, the condition service type is checked then the condition the level is serviced is checked then if the answer is premium then the repair is performed then the completed is repaired then if the answer is standard then the repair is performed then the completed is repaired
+
+model_01.1
+which option?, if the answer is null then down then if the answer is null then up, manual task 2, task 3 then if the answer is option==1 then task up then if the answer is null then task down
+
+cook.1
+the noticed is hungered, the recipe is chosen, the condition desired components? is checked, if the answer is salad then the salad is prepared then if the answer is something real then the condition desired dish? is checked then if the answer is pasta then the pasta is cooked then if the answer is steak then the steak is cooked, the meal is eaten then the satisfied is hungered
+
+B.2.0.9
+the event 8 is started, task 34 then the event 15 is ended
+
+B.2.0.1
+the event 3 is started, user task 12 muti-inst seq, user task 13, the task 14 is serviced then the event 4 is ended
+
+A.3.0.1
+the event is started, task 1, collapsed sub-process, task 2 then the event 1 is ended
+
+B.2.0.3
+start event 1 timer, the task 1 is abstracted, the task 2 is sent, user task 3, the condition inclusive gateway 1 is checked, if the answer is default sequence flow 1 then the activity calling a global user task is called, expanded sub-process 1, user task 8 then the gateway 2 is paralleled then if the answer is conditional sequence flow then the task 4 is serviced, intermediate event signal throw 1, collapsed sub-process 1 multi-instances, task 5 then the gateway 2 is paralleled then end event 1 message
+
+A.4.1.1
+lane 1 starts the event 1, task 1, task 2 then lane 1 ends the event 1
+
+B.2.0.2
+start event 4 conditional, user task 12 muti-inst seq, user task 13, the task 14 is serviced then the event 4 is ended
+
+A.1.0.1
+the event is started, task 1, task 2, task 3 then the event is ended
+
+A.4.1.3
+lane 2 starts the event 2, task 3 then if the answer is null then expanded sub-process 2 then lane 3 ends the event 5 then if the answer is null then expanded sub-process 1, task 5 then lane 2 ends the event 2
+
+C.2.0.4
+RIGID
+
+the order is payed then the condition does retry is checked, the condition payment accepted? is checked, the order is sent, the order is payed then the condition does retry is checked
+
+C.7.0.1
+hiring manager jobs the vacancy, hiring manager writes the description, recruitment completes the advertisement, hiring manager approves the advertisement then the condition advertisement approved? is checked then recruitment completes the advertisement, if the answer is null then recruitment publishes on homepage then if the answer is null then recruitment selects the other platforms then recruitment publishes on other platforms then vacancy  advertised
+
+A.2.0.1
+the event is started, task 1, the condition gateway (split flow) is checked then task 3 then gateway (merge flows) then task 4 then gateway (merge flows) then the event is ended then task 2 then the event is ended
+
+C.6.0.2
+if the answer is null then the hotel is booked then if the answer is null then the flight is booked then the booked is traveled
+
+Order Fulfillment and Procurement.1
+the received is ordered, the availability is checked, the condition the available is articled is checked, if the answer is no then procurement then if the answer is yes then the article is shipped then if the answer is no then procurement then if the answer is yes then the article is shipped, financial settlement then payment received
+
+C.6.0.1
+the travel request is received, the flights and hotel offer is made then if the answer is null then the approved is offered, the credit card information is requested, booking is made, the credit card is charged, booking is confirmed then booking  confirmed, if the answer is null then 24 hours, the customer offer expired is notified then the expired is offered then if the answer is null then the request is canceled, the customer record is updated then the cancelled is requested
+
+A.4.0.3
+the event 3 is started, task 4 then the event 3 is ended
+
+
+Process finished with exit code 0

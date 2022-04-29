@@ -11,6 +11,7 @@
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
+        <jbpt.version>0.3.1</jbpt.version>
     </properties>
 
     <dependencies>
@@ -23,6 +24,42 @@
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpt</groupId>
+            <artifactId>jbpt</artifactId>
+            <version>${jbpt.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpt</groupId>
+            <artifactId>jbpt-core</artifactId>
+            <version>${jbpt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpt</groupId>
+            <artifactId>jbpt-deco</artifactId>
+            <version>${jbpt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpt</groupId>
+            <artifactId>jbpt-petri</artifactId>
+            <version>${jbpt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpt</groupId>
+            <artifactId>jbpt-bpm</artifactId>
+            <version>${jbpt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jbpt</groupId>
+            <artifactId>jbpt-bp</artifactId>
+            <version>${jbpt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
         </dependency>
     </dependencies>
 
