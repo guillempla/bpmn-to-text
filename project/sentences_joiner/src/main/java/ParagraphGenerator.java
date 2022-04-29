@@ -92,17 +92,18 @@ public class ParagraphGenerator {
                 }
                 if (child != null) {
                     updateChildrenSentences(child, childrenSentences);
-//                    nodesChildren.remove(child);
                     entry.setNextVisited(id, true);
                     nextId.remove(0);
                 }
                 else {
+                    // TODO fix this error
                     System.out.println("ERROR: Gate has no child with id: " + id);
                     System.out.println("    " + entry.getNextIds());
                     nodesChildren.forEach(nodeTest -> System.out.println("    " + nodeTest.getName()));
                     System.out.println();
                     printRPSTNode(node);
-                    return null;
+
+                    nextId.remove(0);
                 }
             }
         }
