@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Application {
 
@@ -13,11 +14,10 @@ public class Application {
         ArrayList<String> jsonPaths = getJSONPaths(sentencesPath);
         for (String path: jsonPaths) {
             String bpmnName = getJSONNameFromPath(path);
-            ArrayList<String> gateNoChild = new ArrayList<>(Arrays.asList("A.2.0.1", "C.3.0.1",
-                    "Order Fulfillment and Procurement.3", "B.2.0.6"));
+            ArrayList<String> gateNoChild = new ArrayList<>(List.of("Order Fulfillment and Procurement.3"));
             ArrayList<String> rigids = new ArrayList<>(Arrays.asList("C.2.0.4", "C.3.0.1", "C.1.1.1", "B.2.0.6", "A.2.1.1",
                     "C.1.0.2", "C.5.0.1"));
-            if (true || bpmnName.equals("A.4.0.2") /*gateNoChild.contains(bpmnName)*/
+            if (/*true || bpmnName.equals("A.2.0.1") &&*/ !gateNoChild.contains(bpmnName) /*&& !rigids.contains(bpmnName)*/
                 /*!namesDifferentSize.contains(bpmnName) && !gateNoChild.contains(bpmnName)*/) {
                 JSONReader reader = new JSONReader(bpmnName, path);
                 //reader.saveJSON();
