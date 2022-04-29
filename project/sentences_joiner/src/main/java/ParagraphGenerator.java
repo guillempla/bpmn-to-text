@@ -76,19 +76,34 @@ public class ParagraphGenerator {
             ArrayList<String> nextId = entry.getNextIds();
             while (nextId.size() > 0) {
                 String id = nextId.get(0);
+                if (entry.getNextVisited(id)) {
+                    // if nextId has been treated skip it
+                    nextId.remove(0);
+                    break;
+                }
+
+
                 IRPSTNode<DirectedEdge, Vertex> child = findChildEqualId(id, nodesChildren);
+                int it = 0;
+                while (child == null) {
+                    id = nextId.get(it);
+                    child = findChildEqualId(id, nodesChildren);
+                    if (++it >= nextId.size()) break;
+                }
                 if (child != null) {
                     updateChildrenSentences(child, childrenSentences);
-                    nodesChildren.remove(child);
+                    entry.setNextVisited(id, true);
                     nextId.remove(0);
                 }
                 else {
+                    // TODO fix this error
                     System.out.println("ERROR: Gate has no child with id: " + id);
                     System.out.println("    " + entry.getNextIds());
                     nodesChildren.forEach(nodeTest -> System.out.println("    " + nodeTest.getName()));
                     System.out.println();
                     printRPSTNode(node);
-                    return null;
+
+                    nextId.remove(0);
                 }
             }
         }
@@ -106,7 +121,7 @@ public class ParagraphGenerator {
         Sentence sentence = traverseTree(child);
 //        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printlnSentence);
 //        else System.out.println("WARNING: Children Sentences contain NULL!");
-        System.out.println();
+//        System.out.println();
         entry.setAdded(true);
         childrenSentences.add(sentence);
     }

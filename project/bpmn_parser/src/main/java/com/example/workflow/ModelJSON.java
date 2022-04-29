@@ -15,18 +15,19 @@ import java.util.Map;
 public class ModelJSON {
     public static final String PARSED_BPMN_PATH = "../bpmn_parsed/";
 
-    String fileName;
-    String jsonPath;
-    Map<String, ModelElementInstance> elements;
-    Map<String, ArrayList<Pair<String, String>>> nextElements;
-    ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "type", "name", "lane", "next"));
+    private final String fileName;
+    private final String jsonPath;
+    private final Map<String, ModelElementInstance> elements;
+    private final Map<String, ArrayList<Pair<String, String>>> nextElements;
+    private final Map<String, String> lanes;
+    private final ArrayList<String> attributes = new ArrayList<>(Arrays.asList("id", "type", "name", "lane", "next"));
 
-    public ModelJSON(String fileName, Map<String, ModelElementInstance> elements, Map<String,
-            ArrayList<Pair<String, String>>> nextElements) {
+    public ModelJSON(String fileName, BPMNElements bpmnElements) {
         this.fileName = fileName;
         this.jsonPath = PARSED_BPMN_PATH + fileName + ".json";
-        this.elements = elements;
-        this.nextElements = nextElements;
+        this.elements = bpmnElements.getElements();
+        this.nextElements = bpmnElements.getNextElements();
+        this.lanes = bpmnElements.getLanes();
     }
 
     public void createElementsJSON() {
@@ -52,23 +53,28 @@ public class ModelJSON {
         for (String attributeName : attributes) {
             Object attributeValue;
 
-            if (attributeName.equals("next")) {
-                String valueID = value.getAttributeValue("id");
-                JSONArray nextValues = new JSONArray();
-                ArrayList<Pair<String, String>> pairs = nextElements.get(valueID);
-                for (Pair<String, String> pair : pairs) {
-                    JSONObject nextValue = new JSONObject();
-                    nextValue.put("id", pair.getKey());
-                    nextValue.put("name", pair.getValue());
-                    nextValues.add(nextValue);
-                }
-                attributeValue = nextValues;
-            }
-            else if (attributeName.equals("type")) {
-                attributeValue = value.getElementType().getTypeName();
-            }
-            else {
-                attributeValue = value.getAttributeValue(attributeName);
+            switch (attributeName) {
+                case "next":
+                    String valueID = value.getAttributeValue("id");
+                    JSONArray nextValues = new JSONArray();
+                    ArrayList<Pair<String, String>> pairs = nextElements.get(valueID);
+                    for (Pair<String, String> pair : pairs) {
+                        JSONObject nextValue = new JSONObject();
+                        nextValue.put("id", pair.getKey());
+                        nextValue.put("name", pair.getValue());
+                        nextValues.add(nextValue);
+                    }
+                    attributeValue = nextValues;
+                    break;
+                case "type":
+                    attributeValue = value.getElementType().getTypeName();
+                    break;
+                case "lane":
+                    attributeValue = lanes.get(value.getAttributeValue("id"));
+                    break;
+                default:
+                    attributeValue = value.getAttributeValue(attributeName);
+                    break;
             }
 
             // If attributeValue exists and is not an array, remove line breaks

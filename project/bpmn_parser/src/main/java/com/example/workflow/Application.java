@@ -56,7 +56,7 @@ public class Application {
     int index = 1;
     for (BPMNElements bpmnElement : bpmnElements) {
       String name = bpmnName + "." + index++;
-      ModelJSON modelJSON = new ModelJSON(name, bpmnElement.getElements(), bpmnElement.getNextElements());
+      ModelJSON modelJSON = new ModelJSON(name, bpmnElement);
       modelJSON.createElementsJSON();
     }
   }

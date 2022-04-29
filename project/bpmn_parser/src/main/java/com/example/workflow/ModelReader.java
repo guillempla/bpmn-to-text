@@ -37,6 +37,7 @@ public class ModelReader {
             FlowNode start = (FlowNode) startInstance;
             if (addElement(startInstance, bpmnElement)) {
                 saveFollowingElements(start, bpmnElement);
+                saveLanesFromModel(bpmnElement);
             }
             bpmnElements.add(bpmnElement);
         }
@@ -59,6 +60,20 @@ public class ModelReader {
 
         String nodeID = node.getAttributeValue("id");
         bpmnElement.addNextElements(nodeID, nextIDs);
+    }
+
+    private void saveLanesFromModel(BPMNElements bpmnElement) {
+        Collection<ModelElementInstance> lanesSets = getElementsOfType(LaneSet.class);
+        for (ModelElementInstance laneSetInstance : lanesSets) {
+            LaneSet laneSet = (LaneSet) laneSetInstance;
+            for (Lane lane : laneSet.getLanes()) {
+                String laneName = lane.getName();
+                for (FlowNode flowNodeRef : lane.getFlowNodeRefs()) {
+                    String elementId = flowNodeRef.getId();
+                    bpmnElement.addLane(elementId, laneName);
+                }
+            }
+        }
     }
 
     private boolean addElement(ModelElementInstance instance, BPMNElements bpmnElement) {

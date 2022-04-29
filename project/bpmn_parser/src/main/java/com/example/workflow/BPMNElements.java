@@ -10,10 +10,12 @@ import java.util.Map;
 public class BPMNElements {
     private final Map<String, ModelElementInstance> elements;
     private final Map<String, ArrayList<Pair<String, String>>> nextElements;
+    private final Map<String, String> lanes;
 
     public BPMNElements() {
         this.elements = new HashMap<>();
         this.nextElements = new HashMap<>();
+        this.lanes = new HashMap<>();
     }
 
     public Map<String, ModelElementInstance> getElements() {
@@ -24,12 +26,22 @@ public class BPMNElements {
         return nextElements;
     }
 
-    public void addElements(String instanceId, ModelElementInstance instance) {
-        elements.put(instanceId, instance);
+    public Map<String, String> getLanes() {
+        return lanes;
     }
 
-    public void addNextElements(String nodeID, ArrayList<Pair<String, String>> nextIDs) {
-        nextElements.put(nodeID, nextIDs);
+    public void addElements(String elementId, ModelElementInstance instance) {
+        elements.put(elementId, instance);
+    }
+
+    public void addNextElements(String elementId, ArrayList<Pair<String, String>> nextIDs) {
+        nextElements.put(elementId, nextIDs);
+    }
+
+    public void addLane(String elementId, String lane) {
+        if (elements.containsKey(elementId)) {
+            lanes.put(elementId, lane);
+        }
     }
 
     public boolean elementsContainId(String instanceId) {
