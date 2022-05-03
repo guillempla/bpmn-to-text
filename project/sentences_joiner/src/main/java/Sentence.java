@@ -144,15 +144,6 @@ public class Sentence {
         return coordinatedPhrase;
     }
 
-    public Sentence copySentence() {
-        Sentence copy = new Sentence();
-        copy.setCoordinatedPhrase(this.coordinatedPhrase);
-        copy.setFirstGateway(this.isFirstGateway);
-        copy.setJoinedVertex(this.joinedVertex);
-
-        return copy;
-    }
-
     public void setCoordinatedPhrase(CoordinatedPhraseElement coordinatedPhrase) {
         this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         this.coordinatedPhrase.setConjunction("then");
