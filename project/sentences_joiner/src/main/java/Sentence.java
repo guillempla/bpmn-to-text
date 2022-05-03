@@ -12,7 +12,7 @@ public class Sentence {
     private boolean isFirstGateway;
     private ArrayList<ElementVertex> joinedVertex;
     private final NLGFactory nlgFactory;
-    protected final Lexicon lexicon;
+    private final Lexicon lexicon;
     private CoordinatedPhraseElement coordinatedPhrase;
 
     public Sentence() {
