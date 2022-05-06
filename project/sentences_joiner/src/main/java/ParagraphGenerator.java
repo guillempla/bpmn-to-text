@@ -31,11 +31,6 @@ public class ParagraphGenerator {
     }
 
     private Sentence traverseTree(IRPSTNode<DirectedEdge, Vertex> node) {
-        if (node.getType() == TCType.RIGID) {
-            System.out.println("RIGID");
-            System.out.println();
-        }
-
         // Join entry sentence only if different of parent entry sentence
         ArrayList<Sentence> childrenSentences = new ArrayList<>();
         ElementVertex entry = (ElementVertex) node.getEntry();
