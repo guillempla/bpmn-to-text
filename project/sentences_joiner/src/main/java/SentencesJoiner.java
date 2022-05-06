@@ -101,14 +101,7 @@ public class SentencesJoiner {
 
     private void addSentencesToCoordinate(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
         for (Sentence sentence : sentences) {
-            int totalWordCount = sentence.numWords() + coordinatedSentence.numWords();
-            if (totalWordCount < 50) {
-                coordinatedSentence.addCoordinateSentence(sentence);
-            }
-            else {
-                // TODO Treatment for long sentences
-                coordinatedSentence.addCoordinateSentence(sentence);
-            }
+            coordinatedSentence.addCoordinateSentence(sentence);
         }
     }
 

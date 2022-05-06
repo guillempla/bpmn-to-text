@@ -138,6 +138,9 @@ public class Sentence {
 
         // TODO Comprovar si cal afegir una coordinatedPhrase com a tal
         //  (ara s'afegeix com a String)
+
+        // TODO Afegir comprovació de frase massa llarga i crear una nova
+        //  entrada a l'Stack
     }
 
     public NLGElement getCoordinatedPhrase() {
