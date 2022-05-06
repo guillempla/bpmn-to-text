@@ -6,6 +6,7 @@ import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.realiser.english.Realiser;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Sentence {
     protected final Realiser realiser;
@@ -13,7 +14,7 @@ public class Sentence {
     private ArrayList<ElementVertex> joinedVertex;
     private final NLGFactory nlgFactory;
     private final Lexicon lexicon;
-    private CoordinatedPhraseElement coordinatedPhrase;
+    private final Stack<CoordinatedPhraseElement> coordinatedPhrases;
 
     public Sentence() {
         this.lexicon = Lexicon.getDefaultLexicon();
@@ -23,8 +24,10 @@ public class Sentence {
         this.joinedVertex = new ArrayList<>();
         this.isFirstGateway = false;
 
-        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        this.coordinatedPhrase.setConjunction("then");
+        coordinatedPhrases = new Stack<>();
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        coordinatedPhrase.setConjunction("then");
+        coordinatedPhrases.push(coordinatedPhrase);
     }
 
     public Sentence(NLGElement phrase, ElementVertex vertex) {
@@ -36,8 +39,10 @@ public class Sentence {
         this.joinedVertex.add(vertex);
         this.isFirstGateway = vertex.isOpenGateway();
 
-        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        this.coordinatedPhrase.setConjunction("then");
+        coordinatedPhrases = new Stack<>();
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        coordinatedPhrase.setConjunction("then");
+        coordinatedPhrases.push(coordinatedPhrase);
 
         addCoordinateSentence(phrase);
     }
@@ -51,11 +56,11 @@ public class Sentence {
             realizedSentence = realizedSentence.toLowerCase();
         }
         if (sentence instanceof SPhraseSpec) {
-            coordinatedPhrase.addCoordinate(sentence);
+            coordinatedPhrases.peek().addCoordinate(sentence);
         }
         else {
             String removedDotSentence = realizedSentence.replace(".", "");
-            coordinatedPhrase.addCoordinate(removedDotSentence);
+            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
         }
     }
 
@@ -104,7 +109,7 @@ public class Sentence {
     }
 
     public boolean isVoid() {
-        return coordinatedPhrase == null || sentenceToString().equals("");
+        return coordinatedPhrases.peek() == null || sentenceToString().equals("");
     }
 
     public int numWords() {
@@ -118,7 +123,7 @@ public class Sentence {
     }
 
     public String sentenceToString() {
-        return realizeSentence(coordinatedPhrase);
+        return realizeSentence(coordinatedPhrases.peek());
     }
 
     public void addCoordinateSentence(Sentence sentence) {
@@ -126,12 +131,12 @@ public class Sentence {
         if (Character.isUpperCase(realizedSentence.charAt(0))) {
             realizedSentence = realizedSentence.toLowerCase();
         }
-        if (sentence.getCoordinatedPhrase() instanceof SPhraseSpec) {
-            coordinatedPhrase.addCoordinate(sentence);
+        if (sentence.getPeekCoordinatedPhrase() instanceof SPhraseSpec) {
+            coordinatedPhrases.peek().addCoordinate(sentence);
         }
         else {
             String removedDotSentence = realizedSentence.replace(".", "");
-            coordinatedPhrase.addCoordinate(removedDotSentence);
+            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
         }
 
         joinedVertex.addAll(sentence.getJoinedVertex());
@@ -143,19 +148,15 @@ public class Sentence {
         //  entrada a l'Stack
     }
 
-    public NLGElement getCoordinatedPhrase() {
-        return coordinatedPhrase;
-    }
-
-    public void setCoordinatedPhrase(CoordinatedPhraseElement coordinatedPhrase) {
-        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        this.coordinatedPhrase.setConjunction("then");
-        addCoordinateSentence(coordinatedPhrase);
+    public NLGElement getPeekCoordinatedPhrase() {
+        return coordinatedPhrases.peek();
     }
 
     public void setCoordinatedPhrase(NLGElement phrase) {
-        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        this.coordinatedPhrase.setConjunction("then");
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        coordinatedPhrase.setConjunction("then");
+        if (!coordinatedPhrases.empty()) coordinatedPhrases.pop();
+        coordinatedPhrases.push(coordinatedPhrase);
         addCoordinateSentence(phrase);
     }
 }
