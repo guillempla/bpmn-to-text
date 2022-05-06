@@ -77,7 +77,6 @@ public class ParagraphGenerator {
                     break;
                 }
 
-
                 IRPSTNode<DirectedEdge, Vertex> child = findChildEqualId(id, nodesChildren);
                 int it = 0;
                 while (child == null) {
