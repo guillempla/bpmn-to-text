@@ -1,4 +1,5 @@
 import simplenlg.framework.CoordinatedPhraseElement;
+import simplenlg.framework.DocumentElement;
 import simplenlg.framework.NLGElement;
 import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
@@ -93,10 +94,12 @@ public class Sentence {
     }
 
     public void printSentence() {
+        // TODO Crec que no funcione amb l'Stack
         System.out.print(sentenceToString() + ", ");
     }
 
     public void printlnSentence() {
+        // TODO Crec que no funcione amb l'Stack
         System.out.println(sentenceToString());
     }
 
@@ -158,5 +161,22 @@ public class Sentence {
         if (!coordinatedPhrases.empty()) coordinatedPhrases.pop();
         coordinatedPhrases.push(coordinatedPhrase);
         addCoordinateSentence(phrase);
+    }
+
+    private DocumentElement getParagraph() {
+        Stack<DocumentElement> auxCoordinated = convertStack();
+        return nlgFactory.createParagraph(auxCoordinated);
+    }
+
+    private Stack<DocumentElement> convertStack() {
+        Stack<DocumentElement> auxCoordinated = new Stack<>();
+        for (CoordinatedPhraseElement phrase : coordinatedPhrases) {
+            auxCoordinated.push(convertCoordinatedToDocument(phrase));
+        }
+        return auxCoordinated;
+    }
+
+    private DocumentElement convertCoordinatedToDocument(CoordinatedPhraseElement phrase) {
+        return nlgFactory.createSentence(phrase);
     }
 }
