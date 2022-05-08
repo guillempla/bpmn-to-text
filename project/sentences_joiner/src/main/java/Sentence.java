@@ -160,6 +160,14 @@ public class Sentence {
         addCoordinateSentence(phrase);
     }
 
+    public String sentenceToString() {
+        return realizeSentence(coordinatedPhrases.peek());
+    }
+
+    public String paragraphToString() {
+        return realizeSentence(this.getParagraph());
+    }
+
     private DocumentElement getParagraph() {
         Stack<DocumentElement> auxCoordinated = convertStack();
         return nlgFactory.createParagraph(auxCoordinated);
