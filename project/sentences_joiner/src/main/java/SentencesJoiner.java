@@ -75,9 +75,7 @@ public class SentencesJoiner {
     }
 
     private void addSentencesToSentence(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
-        for (Sentence sentence : sentences) {
-            coordinatedSentence.joinSentence(sentence);
-        }
+        sentences.forEach(coordinatedSentence::joinSentence);
     }
 
     private Sentence joinGateways(ElementVertex gateway, ArrayList<Sentence> sentences) {
