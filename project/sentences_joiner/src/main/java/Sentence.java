@@ -109,6 +109,21 @@ public class Sentence {
         }
     }
 
+    public void addCoordinateSentence(Sentence sentence, boolean branch) {
+        String realizedSentence = sentence.paragraphToString();
+        if (Character.isUpperCase(realizedSentence.charAt(0))) {
+            realizedSentence = realizedSentence.toLowerCase();
+        }
+
+        String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
+        if (branch && !sentence.isVoid()) {
+//            NLGElement branchPhrase = nlgFactory.createSentence(removedDotSentence);
+//            sentence.setCoordinatedPhrase(branchPhrase);
+            coordinatedPhrases.push(sentence.getPeekCoordinatedPhrase());
+        }
+        else {
+            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
+        }
     }
 
     public int numWords() {
