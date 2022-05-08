@@ -109,8 +109,6 @@ public class Sentence {
         }
     }
 
-    public boolean isVoid() {
-        return coordinatedPhrases.peek() == null || paragraphToString().equals("");
     }
 
     public int numWords() {
@@ -157,6 +155,8 @@ public class Sentence {
         else {
             coordinatedPhrases.peek().addCoordinate(removedDotSentence);
         }
+    public boolean isVoid() {
+        return coordinatedPhrases == null || paragraphToString().equals("");
     }
 
     public CoordinatedPhraseElement getPeekCoordinatedPhrase() {
