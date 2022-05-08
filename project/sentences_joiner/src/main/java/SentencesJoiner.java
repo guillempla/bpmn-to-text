@@ -79,7 +79,7 @@ public class SentencesJoiner {
     private Sentence joinGateways(ElementVertex gateway, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
-        String sentenceString = sentences.get(0).sentenceToString();
+        String sentenceString = sentences.get(0).paragraphToString(); // TODO Comprovar si funcione amb l'Stack. Només pot funcionar amb sentences que són simples
         sentenceString = "the condition " + sentenceString + " is checked";
         NLGElement firstPhrase = nlgFactory.createSentence(sentenceString);
         Sentence firstSentence = new Sentence(firstPhrase, gateway);
@@ -119,7 +119,7 @@ public class SentencesJoiner {
         for (Sentence sentence : sentences) {
             String elementId = sentence.getIdOfFirstJoinedVertex();
             String name = next.get(elementId).getKey();
-            String sentenceString = sentence.sentenceToString();
+            String sentenceString = sentence.paragraphToString();
             sentenceString = "If the answer is " + name + " then " + sentenceString;
             NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
             sentence.setCoordinatedPhrase(branchPhrase);
