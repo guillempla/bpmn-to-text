@@ -113,7 +113,7 @@ public class SentencesJoiner {
             System.out.println("    " + next);
             System.out.println("    " + sentences);
             System.out.print("    [");
-            sentences.forEach(Sentence::printSentence);
+            sentences.forEach(Sentence::printParagraph);
             System.out.println("]");
             return;
         }
