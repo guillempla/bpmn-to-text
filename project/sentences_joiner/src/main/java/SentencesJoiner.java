@@ -32,7 +32,7 @@ public class SentencesJoiner {
             return joinGateways(vertex, sentences);
         }
 
-        return joinActivities(vertex.getType(), sentences);
+        return joinActivities(sentences);
     }
 
     private boolean sentenceIsVoid(Sentence sentence) {
@@ -99,7 +99,7 @@ public class SentencesJoiner {
         sentences.forEach(sentence -> coordinatedSentence.joinSentence(sentence, false));
     }
 
-    private Sentence joinActivities(String type, ArrayList<Sentence> sentences) {
+    private Sentence joinActivities(ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
         addSentencesToSentence(sentences, coordinatedSentence);
