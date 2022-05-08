@@ -150,7 +150,7 @@ public class Sentence {
         if (Character.isUpperCase(realizedSentence.charAt(0))) {
             realizedSentence = realizedSentence.toLowerCase();
         }
-        String removedDotSentence = realizedSentence.replace(".", "");
+        String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
         coordinatedPhrases.peek().addCoordinate(removedDotSentence);
 
         joinedVertex.addAll(sentence.getJoinedVertex());
