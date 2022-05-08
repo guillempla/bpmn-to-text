@@ -126,26 +126,34 @@ public class Sentence {
         return words.length;
     }
 
+    public void joinSentence(Sentence sentence) {
+        if (sentence.getStackSize() > 1) {
+            this.coordinatedPhrases.addAll(sentence.getCoordinatedPhrases());
+            // TODO Afegir comprovació de frase massa llarga i crear una nova
+            //  entrada a l'Stack
+        }
+        else {
+            addCoordinateSentence(sentence);
+        }
+    }
+
+    public int getStackSize() {
+        return this.coordinatedPhrases.size();
+    }
+
+    public Stack<CoordinatedPhraseElement> getCoordinatedPhrases() {
+        return coordinatedPhrases;
+    }
+
     public void addCoordinateSentence(Sentence sentence) {
         String realizedSentence = sentence.sentenceToString();
         if (Character.isUpperCase(realizedSentence.charAt(0))) {
             realizedSentence = realizedSentence.toLowerCase();
         }
-        if (sentence.getPeekCoordinatedPhrase() instanceof SPhraseSpec) {
-            coordinatedPhrases.peek().addCoordinate(sentence);
-        }
-        else {
-            String removedDotSentence = realizedSentence.replace(".", "");
-            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
-        }
+        String removedDotSentence = realizedSentence.replace(".", "");
+        coordinatedPhrases.peek().addCoordinate(removedDotSentence);
 
         joinedVertex.addAll(sentence.getJoinedVertex());
-
-        // TODO Comprovar si cal afegir una coordinatedPhrase com a tal
-        //  (ara s'afegeix com a String)
-
-        // TODO Afegir comprovació de frase massa llarga i crear una nova
-        //  entrada a l'Stack
     }
 
     public NLGElement getPeekCoordinatedPhrase() {

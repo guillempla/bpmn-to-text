@@ -83,7 +83,7 @@ public class SentencesJoiner {
         sentenceString = "the condition " + sentenceString + " is checked";
         NLGElement firstPhrase = nlgFactory.createSentence(sentenceString);
         Sentence firstSentence = new Sentence(firstPhrase, gateway);
-        coordinatedSentence.addCoordinateSentence(firstSentence);
+        coordinatedSentence.joinSentence(firstSentence);
         sentences.remove(0);
 
         addSentencesToCoordinate(sentences, coordinatedSentence);
@@ -101,7 +101,7 @@ public class SentencesJoiner {
 
     private void addSentencesToCoordinate(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
         for (Sentence sentence : sentences) {
-            coordinatedSentence.addCoordinateSentence(sentence);
+            coordinatedSentence.joinSentence(sentence);
         }
     }
 
