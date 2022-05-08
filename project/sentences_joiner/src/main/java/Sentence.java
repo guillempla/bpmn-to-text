@@ -112,7 +112,7 @@ public class Sentence {
     }
 
     public boolean isVoid() {
-        return coordinatedPhrases.peek() == null || sentenceToString().equals("");
+        return coordinatedPhrases.peek() == null || paragraphToString().equals("");
     }
 
     public int numWords() {
@@ -131,7 +131,7 @@ public class Sentence {
             this.coordinatedPhrases.addAll(sentence.getCoordinatedPhrases());
             // TODO Afegir comprovació de frase massa llarga i crear una nova
             //  entrada a l'Stack
-        }
+        } // TODO hi ha més casos a tenir en compte a part de "sentence.getStackSize() > 1"
         else {
             addCoordinateSentence(sentence, branch);
         }
@@ -148,7 +148,7 @@ public class Sentence {
     }
 
     public void addCoordinateSentence(Sentence sentence, boolean branch) {
-        String realizedSentence = sentence.sentenceToString();
+        String realizedSentence = sentence.paragraphToString();
         if (Character.isUpperCase(realizedSentence.charAt(0))) {
             realizedSentence = realizedSentence.toLowerCase();
         }
