@@ -158,18 +158,6 @@ public class Sentence {
         return coordinatedPhrases;
     }
 
-    public void addCoordinateSentence(Sentence sentence, boolean branch) {
-        String realizedSentence = sentence.paragraphToString();
-        if (Character.isUpperCase(realizedSentence.charAt(0))) {
-            realizedSentence = realizedSentence.toLowerCase();
-        }
-        String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
-        if (branch) {
-            coordinatedPhrases.push(sentence.getPeekCoordinatedPhrase());
-        }
-        else {
-            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
-        }
     public boolean isVoid() {
         return coordinatedPhrases == null || paragraphToString().equals("");
     }
