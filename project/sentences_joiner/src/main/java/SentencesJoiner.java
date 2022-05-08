@@ -69,13 +69,19 @@ public class SentencesJoiner {
     private Sentence joinBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
         addNameToBranches(vertex.getNext(), sentences);
-        addSentencesToSentence(sentences, coordinatedSentence);
+        addBranchesToSentence(sentences, coordinatedSentence);
 
         return coordinatedSentence;
     }
 
     private void addSentencesToSentence(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
         sentences.forEach(coordinatedSentence::joinSentence);
+    }
+
+    private void addBranchesToSentence(ArrayList<Sentence> branches, Sentence coordinatedSentence) {
+        for (Sentence sentence : branches) {
+            coordinatedSentence.joinSentence(sentence);
+        }
     }
 
     private Sentence joinGateways(ElementVertex gateway, ArrayList<Sentence> sentences) {
