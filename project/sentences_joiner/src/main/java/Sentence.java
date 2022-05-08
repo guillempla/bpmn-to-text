@@ -60,7 +60,7 @@ public class Sentence {
             coordinatedPhrases.peek().addCoordinate(sentence);
         }
         else {
-            String removedDotSentence = realizedSentence.replace(".", "");
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "\n");
             coordinatedPhrases.peek().addCoordinate(removedDotSentence);
         }
     }
