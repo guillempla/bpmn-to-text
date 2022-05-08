@@ -116,6 +116,7 @@ public class Sentence {
     }
 
     public int numWords() {
+        // TODO No funcione amb l'Stack
         String sentence = sentenceToString();
         if (sentence.isEmpty()) {
             return 0;
@@ -123,10 +124,6 @@ public class Sentence {
 
         String[] words = sentence.split("\\s+");
         return words.length;
-    }
-
-    public String sentenceToString() {
-        return realizeSentence(coordinatedPhrases.peek());
     }
 
     public void addCoordinateSentence(Sentence sentence) {

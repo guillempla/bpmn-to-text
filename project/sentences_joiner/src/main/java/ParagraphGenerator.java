@@ -21,8 +21,8 @@ public class ParagraphGenerator {
         this.joinSentences();
     }
 
-    public String getJoinedSentences() {
-        return this.joinedSentences.sentenceToString();
+    public String getParagraph() {
+        return this.joinedSentences.paragraphToString();
     }
 
     private void joinSentences() {
