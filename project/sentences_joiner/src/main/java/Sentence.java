@@ -161,7 +161,7 @@ public class Sentence {
         joinedVertex.addAll(sentence.getJoinedVertex());
     }
 
-    public NLGElement getPeekCoordinatedPhrase() {
+    public CoordinatedPhraseElement getPeekCoordinatedPhrase() {
         return coordinatedPhrases.peek();
     }
 
