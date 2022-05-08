@@ -135,6 +135,8 @@ public class Sentence {
         else {
             addCoordinateSentence(sentence, branch);
         }
+
+        joinedVertex.addAll(sentence.getJoinedVertex());
     }
 
     public int getStackSize() {
@@ -157,8 +159,6 @@ public class Sentence {
         else {
             coordinatedPhrases.peek().addCoordinate(removedDotSentence);
         }
-
-        joinedVertex.addAll(sentence.getJoinedVertex());
     }
 
     public CoordinatedPhraseElement getPeekCoordinatedPhrase() {
