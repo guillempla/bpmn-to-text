@@ -74,13 +74,9 @@ public class SentencesJoiner {
         return coordinatedSentence;
     }
 
-    private void addSentencesToSentence(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
-        sentences.forEach(coordinatedSentence::joinSentence);
-    }
-
     private void addBranchesToSentence(ArrayList<Sentence> branches, Sentence coordinatedSentence) {
         for (Sentence sentence : branches) {
-            coordinatedSentence.joinSentence(sentence);
+            coordinatedSentence.joinSentence(sentence, true);
         }
     }
 
@@ -91,12 +87,16 @@ public class SentencesJoiner {
         sentenceString = "the condition " + sentenceString + " is checked";
         NLGElement firstPhrase = nlgFactory.createSentence(sentenceString);
         Sentence firstSentence = new Sentence(firstPhrase, gateway);
-        coordinatedSentence.joinSentence(firstSentence);
+        coordinatedSentence.joinSentence(firstSentence, false);
         sentences.remove(0);
 
         addSentencesToSentence(sentences, coordinatedSentence);
 
         return coordinatedSentence;
+    }
+
+    private void addSentencesToSentence(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
+        sentences.forEach(sentence -> coordinatedSentence.joinSentence(sentence, false));
     }
 
     private Sentence joinActivities(String type, ArrayList<Sentence> sentences) {

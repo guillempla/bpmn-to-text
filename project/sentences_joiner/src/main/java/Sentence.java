@@ -126,14 +126,14 @@ public class Sentence {
         return words.length;
     }
 
-    public void joinSentence(Sentence sentence) {
+    public void joinSentence(Sentence sentence, boolean branch) {
         if (sentence.getStackSize() > 1) {
             this.coordinatedPhrases.addAll(sentence.getCoordinatedPhrases());
             // TODO Afegir comprovació de frase massa llarga i crear una nova
             //  entrada a l'Stack
         }
         else {
-            addCoordinateSentence(sentence);
+            addCoordinateSentence(sentence, branch);
         }
     }
 
@@ -145,13 +145,18 @@ public class Sentence {
         return coordinatedPhrases;
     }
 
-    public void addCoordinateSentence(Sentence sentence) {
+    public void addCoordinateSentence(Sentence sentence, boolean branch) {
         String realizedSentence = sentence.sentenceToString();
         if (Character.isUpperCase(realizedSentence.charAt(0))) {
             realizedSentence = realizedSentence.toLowerCase();
         }
         String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
-        coordinatedPhrases.peek().addCoordinate(removedDotSentence);
+        if (branch) {
+            coordinatedPhrases.push(sentence.getPeekCoordinatedPhrase());
+        }
+        else {
+            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
+        }
 
         joinedVertex.addAll(sentence.getJoinedVertex());
     }
