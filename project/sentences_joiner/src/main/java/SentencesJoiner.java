@@ -68,8 +68,6 @@ public class SentencesJoiner {
 
     private Sentence joinBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
-//        System.out.println("VERTEX: " + vertex.getSentence());
-//        System.out.println("VERTEX: " + vertex.isBifurcation());
         addNameToBranches(vertex.getNext(), sentences);
         addSentencesToCoordinate(sentences, coordinatedSentence);
 
