@@ -19,12 +19,6 @@ public class SentencesJoiner {
         if (sentences.size() == 0) return new Sentence();
 
         if (joiningBranches(vertex, sentences)) {
-//            System.out.println();
-//            System.out.println(sentences);
-//            System.out.println(sentences.size());
-//            System.out.println(vertexIsFirstGateway(sentences));
-//            vertex.getNextNames().forEach(System.out::println);
-//            sentences.forEach(Sentence::printSentence);
             return joinBranches(vertex, sentences);
         }
 
