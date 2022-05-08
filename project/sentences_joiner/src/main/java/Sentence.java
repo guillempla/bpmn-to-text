@@ -93,14 +93,12 @@ public class Sentence {
         joinedVertex.add(vertex);
     }
 
-    public void printSentence() {
-        // TODO Crec que no funcione amb l'Stack
-        System.out.print(sentenceToString() + ", ");
+    public void printParagraph() {
+        System.out.print(paragraphToString() + ", ");
     }
 
-    public void printlnSentence() {
-        // TODO Crec que no funcione amb l'Stack
-        System.out.println(sentenceToString());
+    public void printlnParagraph() {
+        System.out.println(paragraphToString());
     }
 
     private String realizeSentence(NLGElement sentence) {
