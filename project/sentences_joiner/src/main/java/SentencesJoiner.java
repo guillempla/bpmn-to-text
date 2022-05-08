@@ -69,9 +69,15 @@ public class SentencesJoiner {
     private Sentence joinBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
         addNameToBranches(vertex.getNext(), sentences);
-        addSentencesToCoordinate(sentences, coordinatedSentence);
+        addSentencesToSentence(sentences, coordinatedSentence);
 
         return coordinatedSentence;
+    }
+
+    private void addSentencesToSentence(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
+        for (Sentence sentence : sentences) {
+            coordinatedSentence.joinSentence(sentence);
+        }
     }
 
     private Sentence joinGateways(ElementVertex gateway, ArrayList<Sentence> sentences) {
@@ -84,7 +90,7 @@ public class SentencesJoiner {
         coordinatedSentence.joinSentence(firstSentence);
         sentences.remove(0);
 
-        addSentencesToCoordinate(sentences, coordinatedSentence);
+        addSentencesToSentence(sentences, coordinatedSentence);
 
         return coordinatedSentence;
     }
@@ -92,15 +98,9 @@ public class SentencesJoiner {
     private Sentence joinActivities(String type, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
-        addSentencesToCoordinate(sentences, coordinatedSentence);
+        addSentencesToSentence(sentences, coordinatedSentence);
 
         return coordinatedSentence;
-    }
-
-    private void addSentencesToCoordinate(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
-        for (Sentence sentence : sentences) {
-            coordinatedSentence.joinSentence(sentence);
-        }
     }
 
     private void addNameToBranches(Map<String, Pair<String, Boolean>> next, ArrayList<Sentence> sentences) {
