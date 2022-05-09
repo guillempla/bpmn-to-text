@@ -22,7 +22,7 @@ public class ParagraphGenerator {
     }
 
     public String getParagraph() {
-        return this.joinedSentences.paragraphToString().replace("\n. ", ".\n").replace("\n, ", ", ");
+        return this.joinedSentences.paragraphToString().replace("\n. ", ".\n").replace("\n, ", ", ").replace("\n ", " ");
     }
 
     private void joinSentences() {
