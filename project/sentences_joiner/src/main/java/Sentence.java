@@ -160,7 +160,7 @@ public class Sentence {
     }
 
     public boolean isVoid() {
-        return coordinatedPhrases == null || paragraphToString().equals("");
+        return coordinatedPhrases == null || paragraphToString().replace("\n", "").equals("");
     }
 
     public CoordinatedPhraseElement getPeekCoordinatedPhrase() {
