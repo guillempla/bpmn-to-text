@@ -60,7 +60,7 @@ public class Sentence {
             coordinatedPhrases.peek().addCoordinate(sentence);
         }
         else {
-            String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "\n");
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "");
             coordinatedPhrases.peek().addCoordinate(removedDotSentence);
         }
     }
@@ -115,13 +115,14 @@ public class Sentence {
             realizedSentence = realizedSentence.toLowerCase();
         }
 
-        String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
         if (branch && !sentence.isVoid()) {
-//            NLGElement branchPhrase = nlgFactory.createSentence(removedDotSentence);
-//            sentence.setCoordinatedPhrase(branchPhrase);
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "\n");
+            NLGElement branchPhrase = nlgFactory.createSentence(removedDotSentence);
+            sentence.setCoordinatedPhrase(branchPhrase);
             coordinatedPhrases.push(sentence.getPeekCoordinatedPhrase());
         }
         else {
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
             coordinatedPhrases.peek().addCoordinate(removedDotSentence);
         }
     }
