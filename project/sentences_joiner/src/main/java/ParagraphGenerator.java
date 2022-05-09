@@ -113,9 +113,9 @@ public class ParagraphGenerator {
     private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<Sentence> childrenSentences) {
         ElementVertex entry = (ElementVertex) child.getEntry();
         Sentence sentence = traverseTree(child);
-//        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printlnSentence);
-//        else System.out.println("WARNING: Children Sentences contain NULL!");
-//        System.out.println();
+        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printlnParagraph);
+        else System.out.println("WARNING: Children Sentences contain NULL!");
+        System.out.println("----PARAGRAPH----");
         entry.setAdded(true);
         childrenSentences.add(sentence);
     }
