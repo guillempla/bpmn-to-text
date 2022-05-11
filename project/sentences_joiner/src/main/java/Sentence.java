@@ -109,27 +109,9 @@ public class Sentence {
         }
     }
 
-    public void addCoordinateSentence(Sentence sentence, boolean branch) {
-        String realizedSentence = sentence.paragraphToString();
-        if (Character.isUpperCase(realizedSentence.charAt(0))) {
-            realizedSentence = realizedSentence.toLowerCase();
-        }
-
-        if (branch && !sentence.isVoid()) {
-            String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "\n");
-            NLGElement branchPhrase = nlgFactory.createSentence(removedDotSentence);
-            sentence.setCoordinatedPhrase(branchPhrase);
-            coordinatedPhrases.push(sentence.getPeekCoordinatedPhrase());
-        }
-        else {
-            String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
-            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
-        }
-    }
-
     public int numWords() {
         // TODO No funcione amb l'Stack
-        String sentence = sentenceToString();
+        String sentence = lastSentenceToString();
         if (sentence.isEmpty()) {
             return 0;
         }
@@ -138,8 +120,13 @@ public class Sentence {
         return words.length;
     }
 
+    public String lastSentenceToString() {
+        return realizeSentence(coordinatedPhrases.peek());
+    }
+
     public void joinSentence(Sentence sentence, boolean branch) {
         if (sentence.getStackSize() > 1) {
+            sentence.getCoordinatedPhrases().removeIf(coordinatedPhrase -> realizeSentence(coordinatedPhrase).equals(""));
             this.coordinatedPhrases.addAll(sentence.getCoordinatedPhrases());
             // TODO Afegir comprovació de frase massa llarga i crear una nova
             //  entrada a l'Stack
@@ -167,20 +154,43 @@ public class Sentence {
         return coordinatedPhrases.peek();
     }
 
+    public void addCoordinateSentence(Sentence sentence, boolean branch) {
+        if (sentence.isVoid()) return;
+
+        String realizedSentence = sentence.paragraphToString();
+        if (Character.isUpperCase(realizedSentence.charAt(0))) {
+            realizedSentence = realizedSentence.toLowerCase();
+        }
+//.replaceAll("[\\n]+[.]",".\n").replace("\n, ", ", ").replaceAll("[\\n]+[ ]", "\n");
+        if (branch) {
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "\n");
+            NLGElement branchPhrase = nlgFactory.createSentence(removedDotSentence);
+            sentence.setCoordinatedPhrase(branchPhrase);
+            coordinatedPhrases.push(sentence.getPeekCoordinatedPhrase());
+        }
+        else {
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
+            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
+        }
+    }
+
+    public String paragraphToString() {
+        return realizeSentence(this.getParagraph()).replaceAll("[\\n]+[.]", ".\n").replace("\n, ", ", ").replaceAll("[\\n]+[ ]", "\n");
+    }
+
     public void setCoordinatedPhrase(NLGElement phrase) {
+        if (realizeSentence(phrase).replace("\n", "").equals("")) return;
+
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
         coordinatedPhrase.setConjunction("then");
-        if (!coordinatedPhrases.empty()) coordinatedPhrases.pop();
+//        if (!coordinatedPhrases.empty()) coordinatedPhrases.pop();
+        coordinatedPhrases.removeAllElements();
         coordinatedPhrases.push(coordinatedPhrase);
         addCoordinateSentence(phrase);
     }
 
-    public String sentenceToString() {
-        return realizeSentence(coordinatedPhrases.peek());
-    }
-
-    public String paragraphToString() {
-        return realizeSentence(this.getParagraph());
+    public String firstSentenceToString() {
+        return realizeSentence(coordinatedPhrases.get(0));
     }
 
     private DocumentElement getParagraph() {

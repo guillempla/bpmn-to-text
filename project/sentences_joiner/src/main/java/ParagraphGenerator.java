@@ -5,8 +5,13 @@ import org.jbpt.graph.DirectedEdge;
 import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
+import org.languagetool.JLanguageTool;
+import org.languagetool.language.BritishEnglish;
+import org.languagetool.rules.RuleMatch;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class ParagraphGenerator {
@@ -22,7 +27,24 @@ public class ParagraphGenerator {
     }
 
     public String getParagraph() {
-        return this.joinedSentences.paragraphToString().replace("\n. ", ".\n").replace("\n, ", ", ").replace("\n ", " ");
+//        .replaceAll("[\\n]+[.]",".\n").replaceAll("[\\n]+[,]",", ").replaceAll("[\\n]+[ ]", " ");
+//        .replace("\n. ", ".\n").replace("\n, ", ", ").replace("\n ", " ");
+        String paragraph = this.joinedSentences.paragraphToString();
+//        JLanguageTool langTool = new JLanguageTool(new BritishEnglish());
+//        List<RuleMatch> matches = null;
+//        try {
+//            matches = langTool.check(paragraph);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        for (RuleMatch match : matches) {
+//            System.out.println("Potential error at characters " +
+//                    match.getFromPos() + "-" + match.getToPos() + ": " +
+//                    match.getMessage());
+//            System.out.println("Suggested correction(s): " +
+//                    match.getSuggestedReplacements());
+//        }
+        return paragraph;
     }
 
     private void joinSentences() {
@@ -113,9 +135,9 @@ public class ParagraphGenerator {
     private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<Sentence> childrenSentences) {
         ElementVertex entry = (ElementVertex) child.getEntry();
         Sentence sentence = traverseTree(child);
-        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printlnParagraph);
-        else System.out.println("WARNING: Children Sentences contain NULL!");
-        System.out.println("----PARAGRAPH----");
+//        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printlnParagraph);
+//        else System.out.println("WARNING: Children Sentences contain NULL!");
+//        System.out.println("----PARAGRAPH----");
         entry.setAdded(true);
         childrenSentences.add(sentence);
     }
