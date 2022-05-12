@@ -5,9 +5,6 @@ import org.jbpt.graph.DirectedEdge;
 import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
-import org.languagetool.JLanguageTool;
-import org.languagetool.language.BritishEnglish;
-import org.languagetool.rules.RuleMatch;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,22 +26,7 @@ public class ParagraphGenerator {
     public String getParagraph() {
 //        .replaceAll("[\\n]+[.]",".\n").replaceAll("[\\n]+[,]",", ").replaceAll("[\\n]+[ ]", " ");
 //        .replace("\n. ", ".\n").replace("\n, ", ", ").replace("\n ", " ");
-        String paragraph = this.joinedSentences.paragraphToString();
-//        JLanguageTool langTool = new JLanguageTool(new BritishEnglish());
-//        List<RuleMatch> matches = null;
-//        try {
-//            matches = langTool.check(paragraph);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        for (RuleMatch match : matches) {
-//            System.out.println("Potential error at characters " +
-//                    match.getFromPos() + "-" + match.getToPos() + ": " +
-//                    match.getMessage());
-//            System.out.println("Suggested correction(s): " +
-//                    match.getSuggestedReplacements());
-//        }
-        return paragraph;
+        return this.joinedSentences.paragraphToString();
     }
 
     private void joinSentences() {
