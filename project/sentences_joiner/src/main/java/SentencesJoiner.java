@@ -19,12 +19,6 @@ public class SentencesJoiner {
         if (sentences.size() == 0) return new Sentence();
 
         if (joiningBranches(vertex, sentences)) {
-//            System.out.println();
-//            System.out.println(sentences);
-//            System.out.println(sentences.size());
-//            System.out.println(vertexIsFirstGateway(sentences));
-//            vertex.getNextNames().forEach(System.out::println);
-//            sentences.forEach(Sentence::printSentence);
             return joinBranches(vertex, sentences);
         }
 
@@ -32,7 +26,7 @@ public class SentencesJoiner {
             return joinGateways(vertex, sentences);
         }
 
-        return joinActivities(vertex.getType(), sentences);
+        return joinActivities(sentences);
     }
 
     private boolean sentenceIsVoid(Sentence sentence) {
@@ -68,48 +62,43 @@ public class SentencesJoiner {
 
     private Sentence joinBranches(ElementVertex vertex, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
-//        System.out.println("VERTEX: " + vertex.getSentence());
-//        System.out.println("VERTEX: " + vertex.isBifurcation());
         addNameToBranches(vertex.getNext(), sentences);
-        addSentencesToCoordinate(sentences, coordinatedSentence);
+        addBranchesToSentence(sentences, coordinatedSentence);
 
         return coordinatedSentence;
+    }
+
+    private void addBranchesToSentence(ArrayList<Sentence> branches, Sentence coordinatedSentence) {
+        for (Sentence sentence : branches) {
+            coordinatedSentence.joinSentence(sentence, true);
+        }
     }
 
     private Sentence joinGateways(ElementVertex gateway, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
-        String sentenceString = sentences.get(0).sentenceToString();
+        String sentenceString = sentences.get(0).paragraphToString();
         sentenceString = "the condition " + sentenceString + " is checked";
         NLGElement firstPhrase = nlgFactory.createSentence(sentenceString);
         Sentence firstSentence = new Sentence(firstPhrase, gateway);
-        coordinatedSentence.addCoordinateSentence(firstSentence);
+        coordinatedSentence.joinSentence(firstSentence, false);
         sentences.remove(0);
 
-        addSentencesToCoordinate(sentences, coordinatedSentence);
+        addSentencesToSentence(sentences, coordinatedSentence);
 
         return coordinatedSentence;
     }
 
-    private Sentence joinActivities(String type, ArrayList<Sentence> sentences) {
+    private void addSentencesToSentence(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
+        sentences.forEach(sentence -> coordinatedSentence.joinSentence(sentence, false));
+    }
+
+    private Sentence joinActivities(ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
-        addSentencesToCoordinate(sentences, coordinatedSentence);
+        addSentencesToSentence(sentences, coordinatedSentence);
 
         return coordinatedSentence;
-    }
-
-    private void addSentencesToCoordinate(ArrayList<Sentence> sentences, Sentence coordinatedSentence) {
-        for (Sentence sentence : sentences) {
-            int totalWordCount = sentence.numWords() + coordinatedSentence.numWords();
-            if (totalWordCount < 50) {
-                coordinatedSentence.addCoordinateSentence(sentence);
-            }
-            else {
-                // TODO Treatment for long sentences
-                coordinatedSentence.addCoordinateSentence(sentence);
-            }
-        }
     }
 
     private void addNameToBranches(Map<String, Pair<String, Boolean>> next, ArrayList<Sentence> sentences) {
@@ -118,7 +107,7 @@ public class SentencesJoiner {
             System.out.println("    " + next);
             System.out.println("    " + sentences);
             System.out.print("    [");
-            sentences.forEach(Sentence::printSentence);
+            sentences.forEach(Sentence::printParagraph);
             System.out.println("]");
             return;
         }
@@ -126,7 +115,7 @@ public class SentencesJoiner {
         for (Sentence sentence : sentences) {
             String elementId = sentence.getIdOfFirstJoinedVertex();
             String name = next.get(elementId).getKey();
-            String sentenceString = sentence.sentenceToString();
+            String sentenceString = sentence.paragraphToString();
             sentenceString = "If the answer is " + name + " then " + sentenceString;
             NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
             sentence.setCoordinatedPhrase(branchPhrase);

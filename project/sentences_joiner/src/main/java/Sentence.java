@@ -1,4 +1,5 @@
 import simplenlg.framework.CoordinatedPhraseElement;
+import simplenlg.framework.DocumentElement;
 import simplenlg.framework.NLGElement;
 import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
@@ -6,14 +7,15 @@ import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.realiser.english.Realiser;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Sentence {
     protected final Realiser realiser;
     private boolean isFirstGateway;
     private ArrayList<ElementVertex> joinedVertex;
     private final NLGFactory nlgFactory;
-    protected final Lexicon lexicon;
-    private CoordinatedPhraseElement coordinatedPhrase;
+    private final Lexicon lexicon;
+    private final Stack<CoordinatedPhraseElement> coordinatedPhrases;
 
     public Sentence() {
         this.lexicon = Lexicon.getDefaultLexicon();
@@ -23,8 +25,10 @@ public class Sentence {
         this.joinedVertex = new ArrayList<>();
         this.isFirstGateway = false;
 
-        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        this.coordinatedPhrase.setConjunction("then");
+        coordinatedPhrases = new Stack<>();
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        coordinatedPhrase.setConjunction("then");
+        coordinatedPhrases.push(coordinatedPhrase);
     }
 
     public Sentence(NLGElement phrase, ElementVertex vertex) {
@@ -36,8 +40,10 @@ public class Sentence {
         this.joinedVertex.add(vertex);
         this.isFirstGateway = vertex.isOpenGateway();
 
-        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        this.coordinatedPhrase.setConjunction("then");
+        coordinatedPhrases = new Stack<>();
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        coordinatedPhrase.setConjunction("then");
+        coordinatedPhrases.push(coordinatedPhrase);
 
         addCoordinateSentence(phrase);
     }
@@ -51,11 +57,11 @@ public class Sentence {
             realizedSentence = realizedSentence.toLowerCase();
         }
         if (sentence instanceof SPhraseSpec) {
-            coordinatedPhrase.addCoordinate(sentence);
+            coordinatedPhrases.peek().addCoordinate(sentence);
         }
         else {
-            String removedDotSentence = realizedSentence.replace(".", "");
-            coordinatedPhrase.addCoordinate(removedDotSentence);
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "");
+            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
         }
     }
 
@@ -87,12 +93,12 @@ public class Sentence {
         joinedVertex.add(vertex);
     }
 
-    public void printSentence() {
-        System.out.print(sentenceToString() + ", ");
+    public void printParagraph() {
+        System.out.print(paragraphToString() + ", ");
     }
 
-    public void printlnSentence() {
-        System.out.println(sentenceToString());
+    public void printlnParagraph() {
+        System.out.println(paragraphToString());
     }
 
     private String realizeSentence(NLGElement sentence) {
@@ -103,12 +109,9 @@ public class Sentence {
         }
     }
 
-    public boolean isVoid() {
-        return coordinatedPhrase == null || sentenceToString().equals("");
-    }
-
     public int numWords() {
-        String sentence = sentenceToString();
+        // TODO No funcione amb l'Stack
+        String sentence = lastSentenceToString();
         if (sentence.isEmpty()) {
             return 0;
         }
@@ -117,51 +120,93 @@ public class Sentence {
         return words.length;
     }
 
-    public String sentenceToString() {
-        return realizeSentence(coordinatedPhrase);
+    public String lastSentenceToString() {
+        return realizeSentence(coordinatedPhrases.peek());
     }
 
-    public void addCoordinateSentence(Sentence sentence) {
-        String realizedSentence = sentence.sentenceToString();
-        if (Character.isUpperCase(realizedSentence.charAt(0))) {
-            realizedSentence = realizedSentence.toLowerCase();
-        }
-        if (sentence.getCoordinatedPhrase() instanceof SPhraseSpec) {
-            coordinatedPhrase.addCoordinate(sentence);
-        }
+    public void joinSentence(Sentence sentence, boolean branch) {
+        if (sentence.getStackSize() > 1) {
+            sentence.getCoordinatedPhrases().removeIf(coordinatedPhrase -> realizeSentence(coordinatedPhrase).equals(""));
+            this.coordinatedPhrases.addAll(sentence.getCoordinatedPhrases());
+            // TODO Afegir comprovació de frase massa llarga i crear una nova
+            //  entrada a l'Stack
+        } // TODO hi ha més casos a tenir en compte a part de "sentence.getStackSize() > 1"
         else {
-            String removedDotSentence = realizedSentence.replace(".", "");
-            coordinatedPhrase.addCoordinate(removedDotSentence);
+            addCoordinateSentence(sentence, branch);
         }
 
         joinedVertex.addAll(sentence.getJoinedVertex());
-
-        // TODO Comprovar si cal afegir una coordinatedPhrase com a tal
-        //  (ara s'afegeix com a String)
     }
 
-    public NLGElement getCoordinatedPhrase() {
-        return coordinatedPhrase;
+    public int getStackSize() {
+        return this.coordinatedPhrases.size();
     }
 
-    public Sentence copySentence() {
-        Sentence copy = new Sentence();
-        copy.setCoordinatedPhrase(this.coordinatedPhrase);
-        copy.setFirstGateway(this.isFirstGateway);
-        copy.setJoinedVertex(this.joinedVertex);
-
-        return copy;
+    public Stack<CoordinatedPhraseElement> getCoordinatedPhrases() {
+        return coordinatedPhrases;
     }
 
-    public void setCoordinatedPhrase(CoordinatedPhraseElement coordinatedPhrase) {
-        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        this.coordinatedPhrase.setConjunction("then");
-        addCoordinateSentence(coordinatedPhrase);
+    public boolean isVoid() {
+        return coordinatedPhrases == null || paragraphToString().replace("\n", "").equals("");
+    }
+
+    public CoordinatedPhraseElement getPeekCoordinatedPhrase() {
+        return coordinatedPhrases.peek();
+    }
+
+    public void addCoordinateSentence(Sentence sentence, boolean branch) {
+        if (sentence.isVoid()) return;
+
+        String realizedSentence = sentence.paragraphToString();
+        if (Character.isUpperCase(realizedSentence.charAt(0))) {
+            realizedSentence = realizedSentence.toLowerCase();
+        }
+//.replaceAll("[\\n]+[.]",".\n").replace("\n, ", ", ").replaceAll("[\\n]+[ ]", "\n");
+        if (branch) {
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "\n");
+            NLGElement branchPhrase = nlgFactory.createSentence(removedDotSentence);
+            sentence.setCoordinatedPhrase(branchPhrase);
+            coordinatedPhrases.push(sentence.getPeekCoordinatedPhrase());
+        }
+        else {
+            String removedDotSentence = realizedSentence.replace(".", "").replace("\n", "");
+            coordinatedPhrases.peek().addCoordinate(removedDotSentence);
+        }
+    }
+
+    public String paragraphToString() {
+        return realizeSentence(this.getParagraph()).replaceAll("[\\n]+[.]", ".\n").replace("\n, ", ", ").replaceAll("[\\n]+[ ]", "\n");
     }
 
     public void setCoordinatedPhrase(NLGElement phrase) {
-        this.coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        this.coordinatedPhrase.setConjunction("then");
+        if (realizeSentence(phrase).replace("\n", "").equals("")) return;
+
+        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
+        coordinatedPhrase.setConjunction("then");
+//        if (!coordinatedPhrases.empty()) coordinatedPhrases.pop();
+        coordinatedPhrases.removeAllElements();
+        coordinatedPhrases.push(coordinatedPhrase);
         addCoordinateSentence(phrase);
+    }
+
+    public String firstSentenceToString() {
+        return realizeSentence(coordinatedPhrases.get(0));
+    }
+
+    private DocumentElement getParagraph() {
+        Stack<DocumentElement> auxCoordinated = convertStack();
+        return nlgFactory.createParagraph(auxCoordinated);
+    }
+
+    private Stack<DocumentElement> convertStack() {
+        Stack<DocumentElement> auxCoordinated = new Stack<>();
+        for (CoordinatedPhraseElement phrase : coordinatedPhrases) {
+            auxCoordinated.push(convertCoordinatedToDocument(phrase));
+        }
+        return auxCoordinated;
+    }
+
+    private DocumentElement convertCoordinatedToDocument(CoordinatedPhraseElement phrase) {
+        return nlgFactory.createSentence(phrase);
     }
 }

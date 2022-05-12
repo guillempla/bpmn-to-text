@@ -29,7 +29,7 @@ public class JSONReader {
         MultiDirectedGraph graph = this.buildGraph();
         System.out.println(fileName);
         ParagraphGenerator joiner = new ParagraphGenerator(graph);
-        System.out.println(joiner.getJoinedSentences());
+        System.out.println(joiner.getParagraph());
     }
 
     private MultiDirectedGraph buildGraph() {

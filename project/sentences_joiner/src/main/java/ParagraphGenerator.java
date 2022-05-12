@@ -6,7 +6,9 @@ import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class ParagraphGenerator {
@@ -21,8 +23,10 @@ public class ParagraphGenerator {
         this.joinSentences();
     }
 
-    public String getJoinedSentences() {
-        return this.joinedSentences.sentenceToString();
+    public String getParagraph() {
+//        .replaceAll("[\\n]+[.]",".\n").replaceAll("[\\n]+[,]",", ").replaceAll("[\\n]+[ ]", " ");
+//        .replace("\n. ", ".\n").replace("\n, ", ", ").replace("\n ", " ");
+        return this.joinedSentences.paragraphToString();
     }
 
     private void joinSentences() {
@@ -31,11 +35,6 @@ public class ParagraphGenerator {
     }
 
     private Sentence traverseTree(IRPSTNode<DirectedEdge, Vertex> node) {
-        if (node.getType() == TCType.RIGID) {
-            System.out.println("RIGID");
-            System.out.println();
-        }
-
         // Join entry sentence only if different of parent entry sentence
         ArrayList<Sentence> childrenSentences = new ArrayList<>();
         ElementVertex entry = (ElementVertex) node.getEntry();
@@ -82,7 +81,6 @@ public class ParagraphGenerator {
                     break;
                 }
 
-
                 IRPSTNode<DirectedEdge, Vertex> child = findChildEqualId(id, nodesChildren);
                 int it = 0;
                 while (child == null) {
@@ -119,9 +117,9 @@ public class ParagraphGenerator {
     private void updateChildrenSentences(IRPSTNode<DirectedEdge, Vertex> child, ArrayList<Sentence> childrenSentences) {
         ElementVertex entry = (ElementVertex) child.getEntry();
         Sentence sentence = traverseTree(child);
-//        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printlnSentence);
+//        if (!childrenSentences.contains(null)) childrenSentences.forEach(Sentence::printlnParagraph);
 //        else System.out.println("WARNING: Children Sentences contain NULL!");
-//        System.out.println();
+//        System.out.println("----PARAGRAPH----");
         entry.setAdded(true);
         childrenSentences.add(sentence);
     }
