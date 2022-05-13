@@ -10,40 +10,56 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Sentence {
-    protected final Realiser realiser;
+    protected Realiser realiser;
     private boolean isFirstGateway;
     private ArrayList<ElementVertex> joinedVertex;
-    private final NLGFactory nlgFactory;
-    private final Lexicon lexicon;
-    private final Stack<CoordinatedPhraseElement> coordinatedPhrases;
+    private NLGFactory nlgFactory;
+    private Stack<CoordinatedPhraseElement> coordinatedPhrases;
 
     public Sentence() {
-        this.lexicon = Lexicon.getDefaultLexicon();
-        this.realiser = new Realiser(lexicon);
-        this.nlgFactory = new NLGFactory(lexicon);
+        initializeSentence(null);
 
         this.joinedVertex = new ArrayList<>();
         this.isFirstGateway = false;
+    }
+
+    private void initializeSentence(String conjunction) {
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        this.realiser = new Realiser(lexicon);
+        this.nlgFactory = new NLGFactory(lexicon);
 
         coordinatedPhrases = new Stack<>();
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        coordinatedPhrase.setConjunction("then");
+        if (conjunction != null)
+            coordinatedPhrase.setConjunction("then");
+        else
+            coordinatedPhrase.setConjunction(conjunction);
         coordinatedPhrases.push(coordinatedPhrase);
     }
 
     public Sentence(NLGElement phrase, ElementVertex vertex) {
-        this.lexicon = Lexicon.getDefaultLexicon();
-        this.realiser = new Realiser(lexicon);
-        this.nlgFactory = new NLGFactory(lexicon);
+        initializeSentence(null);
 
         this.joinedVertex = new ArrayList<>();
         this.joinedVertex.add(vertex);
         this.isFirstGateway = vertex.isOpenGateway();
 
-        coordinatedPhrases = new Stack<>();
-        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        coordinatedPhrase.setConjunction("then");
-        coordinatedPhrases.push(coordinatedPhrase);
+        addCoordinateSentence(phrase);
+    }
+
+    public Sentence(String conjunction) {
+        initializeSentence(conjunction);
+
+        this.joinedVertex = new ArrayList<>();
+        this.isFirstGateway = false;
+    }
+
+    public Sentence(NLGElement phrase, ElementVertex vertex, String conjunction) {
+        initializeSentence(conjunction);
+
+        this.joinedVertex = new ArrayList<>();
+        this.joinedVertex.add(vertex);
+        this.isFirstGateway = vertex.isOpenGateway();
 
         addCoordinateSentence(phrase);
     }
