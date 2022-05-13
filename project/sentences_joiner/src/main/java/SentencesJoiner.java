@@ -9,6 +9,8 @@ import java.util.Map;
 public class SentencesJoiner {
     private final NLGFactory nlgFactory;
 
+    private Connector connector;
+
     public SentencesJoiner() {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
