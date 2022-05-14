@@ -9,10 +9,23 @@ public abstract class Connector {
     protected String selectedConnector;
     protected ArrayList<String> connectors;
     protected final NLGFactory nlgFactory;
+    protected final boolean randomConnector;
 
     public Connector() {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
+
+        randomConnector = false;
+        selectConnector();
+    }
+
+    private void selectConnector() {
+        if (!randomConnector) {
+            selectConnector(0);
+        }
+        else {
+            selectRandomConnector();
+        }
     }
 
     public Connector(String connector) {
@@ -20,13 +33,8 @@ public abstract class Connector {
         this.nlgFactory = new NLGFactory(lexicon);
 
         connectors.add(connector);
-    }
-
-    public Connector(Collection<String> connectors) {
-        Lexicon lexicon = Lexicon.getDefaultLexicon();
-        this.nlgFactory = new NLGFactory(lexicon);
-
-        this.connectors.addAll(connectors);
+        randomConnector = false;
+        selectConnector();
     }
 
     public String getSelectedConnector() {
@@ -58,4 +66,13 @@ public abstract class Connector {
     }
 
     abstract public void transformSentenceWithConnector(Sentence sentence);
+
+    public Connector(Collection<String> connectors) {
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        this.nlgFactory = new NLGFactory(lexicon);
+
+        this.connectors.addAll(connectors);
+        randomConnector = false;
+        selectConnector();
+    }
 }
