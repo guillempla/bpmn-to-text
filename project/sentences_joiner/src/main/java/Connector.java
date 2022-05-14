@@ -1,3 +1,6 @@
+import simplenlg.framework.NLGFactory;
+import simplenlg.lexicon.Lexicon;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -5,12 +8,24 @@ public abstract class Connector {
     protected final String separator = "-";
     protected String selectedConnector;
     protected ArrayList<String> connectors;
+    protected final NLGFactory nlgFactory;
+
+    public Connector() {
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        this.nlgFactory = new NLGFactory(lexicon);
+    }
 
     public Connector(String connector) {
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        this.nlgFactory = new NLGFactory(lexicon);
+
         connectors.add(connector);
     }
 
     public Connector(Collection<String> connectors) {
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        this.nlgFactory = new NLGFactory(lexicon);
+
         this.connectors.addAll(connectors);
     }
 
