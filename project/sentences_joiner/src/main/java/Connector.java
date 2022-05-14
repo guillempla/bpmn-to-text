@@ -10,31 +10,29 @@ public abstract class Connector {
     protected ArrayList<String> connectors;
     protected final NLGFactory nlgFactory;
     protected final boolean randomConnector;
+    protected int currentIndex;
 
     public Connector() {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
 
         randomConnector = false;
+        currentIndex = 0;
         selectConnector();
     }
 
     private void selectConnector() {
         if (!randomConnector) {
-            selectConnector(0);
+            selectConnector(currentIndex);
         }
         else {
             selectRandomConnector();
         }
     }
 
-    public Connector(String connector) {
-        Lexicon lexicon = Lexicon.getDefaultLexicon();
-        this.nlgFactory = new NLGFactory(lexicon);
-
-        connectors.add(connector);
-        randomConnector = false;
-        selectConnector();
+    protected void selectConnector(int index) {
+        int indexModule = index % connectors.size();
+        selectedConnector = connectors.get(indexModule);
     }
 
     public String getSelectedConnector() {
@@ -57,8 +55,18 @@ public abstract class Connector {
 
     }
 
-    protected void selectConnector(int index) {
-        selectedConnector = connectors.get(index);
+    public Connector(String connector) {
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        this.nlgFactory = new NLGFactory(lexicon);
+
+        connectors.add(connector);
+        randomConnector = false;
+        currentIndex = 0;
+        selectConnector();
+    }
+
+    protected void incrementIndex() {
+        currentIndex++;
     }
 
     protected String[] splitConnector(String connector) {
