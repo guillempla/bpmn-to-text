@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public class Final extends Connector {
     public Final() {
-        super(java.util.List.of("Finally ", "To conclude "));
+        super(java.util.List.of("Finally ", "To conclude ", "And finally "));
     }
 
     public Final(String connector) {
