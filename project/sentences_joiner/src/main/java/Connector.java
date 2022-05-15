@@ -3,6 +3,7 @@ import simplenlg.lexicon.Lexicon;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 public abstract class Connector {
     protected final String separator = "-";
@@ -52,7 +53,10 @@ public abstract class Connector {
     }
 
     protected void selectRandomConnector() {
+        Random rand = new Random();
 
+        int indexModule = rand.nextInt(connectors.size());
+        selectedConnector = connectors.get(indexModule);
     }
 
     public Connector(String connector) {
