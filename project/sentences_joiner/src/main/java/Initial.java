@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public class Initial extends Connector {
     public Initial() {
-        super(java.util.List.of("Once ", "First of all ", "When "));
+        super(java.util.List.of("Once ", "First of all ", "When ", "The process starts when "));
     }
 
     public Initial(String connector) {
