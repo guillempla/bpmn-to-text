@@ -36,6 +36,10 @@ public abstract class Connector {
         selectedConnector = connectors.get(indexModule);
     }
 
+    public void printConnectors() {
+        connectors.forEach(System.out::println);
+    }
+
     public String getSelectedConnector() {
         return selectedConnector;
     }
