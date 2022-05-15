@@ -15,30 +15,28 @@ public class Sentence {
     private ArrayList<ElementVertex> joinedVertex;
     private NLGFactory nlgFactory;
     private Stack<CoordinatedPhraseElement> coordinatedPhrases;
+    private String conjunction;
 
     public Sentence() {
-        initializeSentence(null);
+        initializeSentence();
 
         this.joinedVertex = new ArrayList<>();
         this.isFirstGateway = false;
     }
 
-    private void initializeSentence(String conjunction) {
+    private void initializeSentence() {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.realiser = new Realiser(lexicon);
         this.nlgFactory = new NLGFactory(lexicon);
 
         coordinatedPhrases = new Stack<>();
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        if (conjunction != null)
-            coordinatedPhrase.setConjunction("then");
-        else
-            coordinatedPhrase.setConjunction(conjunction);
+        coordinatedPhrase.setConjunction(conjunction);
         coordinatedPhrases.push(coordinatedPhrase);
     }
 
     public Sentence(NLGElement phrase, ElementVertex vertex) {
-        initializeSentence(null);
+        initializeSentence();
 
         this.joinedVertex = new ArrayList<>();
         this.joinedVertex.add(vertex);
@@ -48,20 +46,26 @@ public class Sentence {
     }
 
     public Sentence(String conjunction) {
-        initializeSentence(conjunction);
+        this.conjunction = conjunction;
+        initializeSentence();
 
         this.joinedVertex = new ArrayList<>();
         this.isFirstGateway = false;
     }
 
     public Sentence(NLGElement phrase, ElementVertex vertex, String conjunction) {
-        initializeSentence(conjunction);
+        this.conjunction = conjunction;
+        initializeSentence();
 
         this.joinedVertex = new ArrayList<>();
         this.joinedVertex.add(vertex);
         this.isFirstGateway = vertex.isOpenGateway();
 
         addCoordinateSentence(phrase);
+    }
+
+    public void setConjunction(String conjunction) {
+        this.conjunction = conjunction;
     }
 
     public void addCoordinateSentence(NLGElement sentence) {
@@ -198,8 +202,7 @@ public class Sentence {
         if (realizeSentence(phrase).replace("\n", "").equals("")) return;
 
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        coordinatedPhrase.setConjunction("then");
-//        if (!coordinatedPhrases.empty()) coordinatedPhrases.pop();
+        coordinatedPhrase.setConjunction(conjunction);
         coordinatedPhrases.removeAllElements();
         coordinatedPhrases.push(coordinatedPhrase);
         addCoordinateSentence(phrase);
