@@ -81,7 +81,13 @@ public abstract class Connector {
         return connector.split(separator);
     }
 
-    abstract public void transformSentenceWithConnector(Sentence sentence);
+    public void transformSentenceWithConnector(Sentence sentence) {
+
+    }
+
+    public void transformSentenceWithConnector(Sentence sentence, String name) {
+
+    }
 
     public Connector(Collection<String> connectors) {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
