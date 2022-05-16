@@ -17,6 +17,7 @@ public abstract class Connector {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
 
+        connectors = new ArrayList<>();
         randomConnector = false;
         currentIndex = 0;
         selectConnector();
@@ -67,7 +68,8 @@ public abstract class Connector {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
 
-        connectors.add(connector);
+        this.connectors = new ArrayList<>();
+        this.connectors.add(connector);
         randomConnector = false;
         currentIndex = 0;
         selectConnector();
@@ -93,6 +95,7 @@ public abstract class Connector {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
 
+        this.connectors = new ArrayList<>();
         this.connectors.addAll(connectors);
         randomConnector = false;
         selectConnector();
