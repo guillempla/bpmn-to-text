@@ -70,6 +70,7 @@ public abstract class Connector {
 
         this.connectors = new ArrayList<>();
         this.connectors.add(connector);
+        selectedConnector = this.connectors.get(0);
         randomConnector = false;
         currentIndex = 0;
         selectConnector();
@@ -97,6 +98,7 @@ public abstract class Connector {
 
         this.connectors = new ArrayList<>();
         this.connectors.addAll(connectors);
+        selectedConnector = this.connectors.get(0);
         randomConnector = false;
         selectConnector();
     }

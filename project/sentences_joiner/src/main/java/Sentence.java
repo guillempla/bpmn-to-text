@@ -18,6 +18,8 @@ public class Sentence {
     private String conjunction;
 
     public Sentence() {
+        Conjunction conjunctionConnector = new Conjunction();
+        this.conjunction = conjunctionConnector.getSelectedConnector();
         initializeSentence();
 
         this.joinedVertex = new ArrayList<>();
@@ -36,6 +38,8 @@ public class Sentence {
     }
 
     public Sentence(NLGElement phrase, ElementVertex vertex) {
+        Conjunction conjunctionConnector = new Conjunction();
+        this.conjunction = conjunctionConnector.getSelectedConnector();
         initializeSentence();
 
         this.joinedVertex = new ArrayList<>();
