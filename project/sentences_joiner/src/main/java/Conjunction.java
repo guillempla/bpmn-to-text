@@ -15,11 +15,11 @@ public class Conjunction extends Connector {
         super(connectors);
     }
 
-    @Override
-    public void transformSentenceWithConnector(Sentence sentence) {
+    public String transformSentenceWithConnector(Sentence sentence) {
         String sentenceString = sentence.paragraphToString();
         NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
         sentence.setConjunction(selectedConnector);
         sentence.setCoordinatedPhrase(branchPhrase);
+        return sentenceString;
     }
 }

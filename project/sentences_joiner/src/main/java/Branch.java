@@ -16,10 +16,7 @@ public class Branch extends Connector {
     }
 
     @Override
-    public void transformSentenceWithConnector(Sentence sentence, String name) {
-        String sentenceString = sentence.paragraphToString();
-        sentenceString = selectedConnector.replace(separator, name) + sentenceString;
-        NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
-        sentence.setCoordinatedPhrase(branchPhrase);
+    public String transformStringWithConnector(String sentenceString, String name) {
+        return selectedConnector.replace(separator, name) + sentenceString;
     }
 }

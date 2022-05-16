@@ -16,10 +16,7 @@ public class Initial extends Connector {
     }
 
     @Override
-    public void transformSentenceWithConnector(Sentence sentence) {
-        String sentenceString = sentence.paragraphToString();
-        sentenceString = selectedConnector + sentenceString;
-        NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
-        sentence.setCoordinatedPhrase(branchPhrase);
+    public String transformStringWithConnector(String sentenceString) {
+        return selectedConnector + sentenceString;
     }
 }

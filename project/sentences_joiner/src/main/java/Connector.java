@@ -81,12 +81,12 @@ public abstract class Connector {
         return connector.split(separator);
     }
 
-    public void transformSentenceWithConnector(Sentence sentence) {
-
+    public String transformStringWithConnector(String sentenceString) {
+        return selectedConnector + sentenceString;
     }
 
-    public void transformSentenceWithConnector(Sentence sentence, String name) {
-
+    public String transformStringWithConnector(String sentenceString, String name) {
+        return selectedConnector.replace(separator, name) + sentenceString;
     }
 
     public Connector(Collection<String> connectors) {
