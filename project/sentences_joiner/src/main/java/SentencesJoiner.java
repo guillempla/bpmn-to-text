@@ -9,11 +9,21 @@ import java.util.Map;
 public class SentencesJoiner {
     private final NLGFactory nlgFactory;
 
-    private Connector connector;
+    private Initial initialConnector;
+    private Final finalConnector;
+    private Branch branchConnector;
+    private Bifurcation bifurcationConnector;
+    private Conjunction conjunctionConnector;
 
     public SentencesJoiner() {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
         this.nlgFactory = new NLGFactory(lexicon);
+
+        initialConnector = new Initial();
+        finalConnector = new Final();
+        branchConnector = new Branch();
+        bifurcationConnector = new Bifurcation();
+        conjunctionConnector = new Conjunction();
     }
 
     public Sentence joinSentences(ElementVertex vertex, ArrayList<Sentence> sentences) {
@@ -79,8 +89,7 @@ public class SentencesJoiner {
     private Sentence joinGateways(ElementVertex gateway, ArrayList<Sentence> sentences) {
         Sentence coordinatedSentence = new Sentence();
 
-        String sentenceString = sentences.get(0).paragraphToString();
-        sentenceString = "the condition " + sentenceString + " is checked";
+        String sentenceString = bifurcationConnector.transformStringWithConnector(sentences.get(0).paragraphToString());
         NLGElement firstPhrase = nlgFactory.createSentence(sentenceString);
         Sentence firstSentence = new Sentence(firstPhrase, gateway);
         coordinatedSentence.joinSentence(firstSentence, false);
