@@ -1,5 +1,3 @@
-import simplenlg.framework.NLGElement;
-
 import java.util.Collection;
 
 public class Bifurcation extends Connector {

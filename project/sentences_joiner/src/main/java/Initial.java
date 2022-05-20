@@ -1,5 +1,3 @@
-import simplenlg.framework.NLGElement;
-
 import java.util.Collection;
 
 public class Initial extends Connector {
