@@ -10,12 +10,17 @@ public class Application {
 
     public static void main(String[] args) {
         String sentencesPath = "../sentences_generated/";
-        if (args.length > 0) {
+        String joinedPath = "../sentences_joined/";
+        if (args.length == 1) {
             sentencesPath = args[0];
+        }
+        else if (args.length == 2) {
+            sentencesPath = args[0];
+            joinedPath = args[1];
         }
 
         ArrayList<String> jsonPaths = getJSONPaths(sentencesPath);
-        for (String path: jsonPaths) {
+        for (String path : jsonPaths) {
             String bpmnName = getJSONNameFromPath(path);
             ArrayList<String> gateNoChild = new ArrayList<>(List.of("Order Fulfillment and Procurement.3"));
             ArrayList<String> rigids = new ArrayList<>(Arrays.asList("C.2.0.4", "C.3.0.1", "C.1.1.1", "B.2.0.6", "A.2.1.1",
