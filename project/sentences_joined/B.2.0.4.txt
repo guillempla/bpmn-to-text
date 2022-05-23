@@ -1,0 +1,2 @@
+The event 2 is started, user task 7 standard loop then the event 2 is ended.
+

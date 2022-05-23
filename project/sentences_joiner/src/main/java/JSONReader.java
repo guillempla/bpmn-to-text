@@ -8,7 +8,6 @@ import org.json.simple.parser.ParseException;
 import simplenlg.framework.NLGElement;
 
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,19 +16,18 @@ import java.util.Map;
 public class JSONReader {
     public static final String GENERATED_PATH = "../sentences_joined/";
 
-    private final String fileName;
-
     private final JSONObject jsonElements;
     private final Map<String, ElementVertex> vertexElements;
+    private final String paragraph;
 
     public JSONReader(String fileName, String path) {
-        this.fileName = fileName;
         this.jsonElements = parseJSON(path);
         this.vertexElements = this.createVertexes();
         MultiDirectedGraph graph = this.buildGraph();
         System.out.println(fileName);
         ParagraphGenerator joiner = new ParagraphGenerator(graph);
-        System.out.println(joiner.getParagraph());
+        this.paragraph = joiner.getParagraph();
+        System.out.println(paragraph);
     }
 
     private MultiDirectedGraph buildGraph() {
@@ -47,6 +45,10 @@ public class JSONReader {
         }
 
         return graph;
+    }
+
+    public String getParagraph() {
+        return paragraph;
     }
 
     private ArrayList<String> getNextIds(JSONObject jsonElement) {
@@ -112,17 +114,6 @@ public class JSONReader {
             e.printStackTrace();
         }
         return jsonObject;
-    }
-
-    public void saveJSON() {
-        try {
-            FileWriter file = new FileWriter(GENERATED_PATH + fileName + ".json");
-            file.write(jsonElements.toJSONString());
-            file.close();
-            System.out.println("JSON file with joined sentences created");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
 

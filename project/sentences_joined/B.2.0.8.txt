@@ -1,0 +1,4 @@
+The event 7 is started, intermediate event signal catch, task 31 then the condition exclusive gateway 7 is checked. If the answer is null then the event 12 is ended.
+If the answer is null then end event 13 error.
+
+

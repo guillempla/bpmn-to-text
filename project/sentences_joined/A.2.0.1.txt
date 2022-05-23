@@ -1,0 +1,2 @@
+The event is started, task 1, the condition gateway (split flow) is checked then task 3 then gateway (merge flows) then task 4 then gateway (merge flows) then the event is ended then task 2 then the event is ended.
+

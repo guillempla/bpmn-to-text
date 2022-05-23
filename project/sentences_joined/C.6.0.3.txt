@@ -1,0 +1,4 @@
+Booking. If the answer is null then hotel.
+If the answer is null then flight.
+
+

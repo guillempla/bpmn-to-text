@@ -1,0 +1,2 @@
+The received is invoiced, is assigned, the invoice is approved then the condition does invoice the approved is checked, the bank transfer is prepared, the invoice is archived then the processed is invoiced, the condition does review the successful is checked then the invoice is approved, the condition does invoice the approved is checked, invoice not processed then rechnung klären then the condition does review the successful is checked.
+

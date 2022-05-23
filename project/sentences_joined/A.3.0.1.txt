@@ -1,0 +1,2 @@
+The event is started, task 1, collapsed sub-process, task 2 then the event 1 is ended.
+

@@ -1,4 +1,7 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,9 +23,18 @@ public class Application {
             if (true || bpmnName.equals("cook.1") /*&& !gateNoChild.contains(bpmnName)*/ /*&& !rigids.contains(bpmnName)*/
                 /*!namesDifferentSize.contains(bpmnName) && !gateNoChild.contains(bpmnName)*/) {
                 JSONReader reader = new JSONReader(bpmnName, path);
-                //reader.saveJSON();
+                String paragraph = reader.getParagraph();
+                saveParagraph(joinedPath, bpmnName, paragraph);
                 System.out.println();
             }
+        }
+    }
+
+    private static void saveParagraph(String path, String fileName, String paragraph) {
+        try (PrintStream out = new PrintStream(new FileOutputStream(path + fileName + ".txt"))) {
+            out.print(paragraph);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

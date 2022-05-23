@@ -1,0 +1,4 @@
+Lane 2 starts the event 2 then task 3. If the answer is null then expanded sub-process 1, task 5 then lane 2 ends the event 2.
+If the answer is null then expanded sub-process 2 then lane 3 ends the event 5.
+
+

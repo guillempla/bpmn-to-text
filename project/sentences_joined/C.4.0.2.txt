@@ -1,0 +1,2 @@
+New  employee hired, the domain account is created, the workstation is prepared, the required applications and permissions is assigned, the workstation is configured, the it part of welcome package is prepared then workstation and permissions ready.
+

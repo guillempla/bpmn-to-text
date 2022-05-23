@@ -1,0 +1,4 @@
+The noticed is hungered, the recipe is chosen then the condition desired components? is checked. If the answer is salad then the salad is prepared.
+If the answer is something real then the condition desired dish? is checked if the answer is pasta then the pasta is cooked
+if the answer is steak then the steak is cooked, the meal is eaten then the satisfied is hungered.
+

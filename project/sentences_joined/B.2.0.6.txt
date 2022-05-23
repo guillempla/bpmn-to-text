@@ -1,0 +1,2 @@
+Start event 2 message, task 11, the condition event base gateway 3 is checked then intermediate event message catch 2, task 21, expanded sub-process 2 then task 23 then intermediate event message catch, collapsed sub-process 2 then the condition exclusive gateway 4 is checked then intermediate event timer catch, expanded call activity, lane 1 services the task 15, lane 1 receives the task 16 then end event 6 message.
+

@@ -1,0 +1,5 @@
+The received is ordered, the availability is checked then the condition the available is articled is checked. If the answer is no then procurement.
+If the answer is yes then the article is shipped.
+If the answer is no then procurement.
+If the answer is yes then the article is shipped, financial settlement then payment received.
+
