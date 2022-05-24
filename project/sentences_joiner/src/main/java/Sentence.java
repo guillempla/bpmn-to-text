@@ -97,6 +97,10 @@ public class Sentence {
         return isFirstGateway;
     }
 
+    public boolean isInitial() {
+        return joinedVertex.get(0).isInitial();
+    }
+
     public boolean onlyOneBifurcation() {
         return joinedVertex.size() == 1 && joinedVertex.get(0).isBifurcation();
     }
