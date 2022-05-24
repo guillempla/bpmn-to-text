@@ -95,6 +95,6 @@ public class ElementVertex extends Vertex {
     }
 
     public boolean isInitial() {
-        return this.type.equals("");
+        return this.type.toLowerCase().contains("startevent");
     }
 }

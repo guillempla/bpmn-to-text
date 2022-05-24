@@ -28,6 +28,10 @@ public class SentencesJoiner {
         sentences.removeIf(this::sentenceIsVoid);
         if (sentences.size() == 0) return new Sentence();
 
+        if (vertex.isInitial()) {
+            return joinInitial(vertex, sentences);
+        }
+
         if (joiningBranches(vertex, sentences)) {
             return joinBranches(vertex, sentences);
         }
@@ -37,6 +41,20 @@ public class SentencesJoiner {
         }
 
         return joinActivities(sentences);
+    }
+
+    private Sentence joinInitial(ElementVertex vertex, ArrayList<Sentence> sentences) {
+        Sentence coordinatedSentence = new Sentence();
+
+        String sentenceString = initialConnector.transformStringWithConnector(sentences.get(0).paragraphToString());
+        NLGElement initialPhrase = nlgFactory.createSentence(sentenceString);
+        Sentence initialSentence = new Sentence(initialPhrase, vertex);
+        coordinatedSentence.joinSentence(initialSentence, false);
+        sentences.remove(0);
+
+        addSentencesToSentence(sentences, coordinatedSentence);
+
+        return coordinatedSentence;
     }
 
     private boolean sentenceIsVoid(Sentence sentence) {
