@@ -15,6 +15,11 @@ public class Branch extends Connector {
 
     @Override
     public String transformStringWithConnector(String sentenceString, String name) {
-        return selectedConnector.replace(separator, name) + sentenceString;
+        if (name != null)
+            return selectedConnector.replace(separator, name) + sentenceString;
+        else {
+            // TODO Add connector to treat null NAME
+            return selectedConnector.replace(separator, "null") + sentenceString;
+        }
     }
 }
