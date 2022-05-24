@@ -22,8 +22,6 @@ public class ParagraphGenerator {
     }
 
     public String getParagraph() {
-//        .replaceAll("[\\n]+[.]",".\n").replaceAll("[\\n]+[,]",", ").replaceAll("[\\n]+[ ]", " ");
-//        .replace("\n. ", ".\n").replace("\n, ", ", ").replace("\n ", " ");
         return this.joinedSentences.paragraphToString();
     }
 
