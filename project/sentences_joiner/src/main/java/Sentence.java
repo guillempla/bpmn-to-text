@@ -189,7 +189,6 @@ public class Sentence {
         if (Character.isUpperCase(realizedSentence.charAt(0))) {
             realizedSentence = realizedSentence.toLowerCase();
         }
-//.replaceAll("[\\n]+[.]",".\n").replace("\n, ", ", ").replaceAll("[\\n]+[ ]", "\n");
         if (branch) {
             String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "\n");
             NLGElement branchPhrase = nlgFactory.createSentence(removedDotSentence);
