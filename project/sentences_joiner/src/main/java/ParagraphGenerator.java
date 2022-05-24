@@ -6,9 +6,7 @@ import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class ParagraphGenerator {
