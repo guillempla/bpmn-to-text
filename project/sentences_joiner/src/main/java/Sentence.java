@@ -235,4 +235,8 @@ public class Sentence {
     private DocumentElement convertCoordinatedToDocument(CoordinatedPhraseElement phrase) {
         return nlgFactory.createSentence(phrase);
     }
+
+    public boolean isFinal() {
+        return joinedVertex.get(joinedVertex.size() - 1).isFinal();
+    }
 }
