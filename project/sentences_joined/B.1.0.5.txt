@@ -1,2 +1,2 @@
-Start event none 3, the task 8 is abstracted then end event none 4.
+Once start event none 3, the task 8 is abstracted then end event none 4.
 

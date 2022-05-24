@@ -1,4 +1,6 @@
-New  employee hired, the provided information is validated then the condition all necessary data available? is checked. If the answer is yes then the payroll system is updated.
-If the answer is no then if the answer is no then missing points are clarified
-if the answer is yes then the payroll system is updated then payroll ready.
+Once new  employee hired, the provided information is validated then the condition all necessary data available? is checked. If the answer is no then missing points are clarified.
+If the answer is yes then the payroll system is updated.
+If the answer is no then missing points are clarified.
+If the answer is yes then the payroll system is updated
+then payroll ready.
 

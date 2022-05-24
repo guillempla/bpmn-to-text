@@ -1,2 +1,2 @@
-The event timer is started, the task 1 is abstracted, user task 2, the task 3 is serviced then end event none 1.
+Once the event timer is started, the task 1 is abstracted, user task 2, the task 3 is serviced then end event none 1.
 

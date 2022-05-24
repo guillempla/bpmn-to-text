@@ -1,4 +1,2 @@
-If the answer is null then the hotel is booked.
-If the answer is null then the flight is booked
-then the booked is traveled.
+Once if the answer is null then the hotel is bookedif the answer is null then the flight is booked then the booked is traveled.
 

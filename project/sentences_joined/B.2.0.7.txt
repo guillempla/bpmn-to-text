@@ -1,4 +1,4 @@
-Start event 6 signal, task 25 then the condition lane 2 parallels the gateway 5 is checked. If the answer is null then expanded sub-process 3, task 32 then lane 2 parallels the gateway 7.
+Once start event 6 signal, task 25 then the condition lane 2 parallels the gateway 5 is checked. If the answer is null then expanded sub-process 3, task 32 then lane 2 parallels the gateway 7.
 If the answer is null then task 26, intermediate event signal throw 2, inclusive gateway 6, task 28 then lane 2 parallels the gateway 7
 then end event 11 escalation.
 

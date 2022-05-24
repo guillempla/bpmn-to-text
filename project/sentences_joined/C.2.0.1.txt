@@ -1,2 +1,2 @@
-The credit card information is received, the payment is taken then the result is sent.
+Once the credit card information is received, the payment is taken then the result is sent.
 

@@ -1,2 +1,2 @@
-Lane 1 starts the event 1, task 1, task 2 then lane 1 ends the event 1.
+Once lane 1 starts the event 1, task 1, task 2 then lane 1 ends the event 1.
 

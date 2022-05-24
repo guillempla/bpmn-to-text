@@ -1,2 +1,2 @@
-Picker receives the order, picker picks the items, picker places in bin, receive and package items then packager sends to carrier dock.
+Once picker receives the order, picker picks the items, picker places in bin, receive and package items then packager sends to carrier dock.
 

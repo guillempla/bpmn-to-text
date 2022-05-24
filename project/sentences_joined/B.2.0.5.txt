@@ -1,2 +1,2 @@
-Start event 5 none, the task 22 is serviced then end event 8 none.
+Once start event 5 none, the task 22 is serviced then end event 8 none.
 

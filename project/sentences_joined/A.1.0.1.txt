@@ -1,2 +1,2 @@
-The event is started, task 1, task 2, task 3 then the event is ended.
+Once the event is started, task 1, task 2, task 3 then the event is ended.
 

@@ -1,2 +1,2 @@
-Stock level below minimum then procurement.
+Once stock level below minimum then procurement.
 
