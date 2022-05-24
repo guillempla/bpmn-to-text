@@ -13,7 +13,6 @@ public class SentencesJoiner {
     private Final finalConnector;
     private Branch branchConnector;
     private Bifurcation bifurcationConnector;
-    private Conjunction conjunctionConnector;
 
     public SentencesJoiner() {
         Lexicon lexicon = Lexicon.getDefaultLexicon();
@@ -23,7 +22,6 @@ public class SentencesJoiner {
         finalConnector = new Final();
         branchConnector = new Branch();
         bifurcationConnector = new Bifurcation();
-        conjunctionConnector = new Conjunction();
     }
 
     public Sentence joinSentences(ElementVertex vertex, ArrayList<Sentence> sentences) {
@@ -126,8 +124,7 @@ public class SentencesJoiner {
         for (Sentence sentence : sentences) {
             String elementId = sentence.getIdOfFirstJoinedVertex();
             String name = next.get(elementId).getKey();
-            String sentenceString = sentence.paragraphToString();
-            sentenceString = "If the answer is " + name + " then " + sentenceString;
+            String sentenceString = branchConnector.transformStringWithConnector(sentence.paragraphToString(), name);
             NLGElement branchPhrase = nlgFactory.createSentence(sentenceString);
             sentence.setCoordinatedPhrase(branchPhrase);
         }
