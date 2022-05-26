@@ -1,4 +1,4 @@
-Once which option? If the answer is null then down.
+Once which option. If the answer is null then down.
 If the answer is null then up, manual task 2 then task 3. If the answer is option==1 then task up.
 If the answer is null then task down.
 

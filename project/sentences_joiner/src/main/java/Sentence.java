@@ -202,7 +202,7 @@ public class Sentence {
     }
 
     public String paragraphToString() {
-        return realizeSentence(this.getParagraph()).replaceAll("[\\n]+[.]", ".\n").replace("\n, ", ", ").replaceAll("[\\n]+[ ]", "\n");
+        return realizeSentence(this.getParagraph()).replaceAll("[\\n]+[.]", ".\n").replace("\n, ", ", ").replaceAll("[\\n]+[ ]", "\n").replace("?", "");
     }
 
     public void setCoordinatedPhrase(NLGElement phrase) {
