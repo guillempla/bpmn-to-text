@@ -6,9 +6,7 @@ import org.jbpt.graph.MultiDirectedGraph;
 import org.jbpt.graph.abs.IFragment;
 import org.jbpt.hypergraph.abs.Vertex;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class ParagraphGenerator {
@@ -24,8 +22,6 @@ public class ParagraphGenerator {
     }
 
     public String getParagraph() {
-//        .replaceAll("[\\n]+[.]",".\n").replaceAll("[\\n]+[,]",", ").replaceAll("[\\n]+[ ]", " ");
-//        .replace("\n. ", ".\n").replace("\n, ", ", ").replace("\n ", " ");
         return this.joinedSentences.paragraphToString();
     }
 

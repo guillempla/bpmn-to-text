@@ -26,7 +26,7 @@ The event 3 is started, task 4 then the event 3 is ended.
 
 
 C.1.0.2
-Team assistant invoices the received, team assistant assigns, approver approves the invoice then the condition does invoice the approved is checked, accountant prepares the bank transfer, accountant archives the invoice then accountant invoices the processed, the condition does review the successful is checked then approver approves the invoice, invoice not processed, rechnung klären then the condition does review the successful is checked then the condition does invoice the approved is checked.
+Team assistant invoices the received, team assistant assigns, approver approves the invoice then the condition does invoice the approved is checked, accountant prepares the bank transfer, accountant archives the invoice then accountant invoices the processed, the condition does invoice the approved is checked, the condition does review the successful is checked then approver approves the invoice, invoice not processed then rechnung klären then the condition does review the successful is checked.
 
 
 
@@ -94,15 +94,15 @@ Stock level below minimum then procurement.
 Order Fulfillment and Procurement.3
 ERROR: Gate has no child with id: _CB87E85E-0561-4EBB-84F8-6AB108ADC29B
     [_46776D85-8D02-4C88-A4CE-AEAF6A9EA545, _F47CA4E4-62CB-4DCB-BFC3-6EB7583EE758, _CB87E85E-0561-4EBB-84F8-6AB108ADC29B]
-    [_AFA53968-8985-4F4D-A274-606F4C63F547->_46776D85-8D02-4C88-A4CE-AEAF6A9EA545]
     P0
+    [_AFA53968-8985-4F4D-A274-606F4C63F547->_46776D85-8D02-4C88-A4CE-AEAF6A9EA545]
 
     _AFA53968-8985-4F4D-A274-606F4C63F547
     exclusiveGateway
     _46776D85-8D02-4C88-A4CE-AEAF6A9EA545
     BOND
     No Leaf
-The availability is checked with supplier, the condition deliverable? is checked then is ordered from supplier then late delivery then is ordered from supplier, the received is articled then the procured is articled.
+The availability is checked with supplier, the condition deliverable? is checked then late delivery then is ordered from supplier then late delivery then is ordered from supplier, the received is articled then the procured is articled.
 
 
 
@@ -155,7 +155,7 @@ then end event 11 escalation.
 
 
 C.1.1.1
-The received is invoiced, is assigned, the invoice is approved then the condition does invoice the approved is checked, the bank transfer is prepared, the invoice is archived then the processed is invoiced, rechnung klären then the condition does review the successful is checked, the invoice is approved, invoice not processed then the condition does invoice the approved is checked.
+The received is invoiced, is assigned, the invoice is approved then the condition does invoice the approved is checked, the bank transfer is prepared, the invoice is archived then the processed is invoiced, rechnung klären then the condition does review the successful is checked, the condition does invoice the approved is checked, invoice not processed then the invoice is approved.
 
 
 
@@ -256,14 +256,14 @@ The event is started, task 1, task 2, task 3 then the event is ended.
 
 
 A.4.1.3
-Lane 2 starts the event 2 then task 3. If the answer is null then expanded sub-process 2 then lane 3 ends the event 5.
-If the answer is null then expanded sub-process 1, task 5 then lane 2 ends the event 2.
+Lane 2 starts the event 2 then task 3. If the answer is null then expanded sub-process 1, task 5 then lane 2 ends the event 2.
+If the answer is null then expanded sub-process 2 then lane 3 ends the event 5.
 
 
 
 
 C.2.0.4
-The order is payed then the condition payment accepted? is checked then the order is sent, the condition payment accepted? is checked, the condition does retry is checked, the order is payed then the condition does retry is checked.
+The order is payed then the condition payment accepted? is checked then does retry, the order is payed, the condition payment accepted? is checked then the order is sent.
 
 
 
@@ -287,10 +287,8 @@ then the booked is traveled.
 
 
 Order Fulfillment and Procurement.1
-The received is ordered, the availability is checked then the condition the available is articled is checked. If the answer is no then procurement.
-If the answer is yes then the article is shipped.
-If the answer is no then procurement.
-If the answer is yes then the article is shipped, financial settlement then payment received.
+The received is ordered, the availability is checked then the condition the available is articled is checked. If the answer is no then if the answer is no then procurement
+if the answer is yes then the article is shipped. If the answer is yes then the article is shipped, financial settlement then payment received.
 
 
 

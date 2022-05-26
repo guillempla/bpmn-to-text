@@ -93,4 +93,12 @@ public class ElementVertex extends Vertex {
         String name = this.next.get(nextId).getKey();
         this.next.put(nextId, new ImmutablePair<>(name, visited));
     }
+
+    public boolean isInitial() {
+        return this.type.toLowerCase().contains("startevent");
+    }
+
+    public boolean isFinal() {
+        return this.type.toLowerCase().contains("endevent");
+    }
 }

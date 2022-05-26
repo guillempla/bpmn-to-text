@@ -1,0 +1,4 @@
+Once the received is invoiced, the invoice is scanned, the original is archived, approver to  be assigned then is assigned. If the answer is null then invoice review  needed then review and document result.
+If the answer is null then 7 days.
+
+

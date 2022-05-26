@@ -1,0 +1,2 @@
+Once start event none 2, the task 6 is abstracted then end event none 3.
+

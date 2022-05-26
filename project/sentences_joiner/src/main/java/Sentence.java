@@ -10,42 +10,66 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Sentence {
-    protected final Realiser realiser;
+    protected Realiser realiser;
     private boolean isFirstGateway;
     private ArrayList<ElementVertex> joinedVertex;
-    private final NLGFactory nlgFactory;
-    private final Lexicon lexicon;
-    private final Stack<CoordinatedPhraseElement> coordinatedPhrases;
+    private NLGFactory nlgFactory;
+    private Stack<CoordinatedPhraseElement> coordinatedPhrases;
+    private String conjunction;
 
     public Sentence() {
-        this.lexicon = Lexicon.getDefaultLexicon();
-        this.realiser = new Realiser(lexicon);
-        this.nlgFactory = new NLGFactory(lexicon);
+        Conjunction conjunctionConnector = new Conjunction();
+        this.conjunction = conjunctionConnector.getSelectedConnector();
+        initializeSentence();
 
         this.joinedVertex = new ArrayList<>();
         this.isFirstGateway = false;
+    }
+
+    private void initializeSentence() {
+        Lexicon lexicon = Lexicon.getDefaultLexicon();
+        this.realiser = new Realiser(lexicon);
+        this.nlgFactory = new NLGFactory(lexicon);
 
         coordinatedPhrases = new Stack<>();
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        coordinatedPhrase.setConjunction("then");
+        coordinatedPhrase.setConjunction(conjunction);
         coordinatedPhrases.push(coordinatedPhrase);
     }
 
     public Sentence(NLGElement phrase, ElementVertex vertex) {
-        this.lexicon = Lexicon.getDefaultLexicon();
-        this.realiser = new Realiser(lexicon);
-        this.nlgFactory = new NLGFactory(lexicon);
+        Conjunction conjunctionConnector = new Conjunction();
+        this.conjunction = conjunctionConnector.getSelectedConnector();
+        initializeSentence();
 
         this.joinedVertex = new ArrayList<>();
         this.joinedVertex.add(vertex);
         this.isFirstGateway = vertex.isOpenGateway();
 
-        coordinatedPhrases = new Stack<>();
-        CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        coordinatedPhrase.setConjunction("then");
-        coordinatedPhrases.push(coordinatedPhrase);
+        addCoordinateSentence(phrase);
+    }
+
+    public Sentence(String conjunction) {
+        this.conjunction = conjunction;
+        initializeSentence();
+
+        this.joinedVertex = new ArrayList<>();
+        this.isFirstGateway = false;
+    }
+
+    public Sentence(NLGElement phrase, ElementVertex vertex, String conjunction) {
+        this.conjunction = conjunction;
+        initializeSentence();
+
+        this.joinedVertex = new ArrayList<>();
+        this.joinedVertex.add(vertex);
+        this.isFirstGateway = vertex.isOpenGateway();
 
         addCoordinateSentence(phrase);
+    }
+
+    public void setConjunction(String conjunction) {
+        this.conjunction = conjunction;
     }
 
     public void addCoordinateSentence(NLGElement sentence) {
@@ -71,6 +95,10 @@ public class Sentence {
 
     public boolean isFirstGateway() {
         return isFirstGateway;
+    }
+
+    public boolean isInitial() {
+        return joinedVertex.get(0).isInitial();
     }
 
     public boolean onlyOneBifurcation() {
@@ -130,7 +158,7 @@ public class Sentence {
             this.coordinatedPhrases.addAll(sentence.getCoordinatedPhrases());
             // TODO Afegir comprovació de frase massa llarga i crear una nova
             //  entrada a l'Stack
-        } // TODO hi ha més casos a tenir en compte a part de "sentence.getStackSize() > 1"
+        }
         else {
             addCoordinateSentence(sentence, branch);
         }
@@ -161,7 +189,6 @@ public class Sentence {
         if (Character.isUpperCase(realizedSentence.charAt(0))) {
             realizedSentence = realizedSentence.toLowerCase();
         }
-//.replaceAll("[\\n]+[.]",".\n").replace("\n, ", ", ").replaceAll("[\\n]+[ ]", "\n");
         if (branch) {
             String removedDotSentence = realizedSentence.replace(".", "").replace("\n\n", "\n");
             NLGElement branchPhrase = nlgFactory.createSentence(removedDotSentence);
@@ -182,8 +209,7 @@ public class Sentence {
         if (realizeSentence(phrase).replace("\n", "").equals("")) return;
 
         CoordinatedPhraseElement coordinatedPhrase = nlgFactory.createCoordinatedPhrase();
-        coordinatedPhrase.setConjunction("then");
-//        if (!coordinatedPhrases.empty()) coordinatedPhrases.pop();
+        coordinatedPhrase.setConjunction(conjunction);
         coordinatedPhrases.removeAllElements();
         coordinatedPhrases.push(coordinatedPhrase);
         addCoordinateSentence(phrase);
@@ -208,5 +234,9 @@ public class Sentence {
 
     private DocumentElement convertCoordinatedToDocument(CoordinatedPhraseElement phrase) {
         return nlgFactory.createSentence(phrase);
+    }
+
+    public boolean isFinal() {
+        return joinedVertex.get(joinedVertex.size() - 1).isFinal();
     }
 }

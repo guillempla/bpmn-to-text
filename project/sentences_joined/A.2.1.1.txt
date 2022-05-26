@@ -1,0 +1,2 @@
+Once the event is started, task 1, the condition gateway  (split flow) is checked then task 2 then task 3, task 4 then task 2.
+

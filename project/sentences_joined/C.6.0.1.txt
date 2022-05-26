@@ -1,0 +1,5 @@
+Once the travel request is received then the flights and hotel offer is made. If the answer is null then the approved is offered, the credit card information is requested, booking is made, the credit card is charged, booking is confirmed then booking  confirmed.
+If the answer is null then 24 hours, the customer offer expired is notified then the expired is offered.
+If the answer is null then the request is canceled, the customer record is updated then the cancelled is requested.
+
+

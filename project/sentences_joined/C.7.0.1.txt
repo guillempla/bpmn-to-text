@@ -1,0 +1,4 @@
+Once hiring manager jobs the vacancy, hiring manager writes the description, recruitment completes the advertisement then hiring manager approves the advertisement then the condition advertisement approved? is checked then recruitment completes the advertisement. If the answer is null then recruitment publishes on homepage.
+If the answer is null then recruitment selects the other platforms then recruitment publishes on other platforms
+then vacancy  advertised.
+
