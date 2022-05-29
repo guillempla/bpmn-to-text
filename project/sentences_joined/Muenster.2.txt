@@ -1,0 +1,7 @@
+Once the application is received. If the answer is null then check and evaluate application.
+If the answer is null then the transcript of applicant is created
+then ranking is created. If the answer is null then the applicant is marked as suitable.
+If the answer is null then the applicant for interview is invited, the interview is done then the qualification is discussed.
+If the answer is null then mark applicant as not suitable
+then the information is sent to application office.
+

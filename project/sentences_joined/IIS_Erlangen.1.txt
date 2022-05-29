@@ -1,0 +1,7 @@
+Once enrollment administrations receives the application. If the answer is null then enrollment administrations checks the application in time.
+If the answer is null then enrollment administrations checks the application complete
+then the condition complete and in time is checked. Hand application over to examining board then examining board receives the application. If the answer is null then examining board scores the motivation.
+If the answer is null then examining board scores the qualifications.
+If the answer is null then score bachelors grade
+then examining board sums the scores.
+

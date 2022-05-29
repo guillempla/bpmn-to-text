@@ -1,0 +1,4 @@
+Once the responses are checked then the condition does meet the basic requirements is checked. If the answer is yes then the application form is sent.
+If the answer is no then the interview is rejected
+then the status of application is updated.
+

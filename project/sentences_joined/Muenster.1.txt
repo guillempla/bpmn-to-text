@@ -1,0 +1,4 @@
+Once applicant chooses the courses of studies then applicant completes the online interview. If the answer is null then applicant receives the rejection for course of studies.
+If the answer is null then applicant receives the application form, upload bachelor's degree / transcript of records / diploma  supplement, applicant uploads the cv, applicant uploads the course description, applicant uploads the language certificate then applicant uploads the language certificate, applicant uploads the university entrance certificate then applicant uploads the letter of motivation, print out and sign application form, applicant collects the additional required documents then applicant sends the application form and documents.
+
+

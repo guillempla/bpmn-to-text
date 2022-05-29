@@ -1,0 +1,7 @@
+Once the application is received. If the answer is null then rank application on scale from 1 to 10.
+If the answer is null then assessment of application.
+If the answer is null then proof of uni degree provided then proposed as reserved.
+If the answer is null then high ranking requirements are met then proposed as accepted.
+If the answer is null then requirements are not met or low ranking then proposed as rejected
+then final confirmation by head of the university.
+

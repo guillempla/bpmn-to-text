@@ -1,0 +1,7 @@
+Once documents  received then admission office checks the bachelor 's degree. Admission office checks the documents, forward documents then department of informatics evaluates. If the answer is null then department of informatics sends the letter of rejection.
+If the answer is null then department of informatics sends the letter of acceptance.
+If the answer is null then department of informatics sends the interview invitation
+then department of informatics conducts the interview. If the answer is null then department of informatics sends the letter of acceptance.
+If the answer is null then department of informatics sends the letter of rejection.
+
+

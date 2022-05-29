@@ -1,0 +1,5 @@
+Once the online is applied, the documents are sent by post then is waited for results. If the answer is null then accepted.
+If the answer is null then rejected.
+If the answer is null then invited to an interview then is gone to the interview if the answer is null then accepted
+if the answer is null then rejected.
+

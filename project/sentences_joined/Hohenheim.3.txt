@@ -1,0 +1,6 @@
+Once receiving the written applications then checking if complete. If the answer is null then is marked as complete then the documents are sent to selection committee.
+If the answer is null then mark as not complete then rejection.
+If the answer is null then the applicant status is updated.
+If the answer is null then publishing the letters.
+
+
