@@ -1,0 +1,2 @@
+Once the order is payed then the condition does retry is checked then the order is payed, the condition payment accepted is checked then the order is sent, the condition payment accepted is checked then the condition does retry is checked.
+

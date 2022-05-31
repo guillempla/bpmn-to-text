@@ -1,0 +1,4 @@
+Once the application is completed. If the answer is null then the application form is filled.
+If the answer is null then the certificate of bachelor degree is added.
+If the answer is null then the condition german is checked then the certificate of german language is added, the application is sent then the interview is taken.
+

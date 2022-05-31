@@ -1,0 +1,5 @@
+Once receive and sort application then the citizenship is checked. If the answer is null then the application is checked in time eu countries.
+If the answer is null then the application is checked in time non-eu countries, the condition in time is checked, the application complete is checked then the application system is updated. If the answer is null then the rejection is sent.
+If the answer is null then the acceptance is sent.
+
+

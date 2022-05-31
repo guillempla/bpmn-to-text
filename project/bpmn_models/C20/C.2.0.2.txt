@@ -1,0 +1,2 @@
+Once the items are picked, the truck is loaded then the items are delivered.
+

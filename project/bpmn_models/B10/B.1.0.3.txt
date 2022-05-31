@@ -1,0 +1,8 @@
+Once lane 1 starts the event message then the condition lane 1 parallels the gateway divergence is checked. If the answer is null then user task 5 then the condition exclusive gateway divergence 2 is checked if the answer is null then lane 2 services the task 7 then exclusive gateway convergence 2
+if the answer is null then collapsed sub-process, sub process - expanded then exclusive gateway convergence 2
+then end event terminate.
+If the answer is null then the condition exclusive gateway divergence 1 is checked if the answer is null then lane 1 calls the activity calling a global task then exclusive gateway convergence 1
+if the answer is null then call activity collapsed, call activity - expanded then exclusive gateway convergence 1
+then lane 1 ends the event message.
+
+

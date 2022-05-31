@@ -1,0 +1,5 @@
+Once the event is started, task 1 then the condition gateway  (split flow) is checked. If the answer is null then task 3.
+If the answer is null then task 4.
+If the answer is default then task 2.
+
+

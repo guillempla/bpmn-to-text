@@ -1,0 +1,6 @@
+Once the online is applied, the online protocäl is sent then the documents are sent by post. If the answer is null then is payed for aptitude test.
+If the answer is null then the aptitude test is taken
+then is waited for results. If the answer is null then accepted.
+If the answer is null then rejected.
+
+

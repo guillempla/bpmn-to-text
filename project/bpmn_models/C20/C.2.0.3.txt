@@ -1,0 +1,2 @@
+Once the products are browsed on amazon, the item is added to cart then the condition done shopping is checked then the products are browsed on amazon, checkout then the items are received.
+

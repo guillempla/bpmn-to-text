@@ -1,0 +1,4 @@
+Once start event 1 timer, the task 1 is abstracted, the task 2 is sent, user task 3 then the condition inclusive gateway 1 is checked. If the answer is default sequence flow 1 then the activity calling a global user task is called, expanded sub-process 1, user task 8 then the gateway 2 is paralleled.
+If the answer is conditional sequence flow then the task 4 is serviced, intermediate event signal throw 1, collapsed sub-process 1 multi-instances, task 5 then the gateway 2 is paralleled
+then end event 1 message.
+

@@ -1,0 +1,6 @@
+Once documents received, the documents are checked then is evaluated. If the answer is null then is kept in the applicant pool.
+If the answer is null then is invited to an aptitude test
+then rank students according to gpa and the test results. If the answer is null then the letter of acceptance is sent.
+If the answer is null then the letter of rejection is sent.
+
+

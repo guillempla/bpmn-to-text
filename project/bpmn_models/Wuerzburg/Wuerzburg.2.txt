@@ -1,0 +1,6 @@
+Once the uni is chosen. If the answer is null then is filled in online form of application then the german application is sent.
+If the answer is null then is filled in printed form of application for international students then the international application is sent
+then waiting for response. If the answer is null then the commitment is received then is matriculated.
+If the answer is null then the rejection is received.
+
+

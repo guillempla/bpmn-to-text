@@ -1,0 +1,4 @@
+Once the customer request is received, the customer request is analysed then the condition service type is checked. The condition the level is serviced is checked. If the answer is premium then the repair is performed then the completed is repaired.
+If the answer is standard then the repair is performed then the completed is repaired.
+
+

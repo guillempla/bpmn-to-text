@@ -1,0 +1,3 @@
+Once applicant chooses the master program, complete and send application  form online then applicant receives the application number and passwort. If the answer is null then applicant prints the online application form.
+If the answer is null then applicant prints the online application form, applicant sends the all the requirements to the secretarial office for students, waiting for the response then rejection, enrollment then enrollment.
+

@@ -1,0 +1,4 @@
+Once payment retrieval requested then the condition payment amount is checked. If the answer is >= 1000 € then the payment is approved then the condition approved is checked.
+If the answer is < 1000 € then the credit card is charged.
+
+
