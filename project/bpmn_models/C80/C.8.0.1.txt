@@ -1,0 +1,5 @@
+Once vacation request received, the vacation information is fetched then the approval is vacationed. If the answer is manual validation required then manually approve vacation if the answer is approved then the employee of approval is notified, remaining vacation is updated then the approved is vacationed by manager
+if the answer is refused then the employee of refusal is notified then vacation refused by manager. If the answer is refused then the employee of refusal is notified then the refused is vacationed.
+If the answer is approved then the employee of approval is notified, remaining vacation is updated then the approved is vacationed.
+
+
