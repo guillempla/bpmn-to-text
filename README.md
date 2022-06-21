@@ -30,5 +30,4 @@ The goal of the project is to create a set of annotated data that relate texts t
 
 
 ## License
-
-This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
+Aquest projecte té una llicència GPL-3.0; consulteu el fitxer [LICENSE](LICENSE) per obtenir-ne més informació
