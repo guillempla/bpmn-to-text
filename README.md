@@ -16,7 +16,7 @@ The goal of the project is to create a set of annotated data that relate texts t
 
 ## Construit amb
 
-* [Camunda]([https://github.com/python-telegram-bot/python-telegram-bot](https://github.com/camunda/camunda-bpm-platform))
+* [Camunda](https://github.com/camunda/camunda-bpm-platform)
 * [Freeling](http://nlp.lsi.upc.edu/freeling/)
 * [jBPT Library](https://github.com/jbpt/codebase)
 * [SimpleNLG](https://github.com/simplenlg/simplenlg)
