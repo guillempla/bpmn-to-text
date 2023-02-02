@@ -1,2 +1,2 @@
-Once the availability is checked with supplier, the condition deliverable? is checked then late delivery then is ordered from supplier then late delivery then is ordered from supplier, the received is articled then the procured is articled.
+Once the availability is checked with supplier, the condition deliverable is checked then late delivery then is ordered from supplier then late delivery then is ordered from supplier, the received is articled then the procured is articled.
 

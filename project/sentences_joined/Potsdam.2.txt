@@ -1,8 +1,8 @@
 Once the application is completed. If the answer is null then create and add letter of motivation.
-If the answer is null then the condition german is checked then the certificate of german language is added then the certificate of german language is added.
+If the answer is null then the condition german is checked then the certificate of german language is added.
 If the answer is null then the application form is filled.
 If the answer is null then create and add cv.
-If the answer is null then the certificate of bachelor degree is added, the recommendations are added then the recommendations are added, the case-of-hardship certificate is added then the certificates of qualification are added then the certificates of qualification are added then the application is sent. If the answer is null then the rejection is received.
+If the answer is null then the certificate of bachelor degree is added, the recommendations are added, the case-of-hardship certificate is added then the certificates of qualification are added then the certificates of qualification are added then the application is sent. If the answer is null then the rejection is received.
 If the answer is null then the acceptance is received then is immatriculated.
 
 
