@@ -1,3 +1,3 @@
 Once enrollment administration receives the application. If the answer is null then enrollment administration checks the application complete.
-If the answer is null then enrollment administration checks the application in time, complete and in time, hand application over to examining board, check if bachelor equivalent to uni potsdam then examining board sets the additional requirements then the condition does case of hardship is checked.
+If the answer is null then enrollment administration checks the application in time, complete and in time, hand application over to examining board, check if bachelor equivalent to uni potsdam then examining board sets the additional requirements then examining board sets the additional requirements then the condition does case of hardship is checked then the condition score >= 600 is checked.
 

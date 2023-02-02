@@ -25,45 +25,8 @@ public class Application {
             ArrayList<String> gateNoChild = new ArrayList<>(List.of("Order Fulfillment and Procurement.3"));
             ArrayList<String> rigids = new ArrayList<>(Arrays.asList("C.2.0.4", "C.3.0.1", "C.1.1.1", "B.2.0.6", "A.2.1.1",
                     "C.1.0.2", "C.5.0.1"));
-            ArrayList<String> noSatisfactori = new ArrayList<>(Arrays.asList(
-                    "C.7.0.1",
-                    "Order Fulfillment and Procurement.1",
-                    "Order Fulfillment and Procurement.2",
-                    "Order Fulfillment and Procurement.3",
-                    "Potsdam.1",
-                    "Potsdam.2",
-                    "Wuerzburg.1",
-                    "Wuerzburg.2"));
-            ArrayList<String> noReals = new ArrayList<>(Arrays.asList(
-                    "A.1.0.1",
-                    "A.2.0.1",
-                    "A.2.1.1",
-                    "A.3.0.1",
-                    "A.4.0.1",
-                    "A.4.0.2",
-                    "A.4.0.3",
-                    "A.4.0.4",
-                    "A.4.1.1",
-                    "A.4.1.2",
-                    "A.4.1.3",
-                    "A.4.1.4",
-                    "B.1.0.1",
-                    "B.1.0.2",
-                    "B.1.0.3",
-                    "B.1.0.4",
-                    "B.1.0.5",
-                    "B.2.0.1",
-                    "B.2.0.2",
-                    "B.2.0.3",
-                    "B.2.0.4",
-                    "B.2.0.5",
-                    "B.2.0.6",
-                    "B.2.0.7",
-                    "B.2.0.8",
-                    "B.2.0.9",
-                    "model_01.1"));
-            if (!gateNoChild.contains(bpmnName) && !noReals.contains(bpmnName) && !rigids.contains(bpmnName) &&
-            !noSatisfactori.contains(bpmnName)) {
+            if (true || bpmnName.equals("cook.1") /*&& !gateNoChild.contains(bpmnName)*/ /*&& !rigids.contains(bpmnName)*/
+                /*!namesDifferentSize.contains(bpmnName) && !gateNoChild.contains(bpmnName)*/) {
                 JSONReader reader = new JSONReader(bpmnName, path);
                 String paragraph = reader.getParagraph();
                 saveParagraph(joinedPath, bpmnName, paragraph);

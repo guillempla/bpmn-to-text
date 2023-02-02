@@ -1,4 +1,4 @@
-Once the documents are checked, the oral examination is conducted then is evaluated. If the answer is null then the letter of rejection is sent.
+Once the documents are checked, the oral examination is conducted then the oral examination is conducted then is evaluated. If the answer is null then the letter of rejection is sent.
 If the answer is null then the letter of acceptance is sent.
 If the answer is null then the letter of provisional acceptance is sent, is waited for bachelor 's certificate, the received is certificated then the certificate is checked if the answer is null then the provisional acceptance is confirmed
 if the answer is null then the provisional acceptance is canceled.
